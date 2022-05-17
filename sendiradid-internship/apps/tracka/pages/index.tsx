@@ -2,7 +2,7 @@
 export function Index() {
  
   return (
-   <h1>Amazing tracka application WIP</h1>
+   <h1>Amazing tracka application WIP!!!</h1>
   );
 }
 
