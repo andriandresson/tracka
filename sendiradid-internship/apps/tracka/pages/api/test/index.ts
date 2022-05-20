@@ -1,13 +1,16 @@
- import { getSession } from "next-auth/react"
+import { getSession } from "next-auth/react"
+import axios from 'axios'
 
- 
- 
- const Handler = async (req, res) => {
-     const data = await getSession({req})
-     console.log("handler")
-     console.log(data)
-     return res.status(200).json({message: 'Works'})
- }
+const BASE_URL_APP = "https://app.clickup.com/v1";
 
 
- export default Handler
+
+
+const Handler = async (req, res) => {
+    res.status(200).json({ 'message': 'Hello World' })
+
+
+}
+
+
+export default Handler
