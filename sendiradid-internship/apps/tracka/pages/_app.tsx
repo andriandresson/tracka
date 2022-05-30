@@ -1,18 +1,23 @@
 import { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head';
+import Auth from '../components/auth';
 import './styles.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+function CustomApp({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
       <Head>
         <title>Welcome to tracka!</title>
       </Head>
-      <main className="app">
+      {Component.auth ? (
+      <Auth>
         <Component {...pageProps} />
-      </main>
-    </SessionProvider>
+      </Auth>
+    ) : (
+      <Component {...pageProps} />
+    )}
+  </SessionProvider>
   );
 }
 
