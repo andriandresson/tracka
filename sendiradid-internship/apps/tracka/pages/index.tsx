@@ -13,5 +13,5 @@ export function Index() {
      return <h1>You are not logged in</h1>
   }
 }
-
+Index.auth = true
 export default Index;
