@@ -1,11 +1,11 @@
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken } from 'next-auth/react';
 
 const SignIn = ({ csrfToken }) => {
-    return (
-      <form method="post" action="/api/auth/callback/credentials">
+  return (
+    <form method="post" action="/api/auth/callback/credentials">
       <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
       <label>
-        Username
+        username
         <input name="username" type="text" />
       </label>
       <label>
@@ -14,15 +14,15 @@ const SignIn = ({ csrfToken }) => {
       </label>
       <button type="submit">Sign in</button>
     </form>
-      )
-}
+  );
+};
 
 export const getServerSideProps = async (context) => {
   return {
     props: {
-      csrfToken: await getCsrfToken(context)
+      csrfToken: await getCsrfToken(context),
     },
-  }
-}
+  };
+};
 
-export default SignIn
+export default SignIn;
