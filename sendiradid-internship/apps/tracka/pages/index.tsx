@@ -1,9 +1,17 @@
+import { useSession } from 'next-auth/react'
+
 
 export function Index() {
- 
-  return (
-   <h1>Amazing tracka application WIP!!!</h1>
-  );
+  const { data: session} = useSession()
+
+  
+  if(session){
+    return (
+      <h1>you can only see this if you are logged in</h1>
+    )
+  }else {
+     return <h1>You are not logged in</h1>
+  }
 }
 
 export default Index;

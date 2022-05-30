@@ -12,7 +12,9 @@
         "outputPath": "dist/apps/tracka"
       },
       "configurations": {
-        "development": {},
+        "development": {
+          "port": 3000
+        },
         "production": {}
       }
     },
