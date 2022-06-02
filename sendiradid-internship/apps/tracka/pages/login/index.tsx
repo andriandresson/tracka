@@ -15,8 +15,6 @@ import '@fontsource/inter';
 import Image from 'next/image';
 
 const SignIn = ({ csrfToken }) => {
-  const ariaLabel = { 'aria-label': 'description' };
-
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
@@ -33,7 +31,7 @@ const SignIn = ({ csrfToken }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            background: '#15161A',
+            background: '#0A1929',
           }}
         >
           <form
@@ -131,7 +129,12 @@ const SignIn = ({ csrfToken }) => {
               variant="contained"
               size="large"
               type="submit"
-              sx={{ mt: 4, background: '#278BFC', color: '#fff' }}
+              sx={{
+                mt: 4,
+                background: '#278BFC',
+                color: '#fff',
+                fontWeight: 'bold',
+              }}
             >
               Login
             </Button>
