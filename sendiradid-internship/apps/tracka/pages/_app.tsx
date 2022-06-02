@@ -1,8 +1,8 @@
 import { AppProps } from 'next/app';
-import { SessionProvider } from 'next-auth/react'
+import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import Auth from '../components/auth';
-import './styles.css';
+import '../styles/styles.css';
 
 function CustomApp({ Component, pageProps }) {
   return (
@@ -11,13 +11,13 @@ function CustomApp({ Component, pageProps }) {
         <title>Welcome to tracka!</title>
       </Head>
       {Component.auth ? (
-      <Auth>
+        <Auth>
+          <Component {...pageProps} />
+        </Auth>
+      ) : (
         <Component {...pageProps} />
-      </Auth>
-    ) : (
-      <Component {...pageProps} />
-    )}
-  </SessionProvider>
+      )}
+    </SessionProvider>
   );
 }
 

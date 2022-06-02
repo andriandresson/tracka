@@ -9,6 +9,12 @@
   },
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@fontsource/inter": "^4.5.10",
+    "@fontsource/kanit": "^4.5.8",
+    "@mui/icons-material": "^5.8.2",
+    "@mui/material": "^5.8.1",
     "@nrwl/next": "14.1.6",
     "axios": "^0.27.2",
     "core-js": "^3.6.5",
