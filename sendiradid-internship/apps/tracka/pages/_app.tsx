@@ -1,15 +1,22 @@
-import { AppProps } from 'next/app';
+import { QueryClientProvider, QueryClient } from 'react-query';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import Auth from '../components/auth';
 import '../styles/styles.css';
+const queryClient = new QueryClient()
+
+
+
 
 function CustomApp({ Component, pageProps }) {
+  
   return (
-    <SessionProvider session={pageProps.session}>
+      <>
       <Head>
         <title>Welcome to tracka!</title>
-      </Head>
+      </Head> 
+      <SessionProvider session={pageProps.session}>
+        <QueryClientProvider client={queryClient}>
       {Component.auth ? (
         <Auth>
           <Component {...pageProps} />
@@ -17,7 +24,9 @@ function CustomApp({ Component, pageProps }) {
       ) : (
         <Component {...pageProps} />
       )}
+      </QueryClientProvider>
     </SessionProvider>
+    </>
   );
 }
 
