@@ -1,147 +1,101 @@
 import { getCsrfToken } from 'next-auth/react';
 
-import styles from '../../styles/login.module.css';
-
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-
 import Button from '@mui/material/Button';
-import { TextField, Card, Typography, InputAdornment } from '@mui/material';
+import {
+  TextField,
+  Container,
+  Typography,
+  InputAdornment,
+} from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-
-import '@fontsource/kanit';
-import '@fontsource/inter';
 
 import Image from 'next/image';
 
 const SignIn = ({ csrfToken }) => {
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
-
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div className={styles.loginContainer}>
-        <Card
+    <form method="post" action="/api/auth/callback/credentials">
+      <Container
+        sx={{
+          width: 510,
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Image src="/TrackaLogo.svg" alt="Tracka Logo" height="62" width="58" />
+        <Typography
+          variant="h2"
           sx={{
-            width: 510,
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            background: '#0A1929',
+            color: 'primary.main',
+            pb: 8,
+            pt: 1,
           }}
         >
-          <form
-            method="post"
-            action="/api/auth/callback/credentials"
-            className={styles.loginForm}
-          >
-            <Image
-              src="/TrackaLogo.svg"
-              alt="Tracka Logo"
-              height="96"
-              width="96"
-            />
-            <Typography
-              sx={{
-                fontFamily: 'kanit',
-                fontWeight: 400,
-                color: '#278BFC',
-                fontSize: 46,
-                pb: 5,
-              }}
-            >
-              Tracka
-            </Typography>
-            <Typography
-              sx={{
-                color: '#7A7A7B',
-                fontWeight: 500,
-                fontFamily: 'inter',
-                fontSize: 23,
-                pb: 3,
-              }}
-            >
-              Login with your ClickUp account
-            </Typography>
-            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-            <label className="login-label">
-              <Typography
-                sx={{
-                  fontWeight: 500,
-                  fontFamily: 'inter',
-                  fontSize: 21,
-                }}
-              >
-                Email
-              </Typography>
-              <TextField
-                name="username"
-                type="text"
-                placeholder="Enter your Email"
-                margin="normal"
-                sx={{
-                  width: 416,
-                  heigth: 64,
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <MailOutlineIcon sx={{ height: 28, width: 35 }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </label>
-            <label className="login-label">
-              <Typography
-                sx={{
-                  pt: 2,
-                  fontWeight: 500,
-                  fontFamily: 'inter',
-                  fontSize: 21,
-                }}
-              >
-                Password
-              </Typography>
-              <TextField
-                name="password"
-                type="password"
-                placeholder="Enter your password"
-                margin="normal"
-                sx={{
-                  width: 416,
-                  heigth: 26,
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockOpenIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </label>
-            <Button
-              variant="contained"
-              size="large"
-              type="submit"
-              sx={{
-                mt: 4,
-                background: '#278BFC',
-                color: '#fff',
-                fontWeight: 'bold',
-              }}
-            >
-              Login
-            </Button>
-          </form>
-        </Card>
-      </div>
-    </ThemeProvider>
+          Tracka
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            pb: 4,
+          }}
+        >
+          Login with your ClickUp account
+        </Typography>
+        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+
+        <TextField
+          name="username"
+          type="text"
+          placeholder="john@doe.com"
+          margin="normal"
+          label="Email"
+          sx={{
+            width: '65%',
+          }}
+          InputProps={{
+            style: { fontSize: '1rem' },
+            startAdornment: (
+              <InputAdornment position="start">
+                <MailOutlineIcon sx={{ height: 20, width: 26 }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          variant="outlined"
+          name="password"
+          type="password"
+          placeholder="Your password"
+          margin="normal"
+          label="Password"
+          sx={{
+            width: '65%',
+          }}
+          InputProps={{
+            style: { fontSize: '1rem' },
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockOpenIcon sx={{ height: 20, width: 26 }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <Button
+          variant="contained"
+          size="large"
+          type="submit"
+          sx={{
+            mt: 4,
+          }}
+        >
+          Login
+        </Button>
+      </Container>
+    </form>
   );
 };
 
