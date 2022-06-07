@@ -39,7 +39,7 @@ const SignIn = ({ csrfToken }) => {
         <Typography
           variant="h4"
           sx={{
-            pb: 4,
+            pb: 5,
           }}
         >
           Login with your ClickUp account
