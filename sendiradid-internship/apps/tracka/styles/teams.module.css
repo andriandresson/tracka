@@ -1,0 +1,18 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.team {
+    display: flex;
+    height: 300px;
+    width: 300px;
+    margin: 50px;
+    border-radius: 200px 200px;
+    color: white;
+    background-color: orange;
+    justify-content: center;
+    align-items: center;
+}

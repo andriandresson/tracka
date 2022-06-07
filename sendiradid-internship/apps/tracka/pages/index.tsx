@@ -1,13 +1,31 @@
-import { useSession } from 'next-auth/react';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import styled from '../styles/teams.module.css';
 
-export function Index() {
-  const { data: session } = useSession();
+const Index = () => {
+  const fetchTeams = async () => {
+    const { data } = await axios.get('api/teams/');
+    return data;
+  };
 
-  if (session) {
-    return <h1>you can only see this if you are logged in</h1>;
-  } else {
-    return <h1>You are not logged in</h1>;
+  const { data, status } = useQuery('teams', fetchTeams);
+
+  if (status === 'loading') {
+    return <div>loading...</div>;
   }
-}
+  if (status === 'error') {
+    return <div>Error</div>;
+  }
+
+  return (
+    <div className={styled.center}>
+      {data.teams.map((teams) => (
+        <div className={styled.team} key={teams.id}>
+          {teams.name}
+        </div>
+      ))}
+    </div>
+  );
+};
 Index.auth = true;
 export default Index;

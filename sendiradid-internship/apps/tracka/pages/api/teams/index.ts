@@ -16,7 +16,7 @@ const Handler = async (req, res) => {
     },
   };
   const respons = await axios.get(
-    `https://api.clickup.com/api/v2/list/187213015/task?archived=false`,
+    `https://api.clickup.com/api/v2/team`,
     config
   );
   const { data } = respons;
