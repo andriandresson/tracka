@@ -130,11 +130,11 @@ export default NextAuth({
   ],
   callbacks: {
     async redirect({ url, baseUrl }) {
-      console.log("im here")
+
       return baseUrl;
     },
     async session({ session, token }) {
-      console.log("im here 2")
+
 
       const newSession = {
         accessToken: token.accessToken,
