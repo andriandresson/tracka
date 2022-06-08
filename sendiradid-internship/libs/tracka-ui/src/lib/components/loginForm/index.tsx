@@ -22,32 +22,44 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
     <form method="post" action={APIurl}>
       <Container
         sx={{
-          width: 510,
+          width: 395,
           height: '100vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'start',
         }}
       >
-        <Image src="/TrackaLogo.svg" alt="Tracka Logo" height="62" width="58" />
-        <Typography
-          variant="h2"
+        <Container
           sx={{
-            color: 'primary.main',
-            pb: 8,
-            pt: 1,
+            mb: 10,
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
-          Tracka
+          <Image
+            src="/TrackaLogo.svg"
+            alt="Tracka Logo"
+            height="40"
+            width="37.2"
+          />
+        </Container>
+
+        <Typography
+          variant="h1"
+          sx={{
+            pb: 2,
+          }}
+        >
+          Sign in
         </Typography>
         <Typography
-          variant="h4"
+          variant="body1"
           sx={{
-            pb: 5,
+            pb: 6,
           }}
         >
-          Login with your ClickUp account
+          Please Sign in with your ClickUp credentials.{' '}
         </Typography>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
@@ -57,9 +69,7 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
           placeholder="john@doe.com"
           margin="normal"
           label="Email"
-          sx={{
-            width: '65%',
-          }}
+          sx={{ mb: 2, width: '100%' }}
           InputProps={{
             style: { fontSize: '1rem' },
             startAdornment: (
@@ -77,7 +87,8 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
           margin="normal"
           label="Password"
           sx={{
-            width: '65%',
+            width: '100%',
+            mb: 4,
           }}
           InputProps={{
             style: { fontSize: '1rem' },
@@ -90,14 +101,15 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
         />
 
         <Button
+          color="secondary"
           variant="contained"
           size="large"
           type="submit"
           sx={{
-            mt: 4,
+            width: '100%',
           }}
         >
-          Login
+          Sign in
         </Button>
       </Container>
     </form>
