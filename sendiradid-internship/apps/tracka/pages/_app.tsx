@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import '@fontsource/kanit';
 import '@fontsource/inter';
 import theme from '../styles/theme';
+import { Navbar } from '@sendiradid-internship/tracka-ui';
 
 function CustomApp({ Component, pageProps }) {
   return (
@@ -20,6 +21,7 @@ function CustomApp({ Component, pageProps }) {
         <QueryClientProvider client={queryClient}>
           {Component.auth ? (
             <Auth>
+              <Navbar />
               <Component {...pageProps} />
             </Auth>
           ) : (
