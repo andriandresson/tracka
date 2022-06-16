@@ -15,6 +15,8 @@ function CustomApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <Head>
+        <link rel="shortcut icon" href="/favicon.png" />
+
         <title>Welcome to tracka!</title>
       </Head>
       <SessionProvider session={pageProps.session}>

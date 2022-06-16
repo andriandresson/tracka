@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import styled from '../styles/teams.module.css';
+import { Container, Stack, Typography, Button } from '@mui/material';
+import { LabelBox } from '@sendiradid-internship/tracka-ui';
 
 const Index = () => {
   const fetchTeams = async () => {
@@ -18,13 +19,52 @@ const Index = () => {
   }
 
   return (
-    <div className={styled.center}>
-      {data.teams.map((teams) => (
-        <div className={styled.team} key={teams.id}>
-          {teams.name}
-        </div>
-      ))}
-    </div>
+    <Stack direction="row">
+      <Container
+        sx={{
+          ml: 8,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignContent: 'flex-start',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="h2" sx={{ mt: 10, ml: 6 }}>
+          Select team
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 2, ml: 6 }}>
+          Pick your default workspace team, you only select one.
+        </Typography>
+        <Container
+          sx={{
+            mt: 8,
+            alignSelf: 'flex-start',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            gridGap: 80,
+            justifyItems: 'start',
+            alignItems: 'start',
+            justifyContent: 'start',
+          }}
+        >
+          {data.teams.map((team) => (
+            <LabelBox
+              name={team.name}
+              color={team.color}
+              avatar={team.avatar}
+              key={team.id}
+            />
+          ))}
+        </Container>
+        <Button
+          variant="contained"
+          sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
+        >
+          Continue
+        </Button>
+      </Container>
+      <Container></Container>
+    </Stack>
   );
 };
 Index.auth = true;

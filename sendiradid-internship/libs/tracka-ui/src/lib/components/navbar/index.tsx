@@ -11,6 +11,7 @@ import {
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Image from 'next/image';
 import Logo from './Logo.svg';
+import { signOut } from 'next-auth/react';
 
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -63,7 +64,7 @@ export const Navbar = () => {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={() => signOut()}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>
