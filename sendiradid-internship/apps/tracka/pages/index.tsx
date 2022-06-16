@@ -1,13 +1,71 @@
-import { useSession } from 'next-auth/react';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import { Container, Stack, Typography, Button } from '@mui/material';
+import { LabelBox } from '@sendiradid-internship/tracka-ui';
 
-export function Index() {
-  const { data: session } = useSession();
+const Index = () => {
+  const fetchTeams = async () => {
+    const { data } = await axios.get('api/teams/');
+    return data;
+  };
 
-  if (session) {
-    return <h1>you can only see this if you are logged in</h1>;
-  } else {
-    return <h1>You are not logged in</h1>;
+  const { data, status } = useQuery('teams', fetchTeams);
+
+  if (status === 'loading') {
+    return <div>loading...</div>;
   }
-}
+  if (status === 'error') {
+    return <div>Error</div>;
+  }
+
+  return (
+    <Stack direction="row">
+      <Container
+        sx={{
+          ml: 8,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignContent: 'flex-start',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="h2" sx={{ mt: 10, ml: 6 }}>
+          Select team
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 2, ml: 6 }}>
+          Pick your default workspace team, you only select one.
+        </Typography>
+        <Container
+          sx={{
+            mt: 8,
+            alignSelf: 'flex-start',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            gridGap: 80,
+            justifyItems: 'start',
+            alignItems: 'start',
+            justifyContent: 'start',
+          }}
+        >
+          {data.teams.map((team) => (
+            <LabelBox
+              name={team.name}
+              color={team.color}
+              avatar={team.avatar}
+              key={team.id}
+            />
+          ))}
+        </Container>
+        <Button
+          variant="contained"
+          sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
+        >
+          Continue
+        </Button>
+      </Container>
+      <Container></Container>
+    </Stack>
+  );
+};
 Index.auth = true;
 export default Index;
