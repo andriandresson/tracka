@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@sendiradid-internship/tracka-context": [
+        "libs/tracka-context/src/index.ts"
+      ],
       "@sendiradid-internship/tracka-ui": ["libs/tracka-ui/src/index.ts"]
     }
   },

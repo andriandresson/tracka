@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "tracka": "apps/tracka",
+    "tracka-context": "libs/tracka-context",
     "tracka-e2e": "apps/tracka-e2e",
     "tracka-ui": "libs/tracka-ui"
   }
