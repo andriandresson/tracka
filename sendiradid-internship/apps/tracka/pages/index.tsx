@@ -5,12 +5,13 @@ import { LabelBox } from '@sendiradid-internship/tracka-ui';
 
 const Index = () => {
   const fetchTeams = async () => {
-    const { data } = await axios.get('api/teams/');
+    const { data } = await axios.get('api/spaces/');
     return data;
   };
 
-  const { data, status } = useQuery('teams', fetchTeams);
+  const { data, status } = useQuery('spaces', fetchTeams);
 
+  console.log(data);
   if (status === 'loading') {
     return <div>loading...</div>;
   }
@@ -20,7 +21,7 @@ const Index = () => {
 
   return (
     <Stack direction="row">
-      <Container
+      {/* <Container
         sx={{
           ml: 8,
           display: 'flex',
@@ -62,7 +63,7 @@ const Index = () => {
         >
           Continue
         </Button>
-      </Container>
+      </Container> */}
       <Container></Container>
     </Stack>
   );

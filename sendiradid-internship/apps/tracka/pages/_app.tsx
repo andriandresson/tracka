@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Auth from '../components/auth';
 import '../styles/styles.css';
 const queryClient = new QueryClient();
-
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ThemeProvider } from '@mui/material/styles';
 import '@fontsource/kanit';
 import '@fontsource/inter';
@@ -25,6 +25,7 @@ function CustomApp({ Component, pageProps }) {
             <Auth>
               <Navbar />
               <Component {...pageProps} />
+              <ReactQueryDevtools />
             </Auth>
           ) : (
             <Component {...pageProps} />
