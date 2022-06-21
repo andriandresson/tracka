@@ -1,8 +1,6 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { Container, Stack, Typography, Button } from '@mui/material';
-import { Dashboard } from 'apps/tracka/screens/dashboard';
-import { withAuth } from 'apps/tracka/components/withAuth';
 import { LabelBox } from '@sendiradid-internship/tracka-ui';
 
 const Index = () => {
