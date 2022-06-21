@@ -10,28 +10,28 @@ import '@fontsource/kanit';
 import '@fontsource/inter';
 import theme from '../styles/theme';
 import { Navbar } from '@sendiradid-internship/tracka-ui';
+// import { withAuth } from 'apps/tracka/components/withAuth';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { ApplicationProvider } from 'apps/tracka/components/appContext';
 
 function CustomApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <link rel="shortcut icon" href="/favicon.png" />
+    <ApplicationProvider>
 
-        <title>Welcome to tracka!</title>
-      </Head>
-      <SessionProvider session={pageProps.session}>
-        <QueryClientProvider client={queryClient}>
-          {Component.auth ? (
-            <Auth>
-              <Navbar />
-              <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </QueryClientProvider>
-      </SessionProvider>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <link rel="shortcut icon" href="/favicon.png" />
+
+          <title>Welcome to tracka!</title>
+        </Head>
+        <SessionProvider session={pageProps.session}>
+          <QueryClientProvider client={queryClient}>
+            {/* <Screen {...pageProps}></Screen>
+            {isDev && <ReactQueryDevtools></ReactQueryDevtools>} */}
+          </QueryClientProvider>
+        </SessionProvider>
+      </ThemeProvider>
+    </ApplicationProvider>
   );
 }
 
