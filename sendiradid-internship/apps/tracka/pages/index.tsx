@@ -67,5 +67,5 @@ const Index = () => {
     </Stack>
   );
 };
-Index.auth = true;
+
 export default Index;
