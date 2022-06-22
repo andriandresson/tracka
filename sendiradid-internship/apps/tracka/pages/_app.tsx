@@ -1,37 +1,37 @@
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
-import Auth from '../components/auth';
 import '../styles/styles.css';
-const queryClient = new QueryClient();
-
 import { ThemeProvider } from '@mui/material/styles';
 import '@fontsource/kanit';
 import '@fontsource/inter';
 import theme from '../styles/theme';
-import { Navbar } from '@sendiradid-internship/tracka-ui';
-import { withAuth } from 'apps/tracka/components/withAuth';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { ApplicationProvider } from '../components/appContext';
+import { withAuth } from '../components/withAuth';
+const queryClient = new QueryClient();
 
 function CustomApp({ Component, pageProps, router }) {
   const isLoginPage = router?.pathname.includes('/login');
-  console.log('isLoginPage', isLoginPage)
+  console.log('isLoginPage', isLoginPage);
   const Screen = isLoginPage ? Component : withAuth(Component);
   const isDev = process.env.NODE_ENV === 'development';
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <link rel="shortcut icon" href="/favicon.png" />
+    <ApplicationProvider>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <link rel="shortcut icon" href="/favicon.png" />
 
-        <title>Welcome to tracka!</title>
-      </Head>
-      <SessionProvider session={pageProps.session}>
-        <QueryClientProvider client={queryClient}>
-          <Screen {...pageProps}></Screen>
-          {isDev && <ReactQueryDevtools></ReactQueryDevtools>}
-        </QueryClientProvider>
-      </SessionProvider>
-    </ThemeProvider>
+          <title>Welcome to tracka!</title>
+        </Head>
+        <SessionProvider session={pageProps.session}>
+          <QueryClientProvider client={queryClient}>
+            <Screen {...pageProps}></Screen>
+            {isDev && <ReactQueryDevtools></ReactQueryDevtools>}
+          </QueryClientProvider>
+        </SessionProvider>
+      </ThemeProvider>
+    </ApplicationProvider>
   );
 }
 
