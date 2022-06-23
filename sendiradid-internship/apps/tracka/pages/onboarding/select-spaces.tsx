@@ -47,6 +47,13 @@ const SelectSpaces = ({ session }) => {
     return <Container>Error</Container>;
   }
 
+  const isActive = (space: any) => {
+    // check if selected is array
+    if (Array.isArray(value.steps[value.activeStep].selected)) {
+      const spaces = value.steps[value.activeStep].selected as Selection[];
+      return !!spaces.find((elem) => elem.id === space.id);
+    }
+  };
   return (
     <OnboardingLayout
       title={value.steps[value.activeStep].label}
@@ -72,7 +79,7 @@ const SelectSpaces = ({ session }) => {
               name={space.name}
               color={space.color}
               avatar={space.avatar}
-              active={false}
+              active={isActive(space)}
             />
           </Container>
         ))}
