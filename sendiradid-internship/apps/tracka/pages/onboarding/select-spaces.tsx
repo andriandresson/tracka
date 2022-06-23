@@ -12,22 +12,17 @@ import Link from 'next/link';
 const fetchSpaces = async (teamId: string | number) => {
   if (typeof teamId === 'string') {
     const { data } = await axios.get(`/api/spaces/${teamId}`);
-    console.log(data);
     return data;
   } else {
     const { data } = await axios.get(`/api/spaces/${teamId.toString()}`);
-    console.log(data);
     return data;
   }
 };
 
 const SelectSpaces = ({ session }) => {
   const { user } = session;
-  const { value, setValue } = useApplicationContext();
+  const { value, setValue, selectSpaces } = useApplicationContext();
   // setValue('activeStep', 1);
-  console.clear();
-  console.log('context: ', value);
-  console.log('team', value.steps[0].selected);
 
   const selectedTeam = () => {
     // check if selected is array
@@ -41,11 +36,9 @@ const SelectSpaces = ({ session }) => {
 
   const teamId = selectedTeam();
 
-  console.log('teamId:', teamId);
   const { data, isLoading, isError } = useQuery('spaces', () =>
     fetchSpaces(teamId)
   );
-  console.log('data:', data);
   if (isLoading) {
     return <Container>loading...</Container>;
   }
@@ -74,7 +67,7 @@ const SelectSpaces = ({ session }) => {
         }}
       >
         {data.spaces.map((space) => (
-          <Container key={space.id} onClick={() => console.log(space)}>
+          <Container key={space.id} onClick={() => selectSpaces(space)}>
             <LabelBox
               name={space.name}
               color={space.color}

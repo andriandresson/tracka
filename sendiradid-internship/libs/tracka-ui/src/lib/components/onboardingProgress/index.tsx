@@ -19,7 +19,7 @@ export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
     if (Array.isArray(selected)) {
       return selected.length > 1
         ? `${selected.length} spaces selected`
-        : selected[0].name;
+        : selected[0]?.name;
     }
     return selected?.name || '';
   };
