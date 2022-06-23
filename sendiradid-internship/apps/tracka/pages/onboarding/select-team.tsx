@@ -44,7 +44,6 @@ const SelectTeam = () => {
       return !!teams.find((elem) => elem.id === team.id);
     }
     const stepTeam = value.steps[value.activeStep].selected as Selection;
-    console.log(`${team.name} : ${stepTeam?.id === team.id}`);
     return stepTeam?.id === team.id;
   };
 
@@ -82,6 +81,7 @@ const SelectTeam = () => {
         <Button
           variant="contained"
           sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
+          onClick={() => setValue('activeStep', value.activeStep + 1)}
         >
           Continue
         </Button>
