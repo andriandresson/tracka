@@ -2,11 +2,21 @@ import { FC } from 'react';
 import { Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
+import styled from 'styled-components';
+
+const LabelBoxContainer = styled(Container)<{ active?: boolean }>`
+  /* border: ${({ active }) => active && '1px solid #fff'}; */
+
+  &.active > h6 {
+    border-bottom: 1px solid white;
+  }
+`;
 
 interface Props {
   avatar: string;
   color: string;
   name: string;
+  active?: boolean;
 }
 
 const stringAvatar = (name: string) => {
@@ -15,9 +25,11 @@ const stringAvatar = (name: string) => {
   };
 };
 
-export const LabelBox: FC<Props> = ({ avatar, color, name }) => {
+export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
   return (
-    <Container
+    <LabelBoxContainer
+      className={active ? 'active' : ''}
+      active={active}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -45,6 +57,6 @@ export const LabelBox: FC<Props> = ({ avatar, color, name }) => {
       >
         {name}
       </Typography>
-    </Container>
+    </LabelBoxContainer>
   );
 };
