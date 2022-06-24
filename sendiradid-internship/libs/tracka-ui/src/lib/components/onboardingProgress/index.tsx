@@ -5,29 +5,24 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material';
-
-
-type Selection = string | string[] | undefined;
-
-interface Step {
-  label: string;
-  selected?: Selection;
-}
+import { Step as StepType, Selection } from '@sendiradid-internship/tracka-ui';
 
 interface Props {
-  steps: Step[]
-  activeStep: number
+  steps: StepType[];
+  activeStep: number;
 }
 
 export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
-  const { palette } = useTheme()
-  const getSelectionText = (selected: Selection) => {
+  const { palette } = useTheme();
+  const getSelectionText = (selected?: Selection | Selection[]) => {
+    // Check if selected is an array
     if (Array.isArray(selected)) {
-      return selected.length > 1 ? `${selected.length} spaces selected` : selected[0];
+      return selected.length > 1
+        ? `${selected.length} spaces selected`
+        : selected[0]?.name;
     }
-    return selected;
-  }
-
+    return selected?.name || '';
+  };
 
   return (
     <Box sx={{ maxWidth: 400 }}>
@@ -36,7 +31,11 @@ export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
           <Step key={step.label}>
             <StepLabel>
               <Typography sx={{ color: '#fff' }}>{step.label}</Typography>
-              {step.selected && <Typography sx={{ color: palette.grey[700] }}>{getSelectionText(step.selected)}</Typography>}
+              {step.selected && (
+                <Typography sx={{ color: palette.grey[700] }}>
+                  {getSelectionText(step.selected)}
+                </Typography>
+              )}
             </StepLabel>
           </Step>
         ))}
