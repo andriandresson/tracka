@@ -1,7 +1,7 @@
 import { Container, Stack, Typography, Box, Button } from '@mui/material';
 import { FC, ReactNode } from 'react';
 import { OnboardingProgress } from '../onboardingProgress';
-import { Step as Steptype } from '@sendiradid-internship/tracka-ui';
+import { Step as Steptype, Selection } from '@sendiradid-internship/tracka-ui';
 import Link from 'next/link';
 
 interface Props {
@@ -28,6 +28,17 @@ export const OnboardingLayout: FC<Props> = ({
     '/onboarding/review',
   ];
 
+  console.log(steps[activeStep]);
+
+  const isSelected = (): boolean => {
+    // check if selected is array of type Selection
+    if (Array.isArray(steps[activeStep].selected)) {
+      const teams = steps[activeStep]?.selected as Selection[];
+      return teams[0]?.id !== undefined;
+    }
+    const selectedTeam = steps[activeStep].selected as Selection;
+    return selectedTeam?.id !== undefined;
+  };
   return (
     <Container>
       <Stack direction="row">
@@ -36,7 +47,7 @@ export const OnboardingLayout: FC<Props> = ({
           <Typography variant="body1">{description}</Typography>
           {children}
           {activeStep > 0 && (
-            <Link href={routeList[activeStep - 1]}>
+            <Link href={routeList[activeStep - 1]} passHref>
               <Button
                 variant="outlined"
                 sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
@@ -46,14 +57,25 @@ export const OnboardingLayout: FC<Props> = ({
               </Button>
             </Link>
           )}
-          <Link href={routeList[activeStep + 1]}>
-            <Button
-              variant="contained"
-              sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
-              onClick={() => setValue('activeStep', activeStep + 1)}
-            >
-              Continue
-            </Button>
+          <Link href={routeList[activeStep + 1]} passHref>
+            {isSelected() ? (
+              <Button
+                variant="contained"
+                sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
+                onClick={() => setValue('activeStep', activeStep + 1)}
+              >
+                Continue
+              </Button>
+            ) : (
+              <Button
+                disabled
+                variant="contained"
+                sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
+                onClick={() => setValue('activeStep', activeStep + 1)}
+              >
+                Continue
+              </Button>
+            )}
           </Link>
         </Box>
         <OnboardingProgress steps={steps} activeStep={activeStep} />
