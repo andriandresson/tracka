@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import { Step, Selection } from '@sendiradid-internship/tracka-ui';
 
 interface OnboardingProcess {
+  isOnboard: boolean;
   steps: Step[];
   activeStep: number;
   team?: string;
@@ -38,6 +39,7 @@ export const useApplicationContext = () => {
 
 export const ApplicationProvider = ({ children }) => {
   const initialValue = {
+    isOnboard: false,
     activeStep: 0,
     steps: [
       {

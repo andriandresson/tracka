@@ -60,6 +60,7 @@ const SelectSpaces = ({ session }) => {
       description={value.steps[value.activeStep].description}
       activeStep={value.activeStep}
       steps={value.steps}
+      setValue={setValue}
     >
       <Container
         sx={{
@@ -84,28 +85,6 @@ const SelectSpaces = ({ session }) => {
           </Container>
         ))}
       </Container>
-      <Link href="/onboarding/select-team">
-        <Button
-          variant="outlined"
-          sx={{
-            mt: 8,
-            width: 200,
-            alignSelf: 'flex-end',
-          }}
-          onClick={() => setValue('activeStep', value.activeStep - 1)}
-        >
-          Back
-        </Button>
-      </Link>
-      <Link href="/onboarding/select-spaces">
-        <Button
-          variant="contained"
-          sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
-          onClick={() => setValue('activeStep', value.activeStep + 1)}
-        >
-          Continue
-        </Button>
-      </Link>
     </OnboardingLayout>
   );
 };

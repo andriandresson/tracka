@@ -53,6 +53,7 @@ const SelectTeam = () => {
       description={value.steps[value.activeStep].description}
       activeStep={value.activeStep}
       steps={value.steps}
+      setValue={setValue}
     >
       <Container
         sx={{
@@ -77,15 +78,6 @@ const SelectTeam = () => {
           </Container>
         ))}
       </Container>
-      <Link href="/onboarding/select-spaces">
-        <Button
-          variant="contained"
-          sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
-          onClick={() => setValue('activeStep', value.activeStep + 1)}
-        >
-          Continue
-        </Button>
-      </Link>
     </OnboardingLayout>
   );
 };
