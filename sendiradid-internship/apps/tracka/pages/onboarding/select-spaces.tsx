@@ -6,8 +6,7 @@ import {
   OnboardingLayout,
   LabelBox,
 } from '@sendiradid-internship/tracka-ui';
-import { Container, Button } from '@mui/material';
-import Link from 'next/link';
+import { Container } from '@mui/material';
 
 const fetchSpaces = async (teamId: string | number) => {
   if (typeof teamId === 'string') {

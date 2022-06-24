@@ -1,4 +1,4 @@
-import { Container, Button } from '@mui/material';
+import { Container } from '@mui/material';
 import { useApplicationContext } from '../../components/appContext';
 import {
   LabelBox,
@@ -7,7 +7,6 @@ import {
 } from '@sendiradid-internship/tracka-ui';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import Link from 'next/link';
 
 const SelectTeam = () => {
   const { value, setValue, selectTeam } = useApplicationContext();
