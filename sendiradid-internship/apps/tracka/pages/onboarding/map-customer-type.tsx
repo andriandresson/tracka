@@ -1,4 +1,4 @@
-import { Button, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import axios from 'axios';
 import { useApplicationContext } from '../../components/appContext';
 import { Selection, OnboardingLayout } from '@sendiradid-internship/tracka-ui';
@@ -15,7 +15,7 @@ const fetchFolders = async (spaceId: string | number) => {
 };
 
 const SelectClients = () => {
-  const { value, setValue } = useApplicationContext();
+  const { value, setValue, clearSelection } = useApplicationContext();
 
   const selectedSpaces = () => {
     // check if selected is array
@@ -55,6 +55,7 @@ const SelectClients = () => {
         activeStep={value.activeStep}
         steps={value.steps}
         setValue={setValue}
+        clearSelection={clearSelection}
       >
         <Container></Container>
       </OnboardingLayout>
