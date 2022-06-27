@@ -9,7 +9,8 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 
 const SelectTeam = () => {
-  const { value, setValue, selectTeam } = useApplicationContext();
+  const { value, setValue, selectTeam, clearSelection } =
+    useApplicationContext();
 
   //onclick handler for selecting teams and updating the context state
   // const onSelect = (element) => {
@@ -53,6 +54,7 @@ const SelectTeam = () => {
       activeStep={value.activeStep}
       steps={value.steps}
       setValue={setValue}
+      clearSelection={clearSelection}
     >
       <Container
         sx={{

@@ -20,7 +20,8 @@ const fetchSpaces = async (teamId: string | number) => {
 
 const SelectSpaces = ({ session }) => {
   const { user } = session;
-  const { value, setValue, selectSpaces } = useApplicationContext();
+  const { value, setValue, selectSpaces, clearSelection } =
+    useApplicationContext();
   // setValue('activeStep', 1);
 
   const selectedTeam = () => {
@@ -60,6 +61,7 @@ const SelectSpaces = ({ session }) => {
       activeStep={value.activeStep}
       steps={value.steps}
       setValue={setValue}
+      clearSelection={clearSelection}
     >
       <Container
         sx={{
