@@ -11,6 +11,7 @@ interface Props {
   activeStep: number;
   steps: Steptype[];
   setValue: (property: string, newValue: any) => void;
+  clearSelection: (activeStep: number) => void;
 }
 
 export const OnboardingLayout: FC<Props> = ({
@@ -20,6 +21,7 @@ export const OnboardingLayout: FC<Props> = ({
   activeStep,
   steps,
   setValue,
+  clearSelection,
 }) => {
   const routeList = [
     '/onboarding/select-team',
@@ -39,6 +41,8 @@ export const OnboardingLayout: FC<Props> = ({
     const selectedTeam = steps[activeStep].selected as Selection;
     return selectedTeam?.id !== undefined;
   };
+
+  console.log(steps);
   return (
     <Container>
       <Stack direction="row">
@@ -51,7 +55,10 @@ export const OnboardingLayout: FC<Props> = ({
               <Button
                 variant="outlined"
                 sx={{ mt: 8, width: 200, alignSelf: 'flex-end' }}
-                onClick={() => setValue('activeStep', activeStep - 1)}
+                onClick={() => {
+                  clearSelection(activeStep);
+                  setValue('activeStep', activeStep - 1);
+                }}
               >
                 Back
               </Button>
