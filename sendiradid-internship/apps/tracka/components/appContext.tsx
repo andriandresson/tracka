@@ -17,12 +17,14 @@ interface AppContext {
   setValue: (property: OnboardingKeys, newValue: any) => void;
   selectTeam: (team: any) => void;
   selectSpaces: (space: any) => void;
+  clearSelection: (activeStep: number) => void;
 }
 
 const defaultContext = {
   setValue: (property: OnboardingKeys, newValue: any) => null,
   selectTeam: (team: any) => null,
   selectSpaces: (space: any) => null,
+  clearSelection: (activeStep: number) => null,
 };
 
 const ApplicationContext = createContext<AppContext>(defaultContext);
@@ -101,6 +103,12 @@ export const ApplicationProvider = ({ children }) => {
     setApplicationState({ ...applicationState, steps: newSteps });
   };
 
+  const clearSelection = (activeStep: number) => {
+    const newSteps = [...applicationState.steps];
+    newSteps[activeStep].selected = [];
+    setApplicationState({ ...applicationState, steps: newSteps });
+  };
+
   return (
     <ApplicationContext.Provider
       value={{
@@ -108,6 +116,7 @@ export const ApplicationProvider = ({ children }) => {
         setValue: updateApplicationKey,
         selectTeam,
         selectSpaces,
+        clearSelection,
       }}
     >
       {children}
