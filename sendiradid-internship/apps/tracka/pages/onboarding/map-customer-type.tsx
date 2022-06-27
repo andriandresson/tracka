@@ -1,7 +1,11 @@
 import { Container } from '@mui/material';
 import axios from 'axios';
 import { useApplicationContext } from '../../components/appContext';
-import { Selection, OnboardingLayout } from '@sendiradid-internship/tracka-ui';
+import {
+  Selection,
+  OnboardingLayout,
+  CustomerSelect,
+} from '@sendiradid-internship/tracka-ui';
 import { useQuery } from 'react-query';
 
 const fetchFolders = async (spaceId: string | number) => {
@@ -44,8 +48,8 @@ const SelectClients = () => {
     return <Container>Error</Container>;
   }
 
-  console.log('SELECTED SPACES:', selectedSpaces());
-  console.log('DATA:', data);
+  // console.log('SELECTED SPACES:', selectedSpaces());
+  // console.log('DATA:', data);
 
   return (
     <Container>
@@ -57,7 +61,13 @@ const SelectClients = () => {
         setValue={setValue}
         clearSelection={clearSelection}
       >
-        <Container></Container>
+        <CustomerSelect
+          data={data}
+          steps={value.steps}
+          setValue={setValue}
+          clearSelection={clearSelection}
+          activeStep={value.activeStep}
+        />
       </OnboardingLayout>
     </Container>
   );
