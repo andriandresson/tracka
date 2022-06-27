@@ -9,7 +9,6 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { color } from '@mui/system';
 
 interface Props {
   data: any;
@@ -72,21 +71,13 @@ export const CustomerSelect: FC<Props> = ({
                       </AccordionSummary>
                       <AccordionDetails>
                         {folder.lists.map((list: any) => {
-                          {
-                            console.log('list:', list.name);
-                          }
-                          <Accordion key={list.id}>
-                            <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls="panel1bh-content"
-                              id="panel1bh-header"
-                            >
-                              <Typography>{list.name}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                              <Typography>{list.name}</Typography>
-                            </AccordionDetails>
-                          </Accordion>;
+                          return (
+                            <Accordion key={list.id}>
+                              <AccordionDetails>
+                                <Typography>{list.name}</Typography>
+                              </AccordionDetails>
+                            </Accordion>
+                          );
                         })}
                       </AccordionDetails>
                     </Accordion>
