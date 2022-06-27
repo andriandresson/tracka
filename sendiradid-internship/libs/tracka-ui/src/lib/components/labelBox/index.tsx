@@ -2,23 +2,20 @@ import { FC } from 'react';
 import { Typography, Box, Avatar, Container } from '@mui/material';
 import styled from 'styled-components';
 
-const LabelBoxContainer = styled(Box)<{ active?: boolean, color: string }>`
-
+const LabelBoxContainer = styled(Box)<{ active?: boolean }>`
   & {
-      transition: 0.3s;
-      border: none;
+    transition: 0.3s;
+    border: none;
   }
 
-  &.active{
-    border: solid 3px #278BFC
+  &.active {
+    border: solid 3px #278bfc;
   }
-  &:hover{
+  &:hover {
     filter: brightness(130%);
     cursor: pointer;
   }
 `;
-
-    // box-shadow: 0px 0px 40px 7px ${props => props.color};
 interface Props {
   avatar: string;
   color: string;
@@ -47,8 +44,7 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
       <LabelBoxContainer
         className={active ? 'active' : ''}
         active={active}
-        color={color}
-        sx={{ borderRadius: 1, width:'auto', p: 0.5}}
+        sx={{ borderRadius: 1, width: 'auto', p: 0.5 }}
       >
         <Avatar
           variant="square"
@@ -60,12 +56,12 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
             height: 116,
             borderRadius: 1,
             fontSize: 48,
-            pd: 10
+            pd: 10,
           }}
           {...stringAvatar(`${name}`)}
         />
       </LabelBoxContainer>
-      <Typography variant="subtitle2" color="common.white" sx={{mt:0.5}}>
+      <Typography variant="subtitle2" color="common.white" sx={{ mt: 0.5 }}>
         {name}
       </Typography>
     </Container>
