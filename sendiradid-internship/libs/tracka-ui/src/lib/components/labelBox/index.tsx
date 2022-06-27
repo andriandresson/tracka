@@ -1,17 +1,21 @@
 import { FC } from 'react';
-import { Typography } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Container from '@mui/material/Container';
+import { Typography, Box, Avatar, Container } from '@mui/material';
 import styled from 'styled-components';
 
-const LabelBoxContainer = styled(Container)<{ active?: boolean }>`
-  /* border: ${({ active }) => active && '1px solid #fff'}; */
+const LabelBoxContainer = styled(Box)<{ active?: boolean }>`
+  & {
+    transition: 0.3s;
+    border: none;
+  }
 
-  &.active > h6 {
-    border-bottom: 1px solid white;
+  &.active {
+    border: solid 3px #278bfc;
+  }
+  &:hover {
+    filter: brightness(130%);
+    cursor: pointer;
   }
 `;
-
 interface Props {
   avatar: string;
   color: string;
@@ -27,36 +31,39 @@ const stringAvatar = (name: string) => {
 
 export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
   return (
-    <LabelBoxContainer
-      className={active ? 'active' : ''}
-      active={active}
+    <Container
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        textAlign: 'center',
         alignItems: 'center',
+        width: 200,
       }}
     >
-      <Avatar
-        variant="square"
-        src={avatar}
-        sx={{
-          bgcolor: color,
-          color: 'common.white',
-          width: 116,
-          height: 116,
-          borderRadius: 1,
-          fontSize: 48,
-        }}
-        {...stringAvatar(`${name}`)}
-      />
-      <Typography
-        variant="subtitle2"
-        color="common.white"
-        // sx={{ alignSelf: 'center' }}
+      <LabelBoxContainer
+        className={active ? 'active' : ''}
+        active={active}
+        sx={{ borderRadius: 1, width: 'auto', p: 0.5 }}
       >
+        <Avatar
+          variant="square"
+          src={avatar}
+          sx={{
+            bgcolor: color,
+            color: 'common.white',
+            width: 116,
+            height: 116,
+            borderRadius: 1,
+            fontSize: 48,
+            pd: 10,
+          }}
+          {...stringAvatar(`${name}`)}
+        />
+      </LabelBoxContainer>
+      <Typography variant="subtitle2" color="common.white" sx={{ mt: 0.5 }}>
         {name}
       </Typography>
-    </LabelBoxContainer>
+    </Container>
   );
 };
