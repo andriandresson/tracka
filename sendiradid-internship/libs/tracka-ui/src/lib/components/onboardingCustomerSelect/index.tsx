@@ -1,14 +1,6 @@
-import React from 'react';
 import { FC, useState } from 'react';
-import { Step, Selection } from '@sendiradid-internship/tracka-ui';
-import {
-  Card,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Typography,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Step, CustomAccordion } from '@sendiradid-internship/tracka-ui';
+import { Card } from '@mui/material';
 
 interface Props {
   data: any;
@@ -25,66 +17,44 @@ export const CustomerSelect: FC<Props> = ({
   clearSelection,
   activeStep,
 }) => {
-  const [expanded, setExpanded] = React.useState<string | false>(false);
-
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-
+  function handleCheck(e: any) {
+    e.stopPropagation();
+    console.log(e.target);
+  }
   const spaces = data.map((element: any) => {
     return element.folders;
   });
-  console.log('data:', data[0]?.folders);
   console.log('spaces Array:', spaces);
-  console.log('spaces:', spaces[0][0]);
-  spaces.map((element: any) => {
-    console.log('element:', element);
-  });
 
   return (
     <Card variant="outlined">
-      HELLO!
-      {spaces.map((element: any) => {
-        console.log('element name:', element[0]?.space?.name);
-        if (element[0]) {
+      {spaces.map((space: any) => {
+        if (space[0]) {
           return (
-            <Accordion key={element[0]?.space?.id}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-                <Typography>{element[0]?.space?.name}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {element.map((folder: any) => {
-                  console.log('folder:', folder);
+            <CustomAccordion title={space[0]?.space?.name}>
+              {space.map((folder: any) => {
+                if (folder.lists[0]) {
                   return (
-                    <Accordion key={folder.id}>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                      >
-                        <Typography>{folder.name}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {folder.lists.map((list: any) => {
+                    <CustomAccordion title={folder.name}>
+                      {folder.lists.map((list: any) => {
+                        if (list) {
                           return (
-                            <Accordion key={list.id}>
-                              <AccordionDetails>
-                                <Typography>{list.name}</Typography>
-                              </AccordionDetails>
-                            </Accordion>
+                            <CustomAccordion
+                              title={list.name}
+                              elementId={list.id}
+                            />
                           );
-                        })}
-                      </AccordionDetails>
-                    </Accordion>
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </CustomAccordion>
                   );
-                })}
-              </AccordionDetails>
-            </Accordion>
+                } else {
+                  return null;
+                }
+              })}
+            </CustomAccordion>
           );
         } else {
           return null;
