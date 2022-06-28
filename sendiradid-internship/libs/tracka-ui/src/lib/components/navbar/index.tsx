@@ -7,8 +7,8 @@ import {
   Menu,
   IconButton,
   MenuItem,
+  Avatar,
 } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import Image from 'next/image';
 import Logo from './Logo.svg';
 import { signOut } from 'next-auth/react';
@@ -26,14 +26,15 @@ export const Navbar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" enableColorOnDark color="inherit">
+      <AppBar position="static">
         <Toolbar
           sx={{
-            height: 80,
-            // backgroundColor: 'background.default',
+            height: 96,
+            backgroundColor: 'background.default',
+            borderBottom: 'solid 1px #278BFC'
           }}
         >
-          <Container sx={{ flexGrow: 1, ml: 0 }}>
+          <Container sx={{ flexGrow: 1, ml: 0 , mt: 1}}>
             <Image src={Logo} alt="Tracka Logo" height="35" width="35" />
           </Container>
 
@@ -46,7 +47,7 @@ export const Navbar = () => {
               onClick={handleMenu}
               color="default"
             >
-              <AccountCircle />
+              <Avatar />
             </IconButton>
             <Menu
               id="menu-appbar"
