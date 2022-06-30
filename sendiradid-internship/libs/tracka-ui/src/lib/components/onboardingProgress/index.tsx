@@ -14,14 +14,20 @@ interface Props {
 
 export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
   const { palette } = useTheme();
-  const getSelectionText = (selected?: Selection | Selection[]) => {
+  const getSelectionText = (selected?: Selection | Selection[] | string[]) => {
     // Check if selected is an array
-    if (Array.isArray(selected)) {
+    if (Array.isArray(selected) && typeof selected[0] != 'string') {
+      console.log('selected is array', selected);
       return selected.length > 1
         ? `${selected.length} spaces selected`
         : selected[0]?.name;
+    } else if (Array.isArray(selected) && typeof selected[0] == 'string') {
+      return `${selected.length} spaces selected`;
+    } else if (!Array.isArray(selected)) {
+      return selected?.name || '';
+    } else {
+      return '';
     }
-    return selected?.name || '';
   };
 
   return (

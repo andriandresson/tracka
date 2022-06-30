@@ -7,13 +7,15 @@ import {
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import { CustomerSelection } from '@sendiradid-internship/tracka-ui';
 interface Props {
   children?: React.ReactNode;
   parentValue?: boolean;
-  onValueSet?: (value: boolean) => void;
+  onValueSet?: (relativeId: string, value: boolean) => void;
   title: string;
   elementId?: string;
+  relativeId: string;
+  selection: CustomerSelection;
 }
 
 export const CustomAccordion: FC<Props> = ({
@@ -22,6 +24,8 @@ export const CustomAccordion: FC<Props> = ({
   onValueSet,
   title,
   elementId,
+  relativeId,
+  selection,
 }) => {
   const [value, setValue] = useState(parentValue);
 
@@ -29,9 +33,62 @@ export const CustomAccordion: FC<Props> = ({
     parentValue !== undefined && setValue(parentValue);
   }, [parentValue]);
 
+  const isChecked = (relativeId: string) => {
+    const [spaceId, folderId, listId] = relativeId.split('#');
+
+    if (listId) {
+      return selection[spaceId][folderId][listId];
+    } else if (folderId) {
+      //check if all lists are checked
+      const allListsChecked = Object.keys(selection[spaceId][folderId]).every(
+        (list) => selection[spaceId][folderId][list]
+      );
+      return allListsChecked;
+    } else if (!folderId) {
+      //check if all lists in all folders are checked
+      const allListsChecked = Object.keys(selection[spaceId]).every((folder) =>
+        Object.keys(selection[spaceId][folder]).every(
+          (list) => selection[spaceId][folder][list]
+        )
+      );
+      return allListsChecked;
+    } else {
+      return false;
+    }
+  };
+
+  const isIndeterminate = (relativeId: string) => {
+    const [spaceId, folderId] = relativeId.split('#');
+    //if there is a folderId check if all or none lists are checked in the folder
+    if (folderId) {
+      const allListsChecked = Object.keys(selection[spaceId][folderId]).every(
+        (list) => selection[spaceId][folderId][list]
+      );
+      const noneListsChecked = Object.keys(selection[spaceId][folderId]).every(
+        (list) => !selection[spaceId][folderId][list]
+      );
+      return !allListsChecked && !noneListsChecked;
+    } else if (!folderId) {
+      //check if all or none lists are checked in all folders
+      const allListsChecked = Object.keys(selection[spaceId]).every((folder) =>
+        Object.keys(selection[spaceId][folder]).every(
+          (list) => selection[spaceId][folder][list]
+        )
+      );
+      const noneListsChecked = Object.keys(selection[spaceId]).every((folder) =>
+        Object.keys(selection[spaceId][folder]).every(
+          (list) => !selection[spaceId][folder][list]
+        )
+      );
+      return !allListsChecked && !noneListsChecked;
+    } else {
+      return false;
+    }
+  };
+
   const handleCheckboxChange = (newValue: boolean) => {
     setValue(newValue);
-    // onValueSet && onValueSet(newValue);
+    onValueSet && onValueSet(relativeId, newValue);
   };
   const childrenWithProps = React.Children.map(children, (child) => {
     // Checking isValidElement is the safe way and avoids a typescript
@@ -39,9 +96,6 @@ export const CustomAccordion: FC<Props> = ({
     if (React.isValidElement(child)) {
       return React.cloneElement(child, {
         parentValue: value,
-        onValueSet: () => {
-          handleCheckboxChange(!value);
-        },
       });
     }
     return child;
@@ -50,12 +104,18 @@ export const CustomAccordion: FC<Props> = ({
   if (children) {
     return (
       <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
+          <Typography sx={{ flexGrow: 1, alignSelf: 'center' }}>
+            {title}
+          </Typography>
           <Checkbox
             color="default"
             size="small"
-            checked={value}
+            checked={isChecked(relativeId)}
+            indeterminate={isIndeterminate(relativeId)}
             onClick={(e) => {
               e.stopPropagation();
               handleCheckboxChange(!value);
@@ -69,16 +129,17 @@ export const CustomAccordion: FC<Props> = ({
     return (
       <Accordion>
         <AccordionDetails sx={{ display: 'flex' }}>
-          <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
+          <Typography sx={{ flexGrow: 1, alignSelf: 'center' }}>
+            {title}
+          </Typography>
           <Checkbox
             color="default"
             size="small"
-            checked={value}
+            checked={isChecked(relativeId)}
             id={elementId}
             onClick={(e) => {
               e.stopPropagation();
               handleCheckboxChange(!value);
-              console.log(e.target);
             }}
           />
         </AccordionDetails>
