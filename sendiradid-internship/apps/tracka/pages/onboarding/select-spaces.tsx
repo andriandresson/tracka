@@ -6,7 +6,7 @@ import {
   OnboardingLayout,
   LabelBox,
 } from '@sendiradid-internship/tracka-ui';
-import { Container } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 
 const fetchSpaces = async (teamId: string | number) => {
   if (typeof teamId === 'string') {
@@ -63,29 +63,21 @@ const SelectSpaces = ({ session }) => {
       setValue={setValue}
       clearSelection={clearSelection}
     >
-      <Container
-        sx={{
-          mt: 8,
-          alignSelf: 'flex-start',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gridGap: 80,
-          justifyItems: 'start',
-          alignItems: 'start',
-          justifyContent: 'start',
-        }}
-      >
+
+      <Grid container>
+        <Grid container maxWidth='md' justifyContent="flex-start" spacing={5}>
         {data.spaces.map((space) => (
-          <Container key={space.id} onClick={() => selectSpaces(space)}>
+           <Grid item key={space.id} onClick={() => selectSpaces(space)}>
             <LabelBox
               name={space.name}
               color={space.color}
               avatar={space.avatar}
               active={isActive(space)}
             />
-          </Container>
+          </Grid>
         ))}
-      </Container>
+        </Grid>
+        </Grid>
     </OnboardingLayout>
   );
 };

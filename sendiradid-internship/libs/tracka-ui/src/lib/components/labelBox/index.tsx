@@ -38,7 +38,7 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        width: 200,
+        width:150,
       }}
     >
       <LabelBoxContainer
