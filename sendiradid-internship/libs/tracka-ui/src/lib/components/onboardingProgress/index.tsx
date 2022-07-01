@@ -25,8 +25,9 @@ export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400 }}>
-      <Stepper activeStep={activeStep} orientation="vertical">
+    <Box sx={{ maxWidth: 400}}>
+      <Typography variant="h3" sx={{color:'common.white'}}>Onboarding process</Typography>
+      <Stepper sx={{mt: 8, maxWidth:200}} activeStep={activeStep} orientation="vertical">
         {steps.map((step, index) => (
           <Step key={step.label}>
             <StepLabel>

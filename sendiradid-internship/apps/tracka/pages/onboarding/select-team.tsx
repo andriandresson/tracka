@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Grid, Stack } from '@mui/material';
 import { useApplicationContext } from '../../components/appContext';
 import {
   LabelBox,
@@ -56,29 +56,21 @@ const SelectTeam = () => {
       setValue={setValue}
       clearSelection={clearSelection}
     >
-      <Container
-        sx={{
-          mt: 8,
-          alignSelf: 'flex-start',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gridGap: 80,
-          justifyItems: 'start',
-          alignItems: 'start',
-          justifyContent: 'start',
-        }}
-      >
+
+      <Grid container>
+        <Grid container maxWidth='md' justifyContent="flex-start" spacing={5}>
         {data.teams.map((team) => (
-          <Container key={team.id} onClick={() => selectTeam(team)}>
+           <Grid item key={team.id} onClick={() => selectTeam(team)}>
             <LabelBox
               name={team.name}
               color={team.color}
               avatar={team.avatar}
               active={isActive(team)}
             />
-          </Container>
+          </Grid>
         ))}
-      </Container>
+        </Grid>
+        </Grid>
     </OnboardingLayout>
   );
 };
