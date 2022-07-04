@@ -68,7 +68,6 @@ const SelectClients = () => {
           data={data}
           steps={value.steps}
           setValue={setValue}
-          clearSelection={clearSelection}
           activeStep={value.activeStep}
         />
       </OnboardingLayout>
