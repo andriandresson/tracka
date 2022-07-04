@@ -1,5 +1,9 @@
 import { createContext, useContext, useState } from 'react';
-import { Step, Selection } from '@sendiradid-internship/tracka-ui';
+import {
+  Step,
+  Selection,
+  isStepWithSelectionArray,
+} from '@sendiradid-internship/tracka-ui';
 
 interface OnboardingProcess {
   isOnboard: boolean;
@@ -18,6 +22,7 @@ interface AppContext {
   selectTeam: (team: any) => void;
   selectSpaces: (space: any) => void;
   selectInternalSpaces: (space: any) => void;
+  selectLists: (list: any) => void;
   clearSelection: (activeStep: number) => void;
 }
 
@@ -26,6 +31,7 @@ const defaultContext = {
   selectTeam: (team: any) => null,
   selectSpaces: (space: any) => null,
   selectInternalSpaces: (space: any) => null,
+  selectLists: (list: any) => null,
   clearSelection: (activeStep: number) => null,
 };
 
@@ -69,13 +75,14 @@ export const ApplicationProvider = ({ children }) => {
         label: 'Select internal task(s)',
         description: `Select internal non-billable tasks you need access to.`,
       },
-      {
-        label: 'Review',
-      },
+      // {
+      //   label: 'Review',
+      // },
     ],
   };
-  const [applicationState, setApplicationState] =
-    useState<OnboardingProcess>(initialValue);
+  const [applicationState, setApplicationState] = useState<OnboardingProcess>(
+    initialValue as OnboardingProcess
+  );
 
   const updateApplicationKey = (property: OnboardingKeys, newValue: any) => {
     setApplicationState({ ...applicationState, [property]: newValue });
@@ -91,12 +98,12 @@ export const ApplicationProvider = ({ children }) => {
     setApplicationState({ ...applicationState, steps: newSteps });
   };
 
-  const selectSpaces = (element: any) => {
+  const selectCustomerSpaces = (element: any) => {
     const newSteps = [...applicationState.steps];
-    const selectedSpaces: Selection = {
+    const selectedSpaces = {
       id: element.id,
       name: element.name,
-    };
+    } as Selection;
 
     if (
       Array.isArray(applicationState.steps[1].selected) &&
@@ -105,12 +112,16 @@ export const ApplicationProvider = ({ children }) => {
       const index = applicationState.steps[1].selected.findIndex(
         (element) => element.id === selectedSpaces.id
       );
-      if (index === -1) {
-        newSteps[1].selected.push(selectedSpaces);
-      } else {
-        newSteps[1].selected.splice(index, 1);
+
+      if (isStepWithSelectionArray(newSteps[1])) {
+        if (index === -1) {
+          newSteps[1].selected.push(selectedSpaces);
+        } else {
+          newSteps[1].selected.splice(index, 1);
+        }
       }
     }
+
     setApplicationState({ ...applicationState, steps: newSteps });
   };
   const selectInternalSpaces = (element: any) => {
@@ -127,12 +138,21 @@ export const ApplicationProvider = ({ children }) => {
       const index = applicationState.steps[3].selected.findIndex(
         (element) => element.id === selectedSpaces.id
       );
-      if (index === -1) {
-        newSteps[3].selected.push(selectedSpaces);
-      } else {
-        newSteps[3].selected.splice(index, 1);
+      if (isStepWithSelectionArray(newSteps[3])) {
+        if (index === -1) {
+          newSteps[3].selected.push(selectedSpaces);
+        } else {
+          newSteps[3].selected.splice(index, 1);
+        }
       }
     }
+    setApplicationState({ ...applicationState, steps: newSteps });
+  };
+
+  const selectLists = (lists: any) => {
+    const { activeStep } = applicationState;
+    const newSteps = [...applicationState.steps];
+    newSteps[activeStep].selected = [...lists];
     setApplicationState({ ...applicationState, steps: newSteps });
   };
 
@@ -148,8 +168,9 @@ export const ApplicationProvider = ({ children }) => {
         value: applicationState,
         setValue: updateApplicationKey,
         selectTeam,
-        selectSpaces,
+        selectSpaces: selectCustomerSpaces,
         selectInternalSpaces,
+        selectLists,
         clearSelection,
       }}
     >

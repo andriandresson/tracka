@@ -3,11 +3,38 @@ export interface Selection {
   id: string | number;
 }
 
-export interface Step {
+interface BasicStep {
   label: string;
   description?: string;
-  selected?: Selection | Selection[] | string[];
 }
+interface StepWithSelection extends BasicStep {
+  selected?: Selection;
+}
+interface StepWithSelectionArray extends BasicStep {
+  selected: Selection[];
+}
+interface StepWithStringArray extends BasicStep {
+  selected: string[];
+}
+
+export type Step =
+  | StepWithSelection
+  | StepWithSelectionArray
+  | StepWithStringArray;
+
+export const isStepWithSelection = (step: Step): step is StepWithSelection => {
+  return !!(step as StepWithSelection).selected?.id;
+};
+
+export const isStepWithSelectionArray = (
+  step: Step
+): step is StepWithSelectionArray => {
+  return (
+    !!Array.isArray((step as StepWithSelectionArray).selected) &&
+    (step as StepWithSelectionArray).selected.length > 0 &&
+    !!(step as StepWithSelectionArray).selected[0].id
+  );
+};
 
 export type MaybeObjectOrBoolean = {
   [key: string]: MaybeObjectOrBoolean | boolean;
