@@ -17,7 +17,6 @@ export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
   const getSelectionText = (selected?: Selection | Selection[] | string[]) => {
     // Check if selected is an array
     if (Array.isArray(selected) && typeof selected[0] != 'string') {
-      console.log('selected is array', selected);
       return selected.length > 1
         ? `${selected.length} spaces selected`
         : selected[0]?.name;
@@ -31,9 +30,15 @@ export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400}}>
-      <Typography variant="h3" sx={{color:'common.white'}}>Onboarding process</Typography>
-      <Stepper sx={{mt: 8, maxWidth:200}} activeStep={activeStep} orientation="vertical">
+    <Box sx={{ maxWidth: 400 }}>
+      <Typography variant="h3" sx={{ color: 'common.white' }}>
+        Onboarding process
+      </Typography>
+      <Stepper
+        sx={{ mt: 8, maxWidth: 200 }}
+        activeStep={activeStep}
+        orientation="vertical"
+      >
         {steps.map((step, index) => (
           <Step key={step.label}>
             <StepLabel>

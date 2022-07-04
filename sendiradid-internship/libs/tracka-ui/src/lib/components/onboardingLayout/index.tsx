@@ -27,22 +27,25 @@ export const OnboardingLayout: FC<Props> = ({
     '/onboarding/select-team',
     '/onboarding/select-spaces',
     '/onboarding/map-customer-type',
+    '/onboarding/select-internal-spaces',
+    '/onboarding/select-internal-tasks',
     '/onboarding/review',
   ];
-
-  console.log(steps[activeStep]);
-
+  console.log('steps:', steps);
   const isSelected = (): boolean => {
     // check if selected is array of type Selection
     if (Array.isArray(steps[activeStep].selected)) {
       const teams = steps[activeStep]?.selected as Selection[];
-      return teams[0]?.id !== undefined;
+      if (typeof teams[0] == 'string') {
+        return true;
+      } else {
+        return teams[0]?.id !== undefined;
+      }
     }
     const selectedTeam = steps[activeStep].selected as Selection;
     return selectedTeam?.id !== undefined;
   };
 
-  console.log(steps);
   return (
     <>
       <Grid item xs={12} container sx={{ minHeight: '100vh' }}>
@@ -63,44 +66,41 @@ export const OnboardingLayout: FC<Props> = ({
               {description}
             </Typography>
             {children}
-            <Stack direction='row' sx={{mt:8, gap: 12}}>
-            {activeStep > 0 && (
-              <Link href={routeList[activeStep - 1]} passHref>
-                
-                <Button
-                  variant="outlined"
-                  sx={{width: 200}}
-                  onClick={() => {
-                    clearSelection(activeStep);
-                    setValue('activeStep', activeStep - 1);
-                  }}
-                >
-                  Back
-                </Button>
-              </Link>
-            )}
-            <Link href={routeList[activeStep + 1]} passHref>
-              {isSelected() ? (
-
-                <Button
-                  variant="contained"
-                  sx={{width: 200}}
-                  onClick={() => setValue('activeStep', activeStep + 1)}
-                >
-                  Continue
-                </Button>
-                
-              ) : (
-                <Button
-                  disabled
-                  variant="contained"
-                  sx={{width: 200}}
-                  onClick={() => setValue('activeStep', activeStep + 1)}
-                >
-                  Continue
-                </Button>
+            <Stack direction="row" sx={{ mt: 8, gap: 12 }}>
+              {activeStep > 0 && (
+                <Link href={routeList[activeStep - 1]} passHref>
+                  <Button
+                    variant="outlined"
+                    sx={{ width: 200 }}
+                    onClick={() => {
+                      clearSelection(activeStep);
+                      setValue('activeStep', activeStep - 1);
+                    }}
+                  >
+                    Back
+                  </Button>
+                </Link>
               )}
-            </Link>
+              <Link href={routeList[activeStep + 1]} passHref>
+                {isSelected() ? (
+                  <Button
+                    variant="contained"
+                    sx={{ width: 200 }}
+                    onClick={() => setValue('activeStep', activeStep + 1)}
+                  >
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    disabled
+                    variant="contained"
+                    sx={{ width: 200 }}
+                    onClick={() => setValue('activeStep', activeStep + 1)}
+                  >
+                    Continue
+                  </Button>
+                )}
+              </Link>
             </Stack>
           </Grid>
         </Grid>

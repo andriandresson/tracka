@@ -17,6 +17,7 @@ interface AppContext {
   setValue: (property: OnboardingKeys, newValue: any) => void;
   selectTeam: (team: any) => void;
   selectSpaces: (space: any) => void;
+  selectInternalSpaces: (space: any) => void;
   clearSelection: (activeStep: number) => void;
 }
 
@@ -24,6 +25,7 @@ const defaultContext = {
   setValue: (property: OnboardingKeys, newValue: any) => null,
   selectTeam: (team: any) => null,
   selectSpaces: (space: any) => null,
+  selectInternalSpaces: (space: any) => null,
   clearSelection: (activeStep: number) => null,
 };
 
@@ -49,14 +51,23 @@ export const ApplicationProvider = ({ children }) => {
         description: ' Pick your default workspace team, you only select one.',
       },
       {
-        label: 'Select space',
+        label: 'Select external space(s)',
         description: 'Only select the space you need access to.',
         selected: [],
       },
       {
-        label: 'Map customer type',
+        label: 'Select external customer(s)',
         description:
           'There are 2 different types of customers, external customers and internal customer.',
+      },
+      {
+        label: 'Select internal space(s)',
+        description: 'Only select the space you need access to.',
+        selected: [],
+      },
+      {
+        label: 'Select internal task(s)',
+        description: `Select internal non-billable tasks you need access to.`,
       },
       {
         label: 'Review',
@@ -102,6 +113,28 @@ export const ApplicationProvider = ({ children }) => {
     }
     setApplicationState({ ...applicationState, steps: newSteps });
   };
+  const selectInternalSpaces = (element: any) => {
+    const newSteps = [...applicationState.steps];
+    const selectedSpaces: Selection = {
+      id: element.id,
+      name: element.name,
+    };
+
+    if (
+      Array.isArray(applicationState.steps[3].selected) &&
+      Array.isArray(newSteps[3].selected)
+    ) {
+      const index = applicationState.steps[3].selected.findIndex(
+        (element) => element.id === selectedSpaces.id
+      );
+      if (index === -1) {
+        newSteps[3].selected.push(selectedSpaces);
+      } else {
+        newSteps[3].selected.splice(index, 1);
+      }
+    }
+    setApplicationState({ ...applicationState, steps: newSteps });
+  };
 
   const clearSelection = (activeStep: number) => {
     const newSteps = [...applicationState.steps];
@@ -116,6 +149,7 @@ export const ApplicationProvider = ({ children }) => {
         setValue: updateApplicationKey,
         selectTeam,
         selectSpaces,
+        selectInternalSpaces,
         clearSelection,
       }}
     >

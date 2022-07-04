@@ -18,11 +18,9 @@ const fetchSpaces = async (teamId: string | number) => {
   }
 };
 
-const SelectSpaces = ({ session }) => {
-  const { user } = session;
-  const { value, setValue, selectSpaces, clearSelection } =
+const SelectSpaces = () => {
+  const { value, setValue, selectInternalSpaces, clearSelection } =
     useApplicationContext();
-  // setValue('activeStep', 1);
 
   const selectedTeam = () => {
     // check if selected is array
@@ -36,8 +34,9 @@ const SelectSpaces = ({ session }) => {
 
   const teamId = selectedTeam();
 
-  const { data, isLoading, isError } = useQuery(`${teamId}-spaces`, () =>
-    fetchSpaces(teamId)
+  const { data, isLoading, isError } = useQuery(
+    `${teamId}-internalSpaces`,
+    () => fetchSpaces(teamId)
   );
   if (isLoading) {
     return <Container>loading...</Container>;
@@ -66,7 +65,11 @@ const SelectSpaces = ({ session }) => {
       <Grid container>
         <Grid container maxWidth="md" justifyContent="flex-start" spacing={5}>
           {data.spaces.map((space) => (
-            <Grid item key={space.id} onClick={() => selectSpaces(space)}>
+            <Grid
+              item
+              key={space.id}
+              onClick={() => selectInternalSpaces(space)}
+            >
               <LabelBox
                 name={space.name}
                 color={space.color}
@@ -82,3 +85,6 @@ const SelectSpaces = ({ session }) => {
 };
 
 export default SelectSpaces;
+function selectInternalSpaces(space: any): void {
+  throw new Error('Function not implemented.');
+}

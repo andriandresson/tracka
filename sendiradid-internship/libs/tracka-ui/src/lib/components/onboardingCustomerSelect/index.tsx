@@ -11,7 +11,6 @@ interface Props {
   data: any;
   steps: Step[];
   setValue: (property: string, newValue: any) => void;
-  clearSelection: (activeStep: number) => void;
   activeStep: number;
 }
 
@@ -49,7 +48,6 @@ export const CustomerSelect: FC<Props> = ({
   data,
   steps,
   setValue,
-  clearSelection,
   activeStep,
 }) => {
   const spaces = data.map((element: any) => {
@@ -57,18 +55,11 @@ export const CustomerSelect: FC<Props> = ({
   });
 
   const elem = [...data] as RootObject[];
-  // console.log('element', elem);
-  // console.log('spaces', spaces);
   const initalData: CustomerSelection = getInitialData(elem);
-  // console.log('initalData', initalData);
-  // const [selection, setSelection] = useState<MaybeObjectOrBoolean>(initalData);
   const [selection, setSelection] = useState<CustomerSelection>(initalData);
 
   useEffect(() => {
-    console.log('new selection', selection);
     const selectedArray = getSelectedLists(selection);
-    console.log('selectedArray', selectedArray);
-    console.log('steps', steps);
     steps[activeStep].selected = selectedArray;
     setValue('steps', steps);
     //set value of active step to selected array
@@ -101,9 +92,9 @@ export const CustomerSelect: FC<Props> = ({
             //set all lists in the folder to the same value
             [folderId]: {
               ...selection[spaceId][folderId],
-              ...Object.keys(selection[spaceId][folderId]).forEach((list) => {
+              ...(Object.keys(selection[spaceId][folderId]).forEach((list) => {
                 selection[spaceId][folderId][list] = value;
-              }),
+              }) as any),
             },
           },
         });
@@ -114,14 +105,14 @@ export const CustomerSelect: FC<Props> = ({
           ...selection,
           [spaceId]: {
             ...selection[spaceId],
-            ...Object.keys(selection[spaceId]).forEach((folder) => {
+            ...(Object.keys(selection[spaceId]).forEach((folder) => {
               selection[spaceId][folder] = {
                 ...selection[spaceId][folder],
-                ...Object.keys(selection[spaceId][folder]).forEach((list) => {
+                ...(Object.keys(selection[spaceId][folder]).forEach((list) => {
                   selection[spaceId][folder][list] = value;
-                }),
+                }) as any),
               };
-            }),
+            }) as any),
           },
         });
       }
