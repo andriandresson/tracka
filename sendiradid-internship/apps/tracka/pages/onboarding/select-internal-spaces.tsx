@@ -85,6 +85,3 @@ const SelectSpaces = () => {
 };
 
 export default SelectSpaces;
-function selectInternalSpaces(space: any): void {
-  throw new Error('Function not implemented.');
-}

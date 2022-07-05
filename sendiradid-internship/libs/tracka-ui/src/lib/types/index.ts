@@ -31,8 +31,9 @@ export const isStepWithSelectionArray = (
 ): step is StepWithSelectionArray => {
   return (
     !!Array.isArray((step as StepWithSelectionArray).selected) &&
-    (step as StepWithSelectionArray).selected.length > 0 &&
-    !!(step as StepWithSelectionArray).selected[0].id
+    ((step as StepWithSelectionArray).selected.length > 0
+      ? !!(step as StepWithSelectionArray).selected[0].id
+      : true)
   );
 };
 
