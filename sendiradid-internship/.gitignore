@@ -23,6 +23,9 @@ node_modules
 .env.production.local
 .env
 
+# JSON
+.package-lock.json
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

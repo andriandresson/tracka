@@ -65,7 +65,7 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
         sx={{ mt: 0.5, width: 110 }}
       >
         {name}
-      </Typography>{' '}
+      </Typography>
     </Container>
   );
 };
