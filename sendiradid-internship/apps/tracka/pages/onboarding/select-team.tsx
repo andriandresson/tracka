@@ -56,21 +56,22 @@ const SelectTeam = () => {
       setValue={setValue}
       clearSelection={clearSelection}
     >
-
       <Grid container>
-        <Grid container maxWidth='md' justifyContent="flex-start" spacing={5}>
-        {data.teams.map((team) => (
-           <Grid item key={team.id} onClick={() => selectTeam(team)}>
-            <LabelBox
-              name={team.name}
-              color={team.color}
-              avatar={team.avatar}
-              active={isActive(team)}
-            />
-          </Grid>
-        ))}
+        <Grid container maxWidth="md" justifyContent="flex-start" spacing={5}>
+          {data.teams.map((team) => (
+            <Grid item key={team.id} onClick={() => selectTeam(team)}>
+              <Container disableGutters>
+                <LabelBox
+                  name={team.name}
+                  color={team.color}
+                  avatar={team.avatar}
+                  active={isActive(team)}
+                />
+              </Container>
+            </Grid>
+          ))}
         </Grid>
-        </Grid>
+      </Grid>
     </OnboardingLayout>
   );
 };

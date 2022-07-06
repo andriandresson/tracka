@@ -32,19 +32,18 @@ const stringAvatar = (name: string) => {
 export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
   return (
     <Container
+      disableGutters
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        width:150,
       }}
     >
       <LabelBoxContainer
         className={active ? 'active' : ''}
         active={active}
-        sx={{ borderRadius: 1, width: 'auto', p: 0.5 }}
+        sx={{ borderRadius: 1, width: '20' }}
       >
         <Avatar
           variant="square"
@@ -54,16 +53,19 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
             color: 'common.white',
             width: 116,
             height: 116,
-            borderRadius: 1,
+            borderRadius: 0.5,
             fontSize: 48,
-            pd: 10,
           }}
           {...stringAvatar(`${name}`)}
         />
       </LabelBoxContainer>
-      <Typography variant="subtitle2" color="common.white" sx={{ mt: 0.5 }}>
+      <Typography
+        variant="subtitle1"
+        color="common.white"
+        sx={{ mt: 0.5, width: 110 }}
+      >
         {name}
-      </Typography>
+      </Typography>{' '}
     </Container>
   );
 };

@@ -54,53 +54,53 @@ export const OnboardingLayout: FC<Props> = ({
             direction="column"
             justifyContent="flex-start"
             alignItems="flex-start"
-            sx={{ pt: 20, pl: 15, pb: 10 }}
+            sx={{ pt: 27, pl: 23 }}
           >
             <Typography variant="h2" sx={{ color: 'common.white' }}>
               {title}
             </Typography>
-            <Typography variant="body1" sx={{ color: 'common.white', mb: 5 }}>
+            <Typography
+              variant="body1"
+              sx={{ color: 'common.white', mb: 5, pt: 2, pb: 5 }}
+            >
               {description}
             </Typography>
             {children}
-            <Stack direction='row' sx={{mt:8, gap: 12}}>
-            {activeStep > 0 && (
-              <Link href={routeList[activeStep - 1]} passHref>
-                
-                <Button
-                  variant="outlined"
-                  sx={{width: 200}}
-                  onClick={() => {
-                    clearSelection(activeStep);
-                    setValue('activeStep', activeStep - 1);
-                  }}
-                >
-                  Back
-                </Button>
-              </Link>
-            )}
-            <Link href={routeList[activeStep + 1]} passHref>
-              {isSelected() ? (
-
-                <Button
-                  variant="contained"
-                  sx={{width: 200}}
-                  onClick={() => setValue('activeStep', activeStep + 1)}
-                >
-                  Continue
-                </Button>
-                
-              ) : (
-                <Button
-                  disabled
-                  variant="contained"
-                  sx={{width: 200}}
-                  onClick={() => setValue('activeStep', activeStep + 1)}
-                >
-                  Continue
-                </Button>
+            <Stack direction="row" sx={{ mt: 10, gap: 6 }}>
+              {activeStep > 0 && (
+                <Link href={routeList[activeStep - 1]} passHref>
+                  <Button
+                    variant="outlined"
+                    sx={{ width: 200 }}
+                    onClick={() => {
+                      clearSelection(activeStep);
+                      setValue('activeStep', activeStep - 1);
+                    }}
+                  >
+                    Back
+                  </Button>
+                </Link>
               )}
-            </Link>
+              <Link href={routeList[activeStep + 1]} passHref>
+                {isSelected() ? (
+                  <Button
+                    variant="contained"
+                    sx={{ width: 198, height: 48 }}
+                    onClick={() => setValue('activeStep', activeStep + 1)}
+                  >
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    disabled
+                    variant="contained"
+                    sx={{ width: 198, height: 48 }}
+                    onClick={() => setValue('activeStep', activeStep + 1)}
+                  >
+                    Continue
+                  </Button>
+                )}
+              </Link>
             </Stack>
           </Grid>
         </Grid>
