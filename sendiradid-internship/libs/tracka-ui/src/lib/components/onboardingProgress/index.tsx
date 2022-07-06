@@ -14,20 +14,31 @@ interface Props {
 
 export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
   const { palette } = useTheme();
-  const getSelectionText = (selected?: Selection | Selection[]) => {
+  const getSelectionText = (selected?: Selection | Selection[] | string[]) => {
     // Check if selected is an array
-    if (Array.isArray(selected)) {
+    if (Array.isArray(selected) && typeof selected[0] != 'string') {
       return selected.length > 1
         ? `${selected.length} spaces selected`
         : selected[0]?.name;
+    } else if (Array.isArray(selected) && typeof selected[0] == 'string') {
+      return `${selected.length} spaces selected`;
+    } else if (!Array.isArray(selected)) {
+      return selected?.name || '';
+    } else {
+      return '';
     }
-    return selected?.name || '';
   };
 
   return (
-    <Box sx={{ maxWidth: 400}}>
-      <Typography variant="h3" sx={{color:'common.white'}}>Onboarding process</Typography>
-      <Stepper sx={{mt: 8, maxWidth:200}} activeStep={activeStep} orientation="vertical">
+    <Box sx={{ maxWidth: 400 }}>
+      <Typography variant="h3" sx={{ color: 'common.white' }}>
+        Onboarding process
+      </Typography>
+      <Stepper
+        sx={{ mt: 8, maxWidth: 200 }}
+        activeStep={activeStep}
+        orientation="vertical"
+      >
         {steps.map((step, index) => (
           <Step key={step.label}>
             <StepLabel>

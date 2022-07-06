@@ -1,5 +1,9 @@
 import { createContext, useContext, useState } from 'react';
-import { Step, Selection } from '@sendiradid-internship/tracka-ui';
+import {
+  Step,
+  Selection,
+  isStepWithSelectionArray,
+} from '@sendiradid-internship/tracka-ui';
 
 interface OnboardingProcess {
   isOnboard: boolean;
@@ -17,6 +21,8 @@ interface AppContext {
   setValue: (property: OnboardingKeys, newValue: any) => void;
   selectTeam: (team: any) => void;
   selectSpaces: (space: any) => void;
+  selectInternalSpaces: (space: any) => void;
+  selectLists: (list: any) => void;
   clearSelection: (activeStep: number) => void;
 }
 
@@ -24,6 +30,8 @@ const defaultContext = {
   setValue: (property: OnboardingKeys, newValue: any) => null,
   selectTeam: (team: any) => null,
   selectSpaces: (space: any) => null,
+  selectInternalSpaces: (space: any) => null,
+  selectLists: (list: any) => null,
   clearSelection: (activeStep: number) => null,
 };
 
@@ -49,22 +57,32 @@ export const ApplicationProvider = ({ children }) => {
         description: ' Pick your default workspace team, you only select one.',
       },
       {
-        label: 'Select space',
+        label: 'Select external space(s)',
         description: 'Only select the space you need access to.',
         selected: [],
       },
       {
-        label: 'Map customer type',
+        label: 'Select external customer(s)',
         description:
           'There are 2 different types of customers, external customers and internal customer.',
       },
       {
-        label: 'Review',
+        label: 'Select internal space(s)',
+        description: 'Only select the space you need access to.',
+        selected: [],
       },
+      {
+        label: 'Select internal task(s)',
+        description: `Select internal non-billable tasks you need access to.`,
+      },
+      // {
+      //   label: 'Review',
+      // },
     ],
   };
-  const [applicationState, setApplicationState] =
-    useState<OnboardingProcess>(initialValue);
+  const [applicationState, setApplicationState] = useState<OnboardingProcess>(
+    initialValue as OnboardingProcess
+  );
 
   const updateApplicationKey = (property: OnboardingKeys, newValue: any) => {
     setApplicationState({ ...applicationState, [property]: newValue });
@@ -80,12 +98,12 @@ export const ApplicationProvider = ({ children }) => {
     setApplicationState({ ...applicationState, steps: newSteps });
   };
 
-  const selectSpaces = (element: any) => {
+  const selectCustomerSpaces = (element: any) => {
     const newSteps = [...applicationState.steps];
-    const selectedSpaces: Selection = {
+    const selectedSpaces = {
       id: element.id,
       name: element.name,
-    };
+    } as Selection;
 
     if (
       Array.isArray(applicationState.steps[1].selected) &&
@@ -94,12 +112,47 @@ export const ApplicationProvider = ({ children }) => {
       const index = applicationState.steps[1].selected.findIndex(
         (element) => element.id === selectedSpaces.id
       );
-      if (index === -1) {
-        newSteps[1].selected.push(selectedSpaces);
-      } else {
-        newSteps[1].selected.splice(index, 1);
+
+      if (isStepWithSelectionArray(newSteps[1])) {
+        if (index === -1) {
+          newSteps[1].selected.push(selectedSpaces);
+        } else {
+          newSteps[1].selected.splice(index, 1);
+        }
       }
     }
+
+    setApplicationState({ ...applicationState, steps: newSteps });
+  };
+  const selectInternalSpaces = (element: any) => {
+    const newSteps = [...applicationState.steps];
+    const selectedSpaces: Selection = {
+      id: element.id,
+      name: element.name,
+    };
+
+    if (
+      Array.isArray(applicationState.steps[3].selected) &&
+      Array.isArray(newSteps[3].selected)
+    ) {
+      const index = applicationState.steps[3].selected.findIndex(
+        (element) => element.id === selectedSpaces.id
+      );
+      if (isStepWithSelectionArray(newSteps[3])) {
+        if (index === -1) {
+          newSteps[3].selected.push(selectedSpaces);
+        } else {
+          newSteps[3].selected.splice(index, 1);
+        }
+      }
+    }
+    setApplicationState({ ...applicationState, steps: newSteps });
+  };
+
+  const selectLists = (lists: any) => {
+    const { activeStep } = applicationState;
+    const newSteps = [...applicationState.steps];
+    newSteps[activeStep].selected = [...lists];
     setApplicationState({ ...applicationState, steps: newSteps });
   };
 
@@ -115,7 +168,9 @@ export const ApplicationProvider = ({ children }) => {
         value: applicationState,
         setValue: updateApplicationKey,
         selectTeam,
-        selectSpaces,
+        selectSpaces: selectCustomerSpaces,
+        selectInternalSpaces,
+        selectLists,
         clearSelection,
       }}
     >

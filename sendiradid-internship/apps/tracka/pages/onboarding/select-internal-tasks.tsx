@@ -23,18 +23,18 @@ const SelectClients = () => {
 
   const selectedSpaces = () => {
     // check if selected is array
-    if (Array.isArray(value.steps[1].selected)) {
-      const spaces = value.steps[1].selected as Selection[];
+    if (Array.isArray(value.steps[3].selected)) {
+      const spaces = value.steps[3].selected as Selection[];
       return spaces.map((space) => space.id);
     }
-    const space = value.steps[1].selected as Selection;
+    const space = value.steps[3].selected as Selection;
     return space.id;
   };
 
   const spaces = selectedSpaces();
 
   const { data, isLoading, isError } = useQuery(
-    `${spaces.toString()}-folders`,
+    `${spaces.toString()}-internal folders`,
     () => {
       if (Array.isArray(spaces)) {
         const promiseArray = spaces.map((space) => fetchFolders(space));
