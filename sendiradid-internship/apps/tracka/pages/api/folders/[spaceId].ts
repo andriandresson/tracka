@@ -10,7 +10,7 @@ const Handler = async (req, res) => {
     return res.status(401).json({ message: 'unathorized' });
   }
 
-  const accessToken = session.user['accessToken'];
+  const apiToken = session.user['apiToken'];
 
   const { spaceId = null } = req.query;
   if (!spaceId) {
@@ -19,7 +19,7 @@ const Handler = async (req, res) => {
 
   const config = {
     headers: {
-      Authorization: accessToken,
+      Authorization: apiToken,
     },
   };
   try {

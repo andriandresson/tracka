@@ -1,14 +1,29 @@
 import NextAuth, { Session } from 'next-auth';
-import { getSession } from 'next-auth/react';
-
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { ILoginResponse } from '../../../src/lib/types';
 import axios from 'axios';
+import { JWT } from 'next-auth/jwt';
 
 const BASE_URL_APP = 'https://app.clickup.com/v1';
+const BASE_URL_API = 'https://api.clickup.com/api/v2';
 
 interface IDevTokenResponse {
   devToken: string;
+}
+
+interface ClickupUserResponse {
+  user: clickupUser;
+}
+interface clickupUser {
+  id: number;
+  username: string;
+  email: string;
+  color: string;
+  profilePicture: string;
+  initials: string;
+  week_start_day: string;
+  global_font_support: boolean;
+  timezone: string;
 }
 
 export const getDevToken = (token: string): Promise<IDevTokenResponse> => {
@@ -41,21 +56,26 @@ export const getDevToken = (token: string): Promise<IDevTokenResponse> => {
   });
 };
 
-const getAccessToken = async (req, res): Promise<string> => {
-  const data = await getSession({ req });
-  const { user } = data;
+const getUser = async (apiToken: string): Promise<any> => {
+  const headers = {
+    Authorization: `${apiToken}`,
+  };
   return new Promise((res, rej) => {
-    if (!user) {
-      rej('No user');
-    }
-    if (!user['accessToken']) {
-      rej('No access token');
-    }
-    const token = user['accessToken'];
-    if (typeof token !== 'string') {
-      rej('Invalid access token');
-    }
-    return res(token);
+    axios
+      .get<any>(`${BASE_URL_API}/user`, {
+        headers,
+      })
+      .then((response) => {
+        const { data } = response;
+        if (!data) {
+          rej('Invalid token');
+        }
+        res(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        rej(error);
+      });
   });
 };
 
@@ -113,7 +133,13 @@ export default NextAuth({
         try {
           const { user, token, refresh_token } = await login(credentials);
           const { devToken } = await getDevToken(token);
-          return { ...user, token: devToken, refresh_token };
+          const userData = (await getUser(devToken)) as ClickupUserResponse;
+          return {
+            ...user,
+            userData,
+            token: devToken,
+            refresh_token,
+          };
         } catch (error) {
           console.log(error);
           return null;
@@ -126,28 +152,34 @@ export default NextAuth({
       return baseUrl;
     },
     async session({ session, token }) {
+      const { user: userData } = (await getUser(
+        token.apiToken
+      )) as ClickupUserResponse;
       const newSession = {
-        accessToken: token.accessToken,
+        apiToken: token.apiToken,
         refreshToken: token.refreshToken,
-        oAuthToken: token.oAuthToken,
-        id: token.id,
-        defaultTeam: token.defaultTeam,
+        id: userData.id,
+        username: userData.username,
+        color: userData.color,
+        initials: userData.initials,
+        profilePicture: userData.profilePicture,
       };
-      session.user = newSession as any;
+      session.user = newSession as Session['user'];
       return session;
     },
     async jwt({ token, user, account }) {
       if (account && user) {
         return {
           ...token,
-          accessToken: user.token,
+          apiToken: user.token,
           refreshToken: user.refresh_token,
           oAuthToken: user.oAuthToken,
           name: user.username,
           id: user.id,
-          defaultTeam: user.default_team,
-        } as any;
+        } as JWT;
       }
+      console.log('token', token);
+      console.log('user', user);
 
       return token;
     },
