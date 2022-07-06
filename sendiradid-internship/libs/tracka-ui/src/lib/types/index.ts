@@ -1,3 +1,5 @@
+import { DefaultUser, Session } from 'next-auth';
+
 export interface Selection {
   name: string;
   id: string | number;
@@ -116,4 +118,19 @@ export interface CustomerSelection {
       [key: string]: boolean;
     };
   };
+}
+
+export interface ExtendedUserSession extends DefaultUser {
+  apiToken: string;
+  refreshToken: string;
+  oAuthToken: string;
+  defaultTeam: string;
+  username: string;
+  color?: string;
+  initials?: string;
+  profilePicture?: string;
+}
+
+export interface ExtendedSession extends Session {
+  user: ExtendedUserSession;
 }
