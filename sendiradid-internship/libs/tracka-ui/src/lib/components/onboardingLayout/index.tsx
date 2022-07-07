@@ -57,21 +57,24 @@ export const OnboardingLayout: FC<Props> = ({
             direction="column"
             justifyContent="flex-start"
             alignItems="flex-start"
-            sx={{ pt: 20, pl: 15, pb: 10 }}
+            sx={{ pt: 27, pl: 23 }}
           >
-            <Typography variant="h2" sx={{ color: 'common.white' }}>
+            <Typography variant="h2" sx={{ color: 'common.white', ml: 0.3 }}>
               {title}
             </Typography>
-            <Typography variant="body1" sx={{ color: 'common.white', mb: 5 }}>
+            <Typography
+              variant="body1"
+              sx={{ color: 'common.white', mb: 5, ml: 0.3 }}
+            >
               {description}
             </Typography>
             {children}
-            <Stack direction="row" sx={{ mt: 8, gap: 12 }}>
+            <Stack direction="row" sx={{ mt: 10, gap: 6 }}>
               {activeStep > 0 && (
                 <Link href={routeList[activeStep - 1]} passHref>
                   <Button
                     variant="outlined"
-                    sx={{ width: 200 }}
+                    sx={{ width: 198, height: 48 }}
                     onClick={() => {
                       clearSelection(activeStep);
                       setValue('activeStep', activeStep - 1);
@@ -85,7 +88,7 @@ export const OnboardingLayout: FC<Props> = ({
                 {isSelected() ? (
                   <Button
                     variant="contained"
-                    sx={{ width: 200 }}
+                    sx={{ width: 198, height: 48 }}
                     onClick={() => setValue('activeStep', activeStep + 1)}
                   >
                     Continue
@@ -94,7 +97,7 @@ export const OnboardingLayout: FC<Props> = ({
                   <Button
                     disabled
                     variant="contained"
-                    sx={{ width: 200 }}
+                    sx={{ width: 198, height: 48 }}
                     onClick={() => setValue('activeStep', activeStep + 1)}
                   >
                     Continue
