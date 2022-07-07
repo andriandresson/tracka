@@ -64,7 +64,7 @@ const theme = createTheme({
     },
     subtitle1: {
       fontWeight: 600,
-      fontSize: '1.125rem',
+      fontSize: '0.875rem',
       letterSpacing: '0em',
     },
     subtitle2: {
