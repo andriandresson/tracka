@@ -59,13 +59,10 @@ export const OnboardingLayout: FC<Props> = ({
             alignItems="flex-start"
             sx={{ pt: 27, pl: 23 }}
           >
-            <Typography variant="h2" sx={{ color: 'common.white', ml: 0.3 }}>
+            <Typography variant="h2" sx={{ color: 'common.white' }}>
               {title}
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ color: 'common.white', mb: 5, ml: 0.3 }}
-            >
+            <Typography variant="body1" sx={{ color: 'common.white', mb: 5 }}>
               {description}
             </Typography>
             {children}
