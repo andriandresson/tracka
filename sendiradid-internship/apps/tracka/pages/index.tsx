@@ -7,7 +7,7 @@ const Index = () => {
   if (!value.isOnboard) {
     router.push('/onboarding/select-team');
   } else {
-    router.push('/dashbaord');
+    router.push('/dashboard/');
   }
 
   return null;
