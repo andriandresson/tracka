@@ -39,13 +39,13 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        width: 150,
+        width: 118,
       }}
     >
       <LabelBoxContainer
         className={active ? 'active' : ''}
         active={active}
-        sx={{ borderRadius: 1, width: '20' }}
+        sx={{ borderRadius: 1 }}
       >
         <Avatar
           variant="square"
@@ -63,7 +63,7 @@ export const LabelBox: FC<Props> = ({ avatar, color, name, active }) => {
         />
       </LabelBoxContainer>
       <Typography
-        variant="subtitle2"
+        variant="subtitle1"
         color="common.white"
         sx={{ mt: 0.5, width: 110 }}
       >
