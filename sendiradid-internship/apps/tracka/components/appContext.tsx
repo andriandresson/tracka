@@ -8,7 +8,6 @@ import {
 interface OnboardingProcess {
   isOnboard: boolean;
   steps: Step[];
-  goals: string[];
   activeStep: number;
   team?: string;
   clients?: string[];
@@ -50,7 +49,7 @@ export const useApplicationContext = () => {
 
 export const ApplicationProvider = ({ children }) => {
   const initialValue = {
-    isOnboard: true,
+    isOnboard: false,
     activeStep: 0,
     goals: [],
     steps: [

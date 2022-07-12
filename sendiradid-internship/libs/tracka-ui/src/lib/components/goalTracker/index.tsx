@@ -1,6 +1,6 @@
 import { Box, Card, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { FC } from 'react';
 
@@ -73,7 +73,7 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
               {percent}%
             </Typography>
           </Box>
-          <Box>
+          <Box sx={{ flexGrow: '1' }}>
             {goal.key_results.map((keyResult: any) => (
               <Container key={keyResult.name} sx={{ display: 'flex' }}>
                 <Typography
