@@ -5,11 +5,11 @@ import styled from 'styled-components';
 const LabelBoxContainer = styled(Box)<{ active?: boolean }>`
   & {
     transition: 0.3s;
-    border: solid 3px rgba(39, 139, 252, 0);
+    border: solid 3.5px rgba(39, 139, 252, 0);
   }
 
   &.active {
-    border: solid 3px rgba(39, 139, 252, 100);
+    border: solid 3.5px rgba(255, 255, 255, 100);
   }
   &:hover {
     filter: brightness(130%);

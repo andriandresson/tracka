@@ -57,21 +57,26 @@ export const OnboardingLayout: FC<Props> = ({
             direction="column"
             justifyContent="flex-start"
             alignItems="flex-start"
-            sx={{ pt: 27, pl: 23 }}
+            sx={{ pt: 27, pl: 41 }}
           >
-            <Typography variant="h2" sx={{ color: 'common.white' }}>
+            <Typography variant="h2" sx={{ color: 'common.white', mb: 2 }}>
               {title}
             </Typography>
-            <Typography variant="body1" sx={{ color: 'common.white', mb: 5 }}>
+            <Typography variant="body1" sx={{ color: 'common.white', mb: 10 }}>
               {description}
             </Typography>
             {children}
-            <Stack direction="row" sx={{ mt: 10, gap: 6 }}>
+            <Stack direction="row" sx={{ mt: 13, gap: 6 }}>
               {activeStep > 0 && (
                 <Link href={routeList[activeStep - 1]} passHref>
                   <Button
                     variant="outlined"
-                    sx={{ width: 198, height: 48 }}
+                    sx={{
+                      width: 198,
+                      height: 48,
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      color: 'common.white',
+                    }}
                     onClick={() => {
                       clearSelection(activeStep);
                       setValue('activeStep', activeStep - 1);
