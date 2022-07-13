@@ -49,7 +49,7 @@ export const useApplicationContext = () => {
 
 export const ApplicationProvider = ({ children }) => {
   const initialValue = {
-    isOnboard: false,
+    isOnboard: true,
     activeStep: 0,
     steps: [
       {
