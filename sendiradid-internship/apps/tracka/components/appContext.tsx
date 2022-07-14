@@ -51,6 +51,7 @@ export const ApplicationProvider = ({ children }) => {
   const initialValue = {
     isOnboard: false,
     activeStep: 0,
+    goals: [],
     steps: [
       {
         label: 'Select team',
