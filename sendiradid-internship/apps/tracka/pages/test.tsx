@@ -3,12 +3,16 @@ import { useQuery } from 'react-query';
 import axios, { AxiosRequestConfig } from 'axios';
 import { Container } from '@mui/material';
 import { useApplicationContext } from '../components/appContext';
-import { EmployeeTimeTracker } from '@sendiradid-internship/tracka-ui';
+import { EmployeeTimeTrackerWidget } from '@sendiradid-internship/tracka-ui';
 
-const fetchTimeTrackingData = async (teamId: string | number) => {
+const fetchTimeTrackingData = async (
+  teamId: string | number,
+  assignee?: number
+) => {
   const axiosConfig: AxiosRequestConfig = {
     params: {
-      assignee: 55365605,
+      include_task_tags: true,
+      assignee,
     },
   };
   if (typeof teamId === 'string') {
@@ -23,6 +27,12 @@ const fetchTimeTrackingData = async (teamId: string | number) => {
   }
 };
 
+const fetchTeamMembers = async (teamId: string | number) => {
+  const { data } = await axios.get(`/api/teams`);
+
+  const teamMembers = data.teams.find((team) => team.id === teamId);
+  return teamMembers ? teamMembers?.members?.map((member) => member?.user) : [];
+};
 const Test = () => {
   const { value } = useApplicationContext();
 
@@ -32,25 +42,40 @@ const Test = () => {
   //     return stepTeam?.id;
   //   };
   //   const teamId = selectedTeam();
-  const teamId = 37453513;
+  const teamId = '37453513';
 
-  console.log('context', value);
-  console.log('teamId', teamId);
-  const { data, isLoading, isError } = useQuery(`${teamId}-timeasds`, () =>
-    fetchTimeTrackingData(teamId)
+  const { data: teamMembers } = useQuery(`${teamId}-member`, () =>
+    fetchTeamMembers(teamId)
+  );
+
+  //fetching time tracking data for each of the members of the team
+  //response saved as array of all tracked tasks for each member
+  const { data, isLoading, isError } = useQuery(
+    [`timetracked members`, teamId, teamMembers],
+    () => {
+      if (Array.isArray(teamMembers)) {
+        const promiseArray = teamMembers.map((member) =>
+          fetchTimeTrackingData(teamId, member.id)
+        );
+        return Promise.all(promiseArray);
+      } else {
+        return fetchTimeTrackingData(teamMembers);
+      }
+    },
+    {
+      enabled: !!teamMembers,
+    }
   );
   if (isLoading) {
     return <Container>loading...</Container>;
   }
-
   if (isError) {
     return <Container>Error</Container>;
   }
 
-  console.log('data', data);
   return (
-    <Container sx={{ mt: 20 }}>
-      <EmployeeTimeTracker />
+    <Container sx={{ mt: 20, backgroundColor: 'background.default' }}>
+      <EmployeeTimeTrackerWidget data={data} />
     </Container>
   );
 };

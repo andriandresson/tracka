@@ -6,7 +6,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 const Handler = async (req, res) => {
   const session = await getSession({ req });
   const { query } = req;
-  console.log('query', query);
   if (!session || !session.user) {
     return res.status(401).json({ message: 'unathorized' });
   }
@@ -29,7 +28,6 @@ const Handler = async (req, res) => {
       `https://api.clickup.com/api/v2/team/${teamId}/time_entries`,
       config
     );
-    console.log(response);
     const { data } = response;
     res.status(200).json(data);
   } catch (error) {
