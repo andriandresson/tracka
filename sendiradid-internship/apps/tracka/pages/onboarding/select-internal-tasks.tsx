@@ -55,23 +55,21 @@ const SelectClients = () => {
   // console.log('DATA:', data);
 
   return (
-    <Container>
-      <OnboardingLayout
-        title={value.steps[value.activeStep].label}
-        description={value.steps[value.activeStep].description}
-        activeStep={value.activeStep}
+    <OnboardingLayout
+      title={value.steps[value.activeStep].label}
+      description={value.steps[value.activeStep].description}
+      activeStep={value.activeStep}
+      steps={value.steps}
+      setValue={setValue}
+      clearSelection={clearSelection}
+    >
+      <CustomerSelect
+        data={data}
         steps={value.steps}
         setValue={setValue}
-        clearSelection={clearSelection}
-      >
-        <CustomerSelect
-          data={data}
-          steps={value.steps}
-          setValue={setValue}
-          activeStep={value.activeStep}
-        />
-      </OnboardingLayout>
-    </Container>
+        activeStep={value.activeStep}
+      />
+    </OnboardingLayout>
   );
 };
 export default SelectClients;
