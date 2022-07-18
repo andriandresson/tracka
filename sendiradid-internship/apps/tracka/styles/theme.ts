@@ -20,8 +20,8 @@ const theme = createTheme({
       contrastText: '#FFF',
     },
     background: {
-      paper: '#0A1929',
-      default: '#0A1929',
+      paper: '#0C1B2C',
+      default: '#081421',
     },
   },
   components: {
@@ -44,6 +44,7 @@ const theme = createTheme({
       },
     },
   },
+
   typography: {
     fontSize: 16,
     fontFamily: "'Inter','Helvetica','Arial',sans-serif",
