@@ -12,6 +12,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { styled } from '@mui/material/styles';
 
 import Image from 'next/image';
+import Logo from './Logo.svg';
 
 interface Props {
   csrfToken: string;
@@ -56,12 +57,7 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
             justifyContent: 'center',
           }}
         >
-          <Image
-            src="/TrackaLogo.svg"
-            alt="Tracka Logo"
-            height="60,22"
-            width="56"
-          />
+          <Image src={Logo} alt="Tracka Logo" height="61" width="61" />
         </Container>
         <Typography
           variant="h1"
