@@ -22,7 +22,6 @@ const theme = createTheme({
     background: {
       paper: '#0C1B2C',
       default: '#081421',
-      // default: 'green',
     },
   },
   components: {
@@ -45,6 +44,7 @@ const theme = createTheme({
       },
     },
   },
+
   typography: {
     fontSize: 16,
     fontFamily: "'Inter','Helvetica','Arial',sans-serif",

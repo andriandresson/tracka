@@ -9,13 +9,33 @@ import {
 } from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { styled } from '@mui/material/styles';
 
 import Image from 'next/image';
+import Logo from './Logo.svg';
 
 interface Props {
   csrfToken: string;
   APIurl: string;
 }
+
+const LoginTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#278BFC',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#278BFC',
+    },
+    '&:hover fieldset': {
+      borderColor: '#278BFC',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#278BFC',
+      borderWidth: 3,
+    },
+  },
+});
 
 export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
   return (
@@ -23,8 +43,8 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
       <Container
         sx={{
           width: 395,
-          height: '100vh',
           display: 'flex',
+          pt: 21,
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'start',
@@ -32,19 +52,13 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
       >
         <Container
           sx={{
-            mb: 10,
+            pb: 13,
             display: 'flex',
             justifyContent: 'center',
           }}
         >
-          <Image
-            src="/TrackaLogo.svg"
-            alt="Tracka Logo"
-            height="40"
-            width="37.2"
-          />
+          <Image src={Logo} alt="Tracka Logo" height="61" width="61" />
         </Container>
-
         <Typography
           variant="h1"
           sx={{
@@ -56,20 +70,23 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
         <Typography
           variant="body1"
           sx={{
-            pb: 6,
+            pb: 8,
           }}
         >
           Please Sign in with your ClickUp credentials.{' '}
         </Typography>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-
-        <TextField
+        <Typography>Email</Typography>
+        <LoginTextField
           name="username"
           type="text"
-          placeholder="john@doe.com"
+          placeholder="Enter your email"
           margin="normal"
-          label="Email"
-          sx={{ mb: 2, width: '100%' }}
+          sx={{
+            mb: 2,
+            width: 395,
+            height: 60,
+          }}
           InputProps={{
             style: { fontSize: '1rem' },
             startAdornment: (
@@ -79,15 +96,15 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
             ),
           }}
         />
-        <TextField
-          variant="outlined"
+        <Typography>Password</Typography>
+        <LoginTextField
           name="password"
           type="password"
-          placeholder="Your password"
+          placeholder="Enter your password"
           margin="normal"
-          label="Password"
           sx={{
-            width: '100%',
+            width: 395,
+            height: 60,
             mb: 4,
           }}
           InputProps={{
@@ -99,14 +116,12 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
             ),
           }}
         />
-
         <Button
-          color="secondary"
           variant="contained"
-          size="large"
           type="submit"
           sx={{
-            width: '100%',
+            width: 395,
+            height: 48,
           }}
         >
           Sign in
