@@ -171,11 +171,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
 }
 
 .rdrDayNumber span {
-  color: #fff;
-  filter: brightness(1.6);
+  color: #fff !important;
+  filter: brightness(1.4);
 }
 .rdrDayToday .rdrDayNumber span {
   font-weight: 900;
