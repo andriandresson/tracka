@@ -4,7 +4,6 @@ import {
   Box,
   Avatar,
   Container,
-  Button,
   Card,
   List,
   ListSubheader,
@@ -12,13 +11,13 @@ import {
 import { useQuery } from 'react-query';
 import axios, { AxiosRequestConfig } from 'axios';
 import { msToString } from './timeUtils';
+import * as timeUtils from '../customDateRangePicker/timeUtils';
 import {
   EmployeeData,
   TaskTag,
   TeamsArray,
   CustomDateRangePicker,
 } from '@sendiradid-internship/tracka-ui';
-import { Range } from 'react-date-range';
 
 interface TrackerProps {
   data: EmployeeData[];
@@ -98,11 +97,8 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
     startDate: Date;
     endDate?: Date;
   }>({
-    startDate: new Date(),
+    startDate: timeUtils.monthAgoDate(),
   });
-
-  // console.log('state[0].startDate', state[0].startDate?.getTime());
-  // console.log('state[0].endDate', state[0].endDate?.getTime());
 
   const fetchTimeTrackingData = async (
     teamId: string | number,
@@ -138,9 +134,6 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
     endDate?: Date;
   }) => {
     // Format start and end date and log it console
-    console.log(
-      `Selected date range: ${startDate.toLocaleDateString()} - ${endDate?.toLocaleDateString()}`
-    );
     setDateRange({ startDate, endDate });
   };
   const fetchTeamMembers = async (teamId: string | number) => {
