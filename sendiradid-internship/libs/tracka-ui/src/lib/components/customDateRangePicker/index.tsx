@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { FC, useState } from 'react';
 import { Popover, Button, Typography, Divider, Box } from '@mui/material';
 import { DateRange, Range } from 'react-date-range';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -10,11 +10,6 @@ interface Props {
 }
 
 const StyledButton = styled(Button)({
-  //   // change the text color for all buttons
-  //   '& .MuiButton': {
-  //     color: '#FFF',
-  //     paddingInline: 0,
-  //   },
   '&&': {
     background: 'none',
   },
@@ -81,14 +76,6 @@ export const CustomDateRangePicker: FC<Props> = ({ state, onApply }) => {
     const startDate = customDateRangeState[0]?.startDate || new Date();
     const endDate = customDateRangeState[0]?.endDate;
     onApply({ startDate, endDate });
-    console.log(customDateRangeState);
-    // onChange(customDateRangeState);
-  };
-
-  const handleApply = () => {
-    // Todo: make sure we dont have "Continuous" in the state
-    // If we dont have end date use today as end date
-    // onChange(customDateRangeState);
   };
 
   const open = Boolean(anchorEl);

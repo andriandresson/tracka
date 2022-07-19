@@ -130,6 +130,19 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
     }
   };
 
+  const handleOnApply = ({
+    startDate,
+    endDate,
+  }: {
+    startDate: Date;
+    endDate?: Date;
+  }) => {
+    // Format start and end date and log it console
+    console.log(
+      `Selected date range: ${startDate.toLocaleDateString()} - ${endDate?.toLocaleDateString()}`
+    );
+    setDateRange({ startDate, endDate });
+  };
   const fetchTeamMembers = async (teamId: string | number) => {
     const { data } = (await axios.get(`/api/teams`)) as TeamsArray;
     const teamMembers = data.teams.find((team) => team.id === teamId);
@@ -167,25 +180,39 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
     }
   );
   if (isLoading) {
-    return <Container>loading...</Container>;
+    return (
+      <Card sx={{ width: '512px' }}>
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            pb: 2,
+            backgroundColor: 'background.paper',
+            pt: 4,
+          }}
+        >
+          <Typography variant="body2" sx={{ flexGrow: 1, alignSelf: 'center' }}>
+            Time Tracked
+          </Typography>
+          <CustomDateRangePicker
+            state={[
+              {
+                key: 'selection',
+                startDate: dateRange.startDate,
+                endDate: dateRange.endDate,
+              },
+            ]}
+            onApply={handleOnApply}
+            // setRange={setState}
+            // onChange={(item) => setState([item['selection']])}
+          />
+        </Container>
+      </Card>
+    );
   }
   if (isError) {
     return <Container>Error</Container>;
   }
-
-  const handleOnApply = ({
-    startDate,
-    endDate,
-  }: {
-    startDate: Date;
-    endDate?: Date;
-  }) => {
-    // Format start and end date and log it console
-    console.log(
-      `Selected date range: ${startDate.toLocaleDateString()} - ${endDate?.toLocaleDateString()}`
-    );
-    setDateRange({ startDate, endDate });
-  };
 
   //filter members with non empty tasks
   const activeMembers = data?.filter(
