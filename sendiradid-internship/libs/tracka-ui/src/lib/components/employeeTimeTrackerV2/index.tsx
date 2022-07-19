@@ -17,6 +17,7 @@ import {
   TaskTag,
   TeamsArray,
   CustomDateRangePicker,
+  Loader,
 } from '@sendiradid-internship/tracka-ui';
 
 interface TrackerProps {
@@ -200,6 +201,19 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
             // onChange={(item) => setState([item['selection']])}
           />
         </Container>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center',
+            marginInline: 'auto',
+            backgroundColor: 'background.paper',
+          }}
+        >
+          <Loader />
+        </Box>
       </Card>
     );
   }

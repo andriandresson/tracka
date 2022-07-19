@@ -10,3 +10,4 @@ export * from './lib/components/employeeTimeTrackerV2';
 export * from './lib/components/customDateRangePicker';
 export * from './lib/components/goalTracker';
 export * from './lib/components/goalTrackerWidget';
+export * from './lib/components/loader';
