@@ -20,8 +20,9 @@ const theme = createTheme({
       contrastText: '#FFF',
     },
     background: {
-      paper: '#0A1929',
-      default: '#0A1929',
+      paper: '#0C1B2C',
+      default: '#081421',
+      // default: 'green',
     },
   },
   components: {

@@ -7,63 +7,9 @@ import {
   Card,
   List,
   ListSubheader,
-  Chip,
 } from '@mui/material';
 import { msToString } from './timeUtils';
-
-export interface Status {
-  status: string;
-  color: string;
-  type: string;
-  orderindex: number;
-}
-
-export interface Task {
-  id: string;
-  name: string;
-  status: Status;
-  custom_type?: any;
-}
-
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-  color: string;
-  initials: string;
-  profilePicture?: string;
-}
-
-export interface TaskLocation {
-  list_id: string;
-  folder_id: string;
-  space_id: string;
-}
-export interface TaskTag {
-  name: string;
-  tag_fg: string;
-  tag_bg: string;
-  creator: number;
-}
-
-export interface EmployeeData {
-  id: string;
-  task: Task;
-  wid: string;
-  user: User;
-  billable: boolean;
-  start: string;
-  end: string;
-  duration: string;
-  description: string;
-  tags: any[];
-  source: string;
-  at: string;
-  task_location: TaskLocation;
-  task_tags: TaskTag[];
-  task_url: string;
-}
-
+import { EmployeeData, TaskTag } from '@sendiradid-internship/tracka-ui';
 interface TrackerProps {
   data: EmployeeData[];
 }
@@ -90,8 +36,6 @@ export const EmployeeTimeTracker: FC<TrackerProps> = ({ data }) => {
         (tag, index, self) =>
           self.findIndex((t) => t.name === tag.name) === index
       );
-
-  console.log('taskTagsArray', taskTagsArray);
 
   return (
     <Container>
@@ -141,6 +85,18 @@ export const EmployeeTimeTrackerWidget: FC<WidgetProps> = ({ data }) => {
   console.log(activeMembers);
   return (
     <Card sx={{ width: '512px' }}>
+      <Container
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          backgroundColor: 'background.paper',
+          pb: 2,
+        }}
+      >
+        <Typography variant="body2" sx={{ flexGrow: 1 }}>
+          Time Tracked
+        </Typography>
+      </Container>
       {activeMembers?.length > 0 ? (
         <List
           sx={{
@@ -152,7 +108,7 @@ export const EmployeeTimeTrackerWidget: FC<WidgetProps> = ({ data }) => {
           }}
           subheader={
             <ListSubheader>
-              <Box sx={{ display: 'flex', p: 1 }}>
+              <Box sx={{ display: 'flex', p: 1, pb: 2 }}>
                 <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
                   Members
                 </Typography>

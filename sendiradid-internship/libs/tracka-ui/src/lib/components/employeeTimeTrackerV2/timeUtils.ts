@@ -4,7 +4,3 @@ export const msToString = (ms: number): string => {
   const seconds = Math.floor(((ms % 3600000) % 60000) / 1000);
   return `${hours}h${minutes}m`;
 };
-
-export const dateToMs = (date: Date): number => {
-  return date.getTime();
-};
