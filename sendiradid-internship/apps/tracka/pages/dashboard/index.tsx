@@ -26,7 +26,7 @@ const Dashboard = () => {
   const teamID = '37453513';
 
   return (
-    <Container sx={{ mt: 20 }}>
+    <Container sx={{ mt: 20, display: 'flex', flexDirection: 'row' }}>
       <GoalTrackerWidget teamID={teamID} />
       <EmployeeTimeTrackerWidgetV2 teamID={teamID} />
     </Container>
