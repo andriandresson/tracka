@@ -23,6 +23,26 @@ const theme = createTheme({
       paper: '#0C1B2C',
       default: '#081421',
     },
+    error: {
+      main: '#F90054',
+      //color below is the same as main but with lower opacity
+      dark:'rgba(249, 0, 84, 0.5)'
+    },
+    warning: {
+      main: '#FFBC11',
+      //color below is the same as main but with lower opacity
+      dark: 'rgba(255, 188, 17, 0.5)'
+    },
+    success:{
+      main: '#2AD9A9',
+      //color below is the same as main but with lower opacity
+      dark: 'rgba(42, 217, 169, 0.5)'
+    },
+    info: {
+      main: '#278BFC',
+      //color below is the same as main but with lower opacity
+      dark: 'rgba(39, 139, 252, 0.5)'
+    },
   },
   components: {
     MuiContainer: {

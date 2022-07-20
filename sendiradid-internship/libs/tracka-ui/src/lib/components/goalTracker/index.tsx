@@ -79,13 +79,13 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
                 <Typography
                   component="span"
                   variant="body1"
-                  color={keyResult.completed ? '#2AD9A9' : '#DDE3E9'}
+                  color={keyResult.completed ? 'success.main' : 'common.white'}
                 >
                   {keyResult.name}
                 </Typography>
                 <Typography
                   component="span"
-                  color="#DDE3E9"
+                  color="common.white"
                   sx={{ alignSelf: 'flex-end', marginLeft: 'auto' }}
                 >{`${keyResult.steps_current}/${keyResult.steps_end}`}</Typography>
               </Container>
