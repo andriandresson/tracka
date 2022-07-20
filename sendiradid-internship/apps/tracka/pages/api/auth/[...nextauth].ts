@@ -178,8 +178,6 @@ export default NextAuth({
           id: user.id,
         } as JWT;
       }
-      console.log('token', token);
-      console.log('user', user);
 
       return token;
     },

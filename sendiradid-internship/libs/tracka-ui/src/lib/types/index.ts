@@ -134,3 +134,99 @@ export interface ExtendedUserSession extends DefaultUser {
 export interface ExtendedSession extends Session {
   user: ExtendedUserSession;
 }
+
+export interface TimeTrackerStatus {
+  status: string;
+  color: string;
+  type: string;
+  orderindex: number;
+}
+
+export interface Task {
+  id: string;
+  name: string;
+  status: TimeTrackerStatus;
+  custom_type?: any;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  color: string;
+  initials: string;
+  profilePicture?: string;
+}
+
+export interface TaskLocation {
+  list_id: string;
+  folder_id: string;
+  space_id: string;
+}
+export interface TaskTag {
+  name: string;
+  tag_fg: string;
+  tag_bg: string;
+  creator: number;
+}
+
+export interface EmployeeData {
+  id: string;
+  task: Task;
+  wid: string;
+  user: User;
+  billable: boolean;
+  start: string;
+  end: string;
+  duration: string;
+  description: string;
+  tags: any[];
+  source: string;
+  at: string;
+  task_location: TaskLocation;
+  task_tags: TaskTag[];
+  task_url: string;
+}
+////////////////
+
+export interface TeamMember {
+  id: number;
+  username: string;
+  email: string;
+  color: string;
+  profilePicture: string;
+  initials: string;
+  role: number;
+  custom_role?: any;
+  last_active: string;
+  date_joined: string;
+  date_invited: string;
+}
+
+export interface InvitedBy {
+  id: number;
+  username: string;
+  color: string;
+  email: string;
+  initials: string;
+  profilePicture?: any;
+}
+
+export interface Member {
+  user: TeamMember;
+  invited_by: InvitedBy;
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  color: string;
+  avatar: string;
+  members: Member[];
+}
+
+export interface TeamsArray {
+  data: {
+    teams: Team[];
+  };
+}
