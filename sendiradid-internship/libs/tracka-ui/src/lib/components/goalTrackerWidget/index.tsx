@@ -1,18 +1,68 @@
-import { GoalTracker } from '@sendiradid-internship/tracka-ui';
+import { GoalTracker, Goal, Selection } from '@sendiradid-internship/tracka-ui';
 import { FC } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Box, Container, Card, Typography } from '@mui/material';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
 interface Props {
-  goalsArray: any[];
+  teamID: string | number;
 }
 
-export const GoalTrackerWidget: FC<Props> = ({ goalsArray }) => {
+export const GoalTrackerWidget: FC<Props> = ({ teamID }) => {
+  const fetchAllGoals = async (teamId: string | number) => {
+    if (typeof teamId === 'string') {
+      const { data } = await axios.get(`/api/goals/${teamId}`);
+      return data;
+    } else {
+      const { data } = await axios.get(`/api/goals/${teamId.toString()}`);
+      return data;
+    }
+  };
+
+  const fetchGoalDetails = async (goalId: string | number) => {
+    if (typeof goalId === 'string') {
+      const { data } = await axios.get(`/api/goal/${goalId}`);
+      return data;
+    } else {
+      const { data } = await axios.get(`/api/goal/${goalId.toString()}`);
+      return data;
+    }
+  };
+
+  //fetching all goals for selected team
+  const { data: goals } = useQuery(`${teamID}-goals`, () => {
+    return fetchAllGoals(teamID);
+  });
+  const goalsIds = goals?.goals.map((goal: Goal) => goal.id);
+
+  const {
+    data: goalDetails,
+    isLoading,
+    isError,
+  } = useQuery(
+    [`${goalsIds?.toString()}-goal-details`, goalsIds],
+    () => {
+      if (Array.isArray(goalsIds)) {
+        const promiseArray = goalsIds.map((goal) => fetchGoalDetails(goal));
+        return Promise.all(promiseArray);
+      }
+      return fetchGoalDetails(goals.id);
+    },
+    { enabled: !!goalsIds }
+  );
+
+  if (isLoading || !goalsIds) {
+    return <Container>loading...</Container>;
+  }
+  if (isError) {
+    return <Container>Error</Container>;
+  }
   return (
     <Box sx={{ width: 600 }}>
-      {goalsArray[0]?.goal.id ? (
+      {goalDetails[0]?.goal.id ? (
         <Carousel autoPlay={false} animation="slide" navButtonsAlwaysVisible>
-          {goalsArray.map((goal) => {
+          {goalDetails.map((goal: Goal) => {
             return <GoalTracker key={goal.id} goalData={goal} />;
           })}
         </Carousel>

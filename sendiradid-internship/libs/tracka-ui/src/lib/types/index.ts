@@ -230,3 +230,39 @@ export interface TeamsArray {
     teams: Team[];
   };
 }
+
+export interface Owner {
+  id: number;
+  email: string;
+  username: string;
+  color: string;
+  profilePicture: string;
+  initials: string;
+}
+
+export interface Goal {
+  id: string;
+  pretty_id: string;
+  name: string;
+  team_id: string;
+  creator: number;
+  owner?: any;
+  color: string;
+  date_created: string;
+  start_date?: any;
+  due_date: string;
+  description: string;
+  private: boolean;
+  archived: boolean;
+  multiple_owners: boolean;
+  editor_token: string;
+  date_updated: string;
+  last_update: string;
+  folder_id?: any;
+  pinned: boolean;
+  owners: Owner[];
+  key_result_count: number;
+  members: any[];
+  group_members: any[];
+  percent_completed: number;
+}
