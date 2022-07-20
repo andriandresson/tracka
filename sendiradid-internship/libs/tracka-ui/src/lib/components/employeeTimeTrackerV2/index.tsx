@@ -23,6 +23,9 @@ import {
 interface TrackerProps {
   data: EmployeeData[];
 }
+interface Props {
+  teamID: string | number;
+}
 
 export const EmployeeTimeTrackerV2: FC<TrackerProps> = ({ data }) => {
   //fetching time tracking data for each of the members of the team
@@ -93,7 +96,7 @@ const useQueryOptions = {
   refetchOnWindowFocus: false,
 };
 
-export const EmployeeTimeTrackerWidgetV2: FC = () => {
+export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
   const [dateRange, setDateRange] = useState<{
     startDate: Date;
     endDate?: Date;
@@ -102,7 +105,7 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
   });
 
   const fetchTimeTrackingData = async (
-    teamId: string | number,
+    teamID: string | number,
     assignee?: number,
     startDate?: number,
     endDate?: number
@@ -115,12 +118,12 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
         end_date: endDate,
       },
     };
-    if (typeof teamId === 'string') {
-      const { data } = await axios.get(`/api/timetrack/${teamId}`, axiosConfig);
+    if (typeof teamID === 'string') {
+      const { data } = await axios.get(`/api/timetrack/${teamID}`, axiosConfig);
       return data;
     } else {
       const { data } = await axios.get(
-        `/api/timetrack/${teamId.toString()}`,
+        `/api/timetrack/${teamID.toString()}`,
         axiosConfig
       );
       return data;
@@ -137,27 +140,26 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
     // Format start and end date and log it console
     setDateRange({ startDate, endDate });
   };
-  const fetchTeamMembers = async (teamId: string | number) => {
+  const fetchTeamMembers = async (teamID: string | number) => {
     const { data } = (await axios.get(`/api/teams`)) as TeamsArray;
-    const teamMembers = data.teams.find((team) => team.id === teamId);
+    const teamMembers = data.teams.find((team) => team.id === teamID);
     return teamMembers
       ? teamMembers?.members?.map((member) => member?.user)
       : [];
   };
-  const teamId = '37453513';
 
   const { data: teamMembers } = useQuery(
-    `${teamId}-member`,
-    () => fetchTeamMembers(teamId),
+    `${teamID}-member`,
+    () => fetchTeamMembers(teamID),
     useQueryOptions
   );
   const { data, isLoading, isError } = useQuery(
-    [`timetracked members`, teamId, teamMembers, dateRange],
+    [`timetracked members`, teamID, teamMembers, dateRange],
     () => {
       if (Array.isArray(teamMembers)) {
         const promiseArray = teamMembers.map((member) => {
           return fetchTimeTrackingData(
-            teamId,
+            teamID,
             member.id,
             dateRange.startDate.getTime(),
             dateRange.endDate?.getTime()
@@ -225,6 +227,7 @@ export const EmployeeTimeTrackerWidgetV2: FC = () => {
   const activeMembers = data?.filter(
     (member: TrackerProps) => member.data.length > 0
   ) as TrackerProps[];
+  console.log('activeMembers', activeMembers);
   return (
     <Card sx={{ width: '512px' }}>
       <Container

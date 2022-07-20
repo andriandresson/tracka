@@ -14,7 +14,6 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
   const { goal } = goalData;
   const percent = Math.round(goal.percent_completed * 100);
   const dueDate = new Date(parseInt(goal.due_date));
-  console.log('goalData:', goal);
 
   if (percent < 25) {
     backgroundArray.push('#f44336', 'rgba(54, 162, 235, 0)');
