@@ -50,12 +50,12 @@ export const EmployeeTimeTrackerV2: FC<TrackerProps> = ({ data }) => {
       );
 
   return (
-    <Container>
+    <>
       <Box
         display="flex"
         flexDirection="row"
         alignItems="center"
-        sx={{ width: '464px', pt: 1, pb: 1 }}
+        sx={{ maxWidth: '464px', pt: 1, pb: 1, height: '100%' }}
       >
         <Avatar
           src={data[0].user.profilePicture}
@@ -87,7 +87,7 @@ export const EmployeeTimeTrackerV2: FC<TrackerProps> = ({ data }) => {
           {msToString(timeTrackedInMs)}
         </Typography>
       </Box>
-    </Container>
+    </>
   );
 };
 
@@ -177,7 +177,12 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
   );
   if (isLoading) {
     return (
-      <Card sx={{ width: '512px' }}>
+      <Card
+        sx={{
+          width: '512px',
+          backgroundColor: 'background.default',
+        }}
+      >
         <Container
           sx={{
             display: 'flex',
@@ -212,6 +217,7 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
             alignContent: 'center',
             marginInline: 'auto',
             backgroundColor: 'background.paper',
+            maxHeigh: '500px',
           }}
         >
           <Loader />
@@ -229,7 +235,7 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
   ) as TrackerProps[];
   console.log('activeMembers', activeMembers);
   return (
-    <Card sx={{ width: '512px' }}>
+    <Card sx={{ width: '512px', maxHeight: '500px' }}>
       <Container
         sx={{
           display: 'flex',
@@ -290,9 +296,17 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
             />
           ))
         ) : (
-          <Typography>
-            We are fetching the data, it might take a while{' '}
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              maxHeight: '500px',
+            }}
+          >
+            <Loader />
+          </Box>
         )}
       </List>
     </Card>
