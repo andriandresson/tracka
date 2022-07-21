@@ -28,7 +28,6 @@ export const CustomAccordion: FC<Props> = ({
   selection,
 }) => {
   const [value, setValue] = useState(parentValue);
-
   useEffect(() => {
     parentValue !== undefined && setValue(parentValue);
   }, [parentValue]);
@@ -86,6 +85,12 @@ export const CustomAccordion: FC<Props> = ({
     }
   };
 
+  const [expanded, setExpanded] = React.useState<string | false>(relativeId);
+  const handlePanelExpand =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+
   const handleCheckboxChange = (newValue: boolean) => {
     setValue(newValue);
     onValueSet && onValueSet(relativeId, newValue);
@@ -103,7 +108,10 @@ export const CustomAccordion: FC<Props> = ({
 
   if (children) {
     return (
-      <Accordion>
+      <Accordion
+        expanded={expanded === relativeId}
+        onChange={handlePanelExpand(relativeId)}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           sx={{ display: 'flex', alignItems: 'center' }}
