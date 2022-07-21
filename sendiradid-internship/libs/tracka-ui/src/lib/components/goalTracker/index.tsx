@@ -46,10 +46,17 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
   };
 
   return (
-    <Container sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Card sx={{ width: 520, p: 4 }}>
+    <Container
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Box sx={{ width: 520, p: 4, backgroundColor: 'background.paper' }}>
         <Typography variant="h3">{goal.name}</Typography>
-        <Container sx={{ display: 'flex', p: 4 }}>
+        <Container
+          sx={{ display: 'flex', p: 4, backgroundColor: 'background.paper' }}
+        >
           <Box
             sx={{
               width: 120,
@@ -92,7 +99,7 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
           </Box>
         </Container>
         <Typography>due date: {dueDate.toDateString()}</Typography>
-      </Card>
+      </Box>
     </Container>
   );
 };
