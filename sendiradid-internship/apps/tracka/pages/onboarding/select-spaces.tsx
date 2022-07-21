@@ -5,6 +5,7 @@ import {
   Selection,
   OnboardingLayout,
   LabelBox,
+  useActiveStepStatus,
 } from '@sendiradid-internship/tracka-ui';
 import { Container, Grid } from '@mui/material';
 
@@ -22,7 +23,7 @@ const SelectSpaces = ({ session }) => {
   const { user } = session;
   const { value, setValue, selectSpaces, clearSelection } =
     useApplicationContext();
-  // setValue('activeStep', 1);
+  useActiveStepStatus(setValue);
 
   const selectedTeam = () => {
     // check if selected is array
