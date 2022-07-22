@@ -11,3 +11,5 @@ export * from './lib/components/customDateRangePicker';
 export * from './lib/components/goalTracker';
 export * from './lib/components/goalTrackerWidget';
 export * from './lib/components/loader';
+export * from './lib/components/dashboardNavbar';
+export * from './lib/components/dashboardLayout';
