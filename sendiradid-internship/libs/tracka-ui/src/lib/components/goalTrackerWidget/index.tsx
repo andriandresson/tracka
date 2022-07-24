@@ -1,7 +1,7 @@
 import { GoalTracker, Goal, Selection } from '@sendiradid-internship/tracka-ui';
 import { FC } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { Box, Container, Card, Typography } from '@mui/material';
+import { Box, Container, Card, Typography, Skeleton } from '@mui/material';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
@@ -51,17 +51,74 @@ export const GoalTrackerWidget: FC<Props> = ({ teamID }) => {
     },
     { enabled: !!goalsIds }
   );
-
+  //isLoading
   if (isLoading || !goalsIds) {
-    return <Container>loading...</Container>;
+    return (
+      <Container
+        sx={{
+          width: 792,
+          height: 409,
+          mr: 5,
+          bgcolor: 'background.paper',
+          display: 'flex',
+          flexDirection: 'column',
+          p: 1,
+          borderRadius: '5px',
+        }}
+      >
+        <Box sx={{ p: 4 }}>
+          <Skeleton variant="text" sx={{ width: 100, height: 30 }} />
+          <Skeleton variant="text" />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            gap: 8,
+          }}
+        >
+          <Box>
+            <Skeleton variant="circular" width={130} height={130} />
+            <Skeleton variant="text" sx={{ mt: 3 }} />
+            <Skeleton variant="text" sx={{ width: 60 }} />
+          </Box>
+          <Box>
+            <Skeleton
+              variant="rectangular"
+              width={330}
+              height={200}
+              sx={{ borderRadius: 1 }}
+            />
+          </Box>
+        </Box>
+      </Container>
+    );
   }
   if (isError) {
     return <Container>Error</Container>;
   }
   return (
-    <Box sx={{ width: 600 }}>
+    <Box
+      sx={{
+        width: 792,
+        height: 409,
+        mr: 5,
+        p: 2,
+        bgcolor: 'background.paper',
+        borderRadius: '5px',
+      }}
+    >
       {goalDetails[0]?.goal.id ? (
-        <Carousel autoPlay={false} animation="slide" navButtonsAlwaysVisible>
+        <Carousel
+          changeOnFirstRender={true}
+          height={320}
+          sx={{ p: 2 }}
+          autoPlay={false}
+          animation="slide"
+          navButtonsAlwaysVisible
+          navButtonsProps={{ style: { background: 'none' } }}
+        >
           {goalDetails.map((goal: Goal) => {
             return <GoalTracker key={goal.id} goalData={goal} />;
           })}
@@ -69,7 +126,7 @@ export const GoalTrackerWidget: FC<Props> = ({ teamID }) => {
       ) : (
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Card
-            sx={{ width: 520, p: 4, display: 'flex', flexDirection: 'column' }}
+            sx={{ width: 792, p: 4, display: 'flex', flexDirection: 'column' }}
           >
             <Typography variant="body2">
               Setting goals is the first step in turning the invisible into the
