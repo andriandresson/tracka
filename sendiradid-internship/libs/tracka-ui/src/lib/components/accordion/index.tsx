@@ -16,6 +16,7 @@ interface Props {
   elementId?: string;
   relativeId: string;
   selection: CustomerSelection;
+  initiallyClosed?: boolean;
 }
 
 export const CustomAccordion: FC<Props> = ({
@@ -26,6 +27,7 @@ export const CustomAccordion: FC<Props> = ({
   elementId,
   relativeId,
   selection,
+  initiallyClosed,
 }) => {
   const [value, setValue] = useState(parentValue);
   useEffect(() => {
@@ -86,8 +88,11 @@ export const CustomAccordion: FC<Props> = ({
   };
 
   const [expanded, setExpanded] = React.useState<string | false>(relativeId);
+  const [initiallyUnexpanded, setInitiallyUnexpanded] =
+    useState(initiallyClosed);
   const handlePanelExpand =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setInitiallyUnexpanded(undefined);
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -109,7 +114,7 @@ export const CustomAccordion: FC<Props> = ({
   if (children) {
     return (
       <Accordion
-        expanded={expanded === relativeId}
+        expanded={initiallyUnexpanded ? false : expanded === relativeId}
         onChange={handlePanelExpand(relativeId)}
       >
         <AccordionSummary
