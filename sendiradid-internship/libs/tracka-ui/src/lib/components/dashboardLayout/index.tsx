@@ -6,26 +6,15 @@ import {
   Box,
   List,
   CssBaseline,
-  Menu,
   Typography,
   Divider,
   IconButton,
-  MenuItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   ListItem,
-  Toolbar,
-  Tabs,
-  Tab,
 } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { ExtendedUserSession } from '@sendiradid-internship/tracka-ui';
 import Logo from './Logo.svg';
@@ -62,28 +51,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-}));
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
 }));
 
 interface TabPanelProps {
@@ -126,7 +93,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const DashboardLayout: FC<Props> = ({ children }) => {
@@ -140,6 +107,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
+  const colors = ['#5EAFB8', '#DB628B', '#877CD5', '#5CC3A7'];
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -154,7 +122,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
         open={open}
         handleDrawerOpen={() => handleDrawerOpen()}
         activeTab={activeTab}
-        setActiveTab={(value) => setActiveTab(value)}
+        setActiveTab={(newActiveTab) => setActiveTab(newActiveTab)}
       />
 
       <Drawer variant="permanent" open={open}>
@@ -169,60 +137,40 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+          {['Dashboard', 'Customers', 'Internals', 'Employees'].map(
+            (text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <Avatar
+                    variant="square"
+                    sx={{
+                      bgcolor: colors[index],
+                      color: 'white',
+                      width: '28px',
+                      height: '28px',
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {text[0]}
+                  </Avatar>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            )
+          )}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        {children}
-        {/* <TabPanel value={activeTab} index={0}>
-          <EmployeeTimeTrackerWidgetV2 teamID={value.steps[0].selected.id as string}/>
+        <TabPanel value={activeTab} index={0}>
+          {children}
         </TabPanel>
 
         <TabPanel value={activeTab} index={1}>
@@ -231,7 +179,7 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
 
         <TabPanel value={activeTab} index={2}>
           // Timesheet //
-        </TabPanel> */}
+        </TabPanel>
       </Box>
     </Box>
   );

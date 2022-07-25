@@ -21,7 +21,6 @@ export const Navbar = () => {
   if (data?.user) {
     user = data.user as ExtendedUserSession;
   }
-  console.log({ user });
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {

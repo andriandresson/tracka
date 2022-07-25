@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Box,
-  Container,
   Toolbar,
   Menu,
   IconButton,
@@ -11,27 +10,17 @@ import {
   Tab,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { signOut } from 'next-auth/react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSession } from 'next-auth/react';
 import { ExtendedUserSession } from '@sendiradid-internship/tracka-ui';
 
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-}
-
-function LinkTab(props: LinkTabProps) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        // event.preventDefault();
-      }}
-      {...props}
-    />
-  );
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
 }
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -114,9 +103,9 @@ export const DashboardNavbar = ({
             aria-label="nav tabs example"
             sx={{ flexGrow: 1 }}
           >
-            <LinkTab label="Dashboard" href="/dashboard" />
-            <LinkTab label="Calendar" href="/calendar" />
-            <LinkTab label="Timesheets" href="/Timesheets" />
+            <Tab label="Dashboard" {...a11yProps(0)} />
+            <Tab label="Calendar" {...a11yProps(1)} />
+            <Tab label="Timesheets" {...a11yProps(2)} />
           </Tabs>
 
           {user ? (

@@ -26,7 +26,6 @@ interface WithAuthProps {
 export const WithAuth = (Component: React.ComponentType<WithAuthProps>) => {
   const WithAuthComponent = ({ ...props }) => {
     const { value } = useApplicationContext();
-    console.log('value', value);
     const { data: session, status } = useSession();
     const extendedSession = session as ExtendedSession;
     const loading = status === 'loading';
