@@ -1,4 +1,9 @@
-import { Box, Card, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Divider,
+  List, useTheme
+} from '@mui/material';
 import { Container } from '@mui/system';
 import { Chart as ChartJS, ArcElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -54,20 +59,21 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
     <Container
       sx={{
         display: 'flex',
-        justifyContent: 'center',
+        alignContent: 'flex-start',
+        flexDirection: ' column',
       }}
     >
-      <Box sx={{ width: 520, p: 4, backgroundColor: 'background.paper' }}>
-        <Typography variant="h3">{goal.name}</Typography>
-        <Container
-          sx={{ display: 'flex', p: 4, backgroundColor: 'background.paper' }}
-        >
+      <Typography variant="h3">Sprint Goal</Typography>
+      <Typography variant="body1" sx={{ mt: 1 }}>
+        {goal.name}
+      </Typography>
+      <Box sx={{ width: 792, p: 1, height: 320 }}>
+        <Container sx={{ display: 'flex', flexDirection: 'row', pt: 5 }}>
           <Box
             sx={{
               width: 120,
               height: 120,
               position: 'relative',
-              flexShrink: 1,
             }}
           >
             <Doughnut data={data} />
@@ -83,27 +89,70 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
             >
               {percent}%
             </Typography>
+            <Typography variant="subtitle1" sx={{ mt: 3 }}>
+              due date: {dueDate.toDateString()}
+            </Typography>
           </Box>
-          <Box sx={{ flexGrow: '1' }}>
+          <List
+            sx={{
+              width: '100%',
+              maxWidth: 360,
+              maxHeight: 150,
+              position: 'relative',
+              overflow: 'auto',
+              m: 4,
+              pl: 0,
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                boxShadow: 'inset 0 0 6px rgb(44	52	60)',
+                webkitBoxShadow: 'inset 0 0 6px rgb(44	52	60)',
+                borderRadius: '5px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'common.white',
+                borderRadius: '5px',
+              },
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: '#D55681',
+                width: 340,
+                ml: 2,
+                height: 30,
+                p: 0.5,
+                position: 'fixed',
+                mt: -5,
+                borderRadius: '4px 4px 0 0',
+              }}
+            >
+              Tasks that need to be completed
+            </Box>
             {goal.key_results.map((keyResult: any) => (
               <Container key={keyResult.name} sx={{ display: 'flex' }}>
                 <Typography
+                  sx={{ mt: 1 }}
                   component="span"
                   variant="body1"
                   color={keyResult.completed ? 'success.main' : 'common.white'}
                 >
                   {keyResult.name}
+                  <Divider sx={{ width: 300, mt: 1 }} />
                 </Typography>
                 <Typography
                   component="span"
                   color="common.white"
                   sx={{ alignSelf: 'flex-end', marginLeft: 'auto' }}
-                >{`${keyResult.steps_current}/${keyResult.steps_end}`}</Typography>
+                >
+                  {`${keyResult.steps_current}/${keyResult.steps_end}`}
+                  <Divider sx={{ mt: 1 }} />
+                </Typography>
               </Container>
             ))}
-          </Box>
+          </List>
         </Container>
-        <Typography>due date: {dueDate.toDateString()}</Typography>
       </Box>
     </Container>
   );
