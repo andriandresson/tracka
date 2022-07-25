@@ -29,9 +29,8 @@ export const OnboardingLayout: FC<Props> = ({
     '/onboarding/map-customer-type',
     '/onboarding/select-internal-spaces',
     '/onboarding/select-internal-tasks',
-    '/onboarding/review',
+    '/dashboard',
   ];
-  console.log('steps:', steps);
   const isSelected = (): boolean => {
     // check if selected is array of type Selection
     if (Array.isArray(steps[activeStep].selected)) {
@@ -91,7 +90,13 @@ export const OnboardingLayout: FC<Props> = ({
                   <Button
                     variant="contained"
                     sx={{ width: 198, height: 48 }}
-                    onClick={() => setValue('activeStep', activeStep + 1)}
+                    onClick={() => {
+                      if (activeStep === 4) {
+                        setValue('isOnboard', true);
+                      } else {
+                        setValue('activeStep', activeStep + 1);
+                      }
+                    }}
                   >
                     Continue
                   </Button>
