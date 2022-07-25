@@ -35,7 +35,7 @@ export const withAuth = (Component: React.ComponentType<WithAuthProps>) => {
       }
     }, [loading, hasUser]);
     if (loading || !hasUser) {
-      return <div>Waiting for session...</div>;
+      return null;
     }
 
     return (
