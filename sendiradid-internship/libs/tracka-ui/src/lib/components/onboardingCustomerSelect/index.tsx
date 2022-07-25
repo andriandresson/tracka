@@ -5,7 +5,7 @@ import {
   RootObject,
   CustomerSelection,
 } from '@sendiradid-internship/tracka-ui';
-import { Card } from '@mui/material';
+import { Card, Box, List, Typography } from '@mui/material';
 import { getSelectedLists } from './selectionUtils';
 interface Props {
   data: any;
@@ -89,7 +89,6 @@ export const CustomerSelect: FC<Props> = ({
           ...selection,
           [spaceId]: {
             ...selection[spaceId],
-            //set all lists in the folder to the same value
             [folderId]: {
               ...selection[spaceId][folderId],
               ...(Object.keys(selection[spaceId][folderId]).forEach((list) => {
@@ -119,56 +118,91 @@ export const CustomerSelect: FC<Props> = ({
     }
   };
 
+  const colorsArray = ['#9c27b0', '#3f51b5', '#7B68EE', '#673ab7'];
+
   return (
-    <Card variant="outlined">
-      {spaces.map((space: any) => {
-        if (space[0]) {
-          return (
-            <CustomAccordion
-              key={space[0].space.id}
-              onValueSet={handleCheckboxChange}
-              title={space[0]?.space?.name}
-              relativeId={space[0]?.space.id}
-              selection={selection}
-            >
-              {space.map((folder: any) => {
-                if (folder.lists[0]) {
-                  return (
-                    <CustomAccordion
-                      key={folder.id}
-                      onValueSet={handleCheckboxChange}
-                      title={folder.name}
-                      relativeId={`${space[0]?.space.id}#${folder.id}`}
-                      selection={selection}
-                    >
-                      {folder.lists.map((list: any) => {
-                        if (list) {
-                          return (
-                            <CustomAccordion
-                              key={list.id}
-                              onValueSet={handleCheckboxChange}
-                              title={list.name}
-                              elementId={list.id}
-                              relativeId={`${space[0]?.space.id}#${folder.id}#${list.id}`}
-                              selection={selection}
-                            />
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
-                    </CustomAccordion>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </CustomAccordion>
-          );
-        } else {
-          return null;
-        }
-      })}
+    <Card variant="outlined" sx={{ minWidth: 512 }}>
+      <Box sx={{ p: 2, zIndex: 1 }}>
+        <Typography variant="subtitle1">
+          {getSelectedLists(selection).length} lists selected
+        </Typography>
+      </Box>
+      <List
+        sx={{
+          width: '100%',
+          padding: 0,
+          position: 'relative',
+          overflow: 'scroll',
+          maxHeight: 360,
+          pl: 0,
+          '&::-webkit-scrollbar': {
+            width: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            boxShadow: 'inset 0 0 6px rgb(44	52	60)',
+            webkitBoxShadow: 'inset 0 0 6px rgb(44	52	60)',
+            borderRadius: '5px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'common.white',
+            borderRadius: '5px',
+          },
+        }}
+      >
+        {spaces.map((space: any, index: number) => {
+          if (space[0]) {
+            return (
+              <CustomAccordion
+                key={space[0].space.id}
+                onValueSet={handleCheckboxChange}
+                title={space[0]?.space?.name}
+                relativeId={space[0]?.space.id}
+                selection={selection}
+                bgColor={colorsArray[index]}
+                topLevel={true}
+              >
+                <List sx={{ p: 0 }}>
+                  {space.map((folder: any) => {
+                    if (folder.lists[0]) {
+                      return (
+                        <CustomAccordion
+                          key={folder.id}
+                          onValueSet={handleCheckboxChange}
+                          title={folder.name}
+                          relativeId={`${space[0]?.space.id}#${folder.id}`}
+                          selection={selection}
+                          initiallyClosed={true}
+                        >
+                          {folder.lists.map((list: any) => {
+                            if (list) {
+                              return (
+                                <CustomAccordion
+                                  key={list.id}
+                                  onValueSet={handleCheckboxChange}
+                                  title={list.name}
+                                  elementId={list.id}
+                                  relativeId={`${space[0]?.space.id}#${folder.id}#${list.id}`}
+                                  selection={selection}
+                                />
+                              );
+                            } else {
+                              return null;
+                            }
+                          })}
+                        </CustomAccordion>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+                </List>
+              </CustomAccordion>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </List>
     </Card>
   );
 };
