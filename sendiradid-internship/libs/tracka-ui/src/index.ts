@@ -12,3 +12,4 @@ export * from './lib/components/goalTracker';
 export * from './lib/components/goalTrackerWidget';
 export * from './lib/components/loader';
 export * from './lib/hooks/useActiveStepStatus';
+export * from './lib/components/InformativePopup';

@@ -1,7 +1,11 @@
 import { Typography, Button, Grid, Stack } from '@mui/material';
 import { FC, ReactNode } from 'react';
 import { OnboardingProgress } from '../onboardingProgress';
-import { Step as Steptype, Selection } from '@sendiradid-internship/tracka-ui';
+import {
+  Step as Steptype,
+  Selection,
+  InformativePopup,
+} from '@sendiradid-internship/tracka-ui';
 import Link from 'next/link';
 
 interface Props {
@@ -48,6 +52,7 @@ export const OnboardingLayout: FC<Props> = ({
   return (
     <>
       <Grid item xs={12} container sx={{ minHeight: '100vh' }}>
+        <InformativePopup />
         <Grid item container>
           <Grid
             item
