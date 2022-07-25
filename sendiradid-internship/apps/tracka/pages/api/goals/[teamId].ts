@@ -1,6 +1,5 @@
 import { getSession } from 'next-auth/react';
 import axios from 'axios';
-
 // Fetching all spaces for a team
 
 const Handler = async (req, res) => {
@@ -24,7 +23,7 @@ const Handler = async (req, res) => {
   };
   try {
     const response = await axios.get(
-      `https://api.clickup.com/api/v2/team/${teamId}/goal`,
+      `https://api.clickup.com/api/v2/team/${teamId}/goal?include_completed=true`,
       config
     );
     const { data } = response;
