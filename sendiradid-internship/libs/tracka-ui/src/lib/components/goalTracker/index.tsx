@@ -1,4 +1,4 @@
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, Typography, useTheme } from '@mui/material';
 import { Container } from '@mui/system';
 import { Chart as ChartJS, ArcElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -9,6 +9,8 @@ interface Props {
 }
 
 export const GoalTracker: FC<Props> = ({ goalData }) => {
+  const theme = useTheme();
+  console.log('theme', theme.palette.error);
   const backgroundArray = [];
   const borderArray = [];
   const { goal } = goalData;
@@ -16,17 +18,20 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
   const dueDate = new Date(parseInt(goal.due_date));
 
   if (percent < 25) {
-    backgroundArray.push('#f44336', 'rgba(54, 162, 235, 0)');
-    borderArray.push('#f44336', 'rgba(54, 162, 235, 0)');
+    backgroundArray.push(theme.palette.error.main, theme.palette.error.dark);
+    borderArray.push(theme.palette.error.main, theme.palette.error.dark);
   } else if (percent < 50) {
-    backgroundArray.push('#ff9800', 'rgba(54, 162, 235, 0)');
-    borderArray.push('#ff9800', 'rgba(54, 162, 235, 0)');
+    backgroundArray.push(theme.palette.warning.main, theme.palette.error.dark);
+    borderArray.push(theme.palette.warning.main, theme.palette.error.dark);
   } else if (percent < 75) {
-    backgroundArray.push('#ffeb3b', 'rgba(54, 162, 235, 0)');
-    borderArray.push('#ffeb3b', 'rgba(54, 162, 235, 0)');
+    backgroundArray.push(
+      theme.palette.success.main,
+      theme.palette.success.dark
+    );
+    borderArray.push(theme.palette.success.main, theme.palette.success.dark);
   } else {
-    backgroundArray.push('#4caf50', 'rgba(54, 162, 235, 0)');
-    borderArray.push('#4caf50', 'rgba(54, 162, 235, 0)');
+    backgroundArray.push(theme.palette.info.main, theme.palette.info.dark);
+    borderArray.push(theme.palette.info.main, theme.palette.info.dark);
   }
 
   ChartJS.register(ArcElement);
@@ -39,8 +44,8 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
         backgroundColor: backgroundArray,
         borderColor: borderArray,
         borderWidth: 1,
-        cutout: '90%',
-        borderRadius: 30,
+        cutout: '80%',
+        // borderRadius: 30,
       },
     ],
   };
