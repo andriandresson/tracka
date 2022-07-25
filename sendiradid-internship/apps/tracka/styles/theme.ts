@@ -26,22 +26,22 @@ const theme = createTheme({
     error: {
       main: '#F90054',
       //color below is the same as main but with lower opacity
-      dark:'rgba(249, 0, 84, 0.5)'
+      dark: 'rgba(249, 0, 84, 0.2)',
     },
     warning: {
       main: '#FFBC11',
       //color below is the same as main but with lower opacity
-      dark: 'rgba(255, 188, 17, 0.5)'
+      dark: 'rgba(255, 188, 17, 0.2)',
     },
-    success:{
+    success: {
       main: '#2AD9A9',
       //color below is the same as main but with lower opacity
-      dark: 'rgba(42, 217, 169, 0.5)'
+      dark: 'rgba(42, 217, 169, 0.2)',
     },
     info: {
       main: '#278BFC',
       //color below is the same as main but with lower opacity
-      dark: 'rgba(39, 139, 252, 0.5)'
+      dark: 'rgba(39, 139, 252, 0.2)',
     },
   },
   components: {

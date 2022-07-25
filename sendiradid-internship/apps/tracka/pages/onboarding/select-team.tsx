@@ -4,6 +4,7 @@ import {
   LabelBox,
   OnboardingLayout,
   Selection,
+  useActiveStepStatus,
 } from '@sendiradid-internship/tracka-ui';
 import { useQuery } from 'react-query';
 import axios from 'axios';
@@ -12,6 +13,7 @@ const SelectTeam = () => {
   const { value, setValue, selectTeam, clearSelection } =
     useApplicationContext();
 
+  useActiveStepStatus(setValue);
   //onclick handler for selecting teams and updating the context state
   // const onSelect = (element) => {
   //   console.log(element.id);

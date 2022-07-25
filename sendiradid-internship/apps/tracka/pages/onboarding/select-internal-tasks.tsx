@@ -5,6 +5,7 @@ import {
   Selection,
   OnboardingLayout,
   CustomerSelect,
+  useActiveStepStatus,
 } from '@sendiradid-internship/tracka-ui';
 import { useQuery } from 'react-query';
 
@@ -20,7 +21,7 @@ const fetchFolders = async (spaceId: string | number) => {
 
 const SelectClients = () => {
   const { value, setValue, clearSelection } = useApplicationContext();
-
+  useActiveStepStatus(setValue);
   const selectedSpaces = () => {
     // check if selected is array
     if (Array.isArray(value.steps[3].selected)) {
