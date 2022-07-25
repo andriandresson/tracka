@@ -5,6 +5,7 @@ import {
   Selection,
   OnboardingLayout,
   LabelBox,
+  useActiveStepStatus,
 } from '@sendiradid-internship/tracka-ui';
 import { Container, Grid } from '@mui/material';
 
@@ -21,6 +22,7 @@ const fetchSpaces = async (teamId: string | number) => {
 const SelectSpaces = () => {
   const { value, setValue, selectInternalSpaces, clearSelection } =
     useApplicationContext();
+  useActiveStepStatus(setValue);
 
   const selectedTeam = () => {
     // check if selected is array

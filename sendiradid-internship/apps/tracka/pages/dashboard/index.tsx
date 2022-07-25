@@ -1,4 +1,5 @@
 import { Container } from '@mui/system';
+import { useRouter } from 'next/router';
 import React from 'react';
 import {
   GoalTrackerWidget,
@@ -8,29 +9,26 @@ import {
 import { useApplicationContext } from '../../components/appContext';
 
 const Dashboard = () => {
-  const { value, setValue, clearSelection } = useApplicationContext();
+  const router = useRouter();
 
-  //just for presentation purposes I've changed onBoarding value in context to true, so we can go directly to the dashboard
-  //therefore I'm skipping the fetch of selected team ID from context and setting it up to our default teamID
-  //must be changed in production
+  const { value } = useApplicationContext();
 
-  const selectedTeam = () => {
-    if (Array.isArray(value.steps[0].selected)) {
-      const teams = value.steps[0].selected as Selection[];
-      return teams.map((team) => team.id);
-    }
-    const team = value.steps[0].selected as Selection;
-    return team.id;
-  };
-  //    const teamID = selectedTeam();
-  const teamID = '37453513';
+  if (!value.isOnboard) {
+    router.push('/onboarding/select-team');
+  } else {
+    const selectedTeam = () => {
+      const team = value.steps[0].selected as Selection;
+      return team.id;
+    };
 
-  return (
-    <Container sx={{ mt: 20, display: 'flex', flexDirection: 'row' }}>
-      <GoalTrackerWidget teamID={teamID} />
-      <EmployeeTimeTrackerWidgetV2 teamID={teamID} />
-    </Container>
-  );
+    const teamID = selectedTeam();
+    return (
+      <Container sx={{ mt: 20, display: 'flex', flexDirection: 'row' }}>
+        <GoalTrackerWidget teamID={teamID} />
+        <EmployeeTimeTrackerWidgetV2 teamID={teamID} />
+      </Container>
+    );
+  }
 };
 
 export default Dashboard;
