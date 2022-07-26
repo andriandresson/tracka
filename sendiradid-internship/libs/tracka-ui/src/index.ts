@@ -16,4 +16,5 @@ export * from './lib/components/dashboardLayout';
 export * from './lib/hooks/useActiveStepStatus';
 export * from './lib/components/InformativePopup';
 export * from './lib/components/employeeTimeTrackerSkeleton';
+export * from './lib/components/goalTrackerSkeleton';
 
