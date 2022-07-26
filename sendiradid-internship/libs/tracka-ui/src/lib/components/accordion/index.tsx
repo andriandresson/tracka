@@ -4,10 +4,19 @@ import {
   AccordionSummary,
   Checkbox,
   Typography,
+  ListSubheader,
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
+import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import IndeterminateCheckBoxOutlinedIcon from '@mui/icons-material/IndeterminateCheckBoxOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { CustomerSelection } from '@sendiradid-internship/tracka-ui';
+import styled from 'styled-components';
+
 interface Props {
   children?: React.ReactNode;
   parentValue?: boolean;
@@ -17,6 +26,9 @@ interface Props {
   relativeId: string;
   selection: CustomerSelection;
   initiallyClosed?: boolean;
+  bgColor?: string;
+  topLevel?: boolean;
+
 }
 
 export const CustomAccordion: FC<Props> = ({
@@ -28,11 +40,31 @@ export const CustomAccordion: FC<Props> = ({
   relativeId,
   selection,
   initiallyClosed,
+  bgColor,
+  topLevel,
+
 }) => {
   const [value, setValue] = useState(parentValue);
   useEffect(() => {
     parentValue !== undefined && setValue(parentValue);
   }, [parentValue]);
+
+  const StickyHeader = styled(ListSubheader)`
+    & {
+      z-index: 2;
+      top: 0;
+      padding-left: 0;
+      padding-right: 10px;
+    }
+  `;
+  const StickySubHeader = styled(ListSubheader)`
+    & {
+      z-index: 1;
+      top: 60px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  `;
 
   const isChecked = (relativeId: string) => {
     const [spaceId, folderId, listId] = relativeId.split('#');
@@ -87,19 +119,21 @@ export const CustomAccordion: FC<Props> = ({
     }
   };
 
+  const handleCheckboxChange = (newValue: boolean) => {
+    setValue(newValue);
+    onValueSet && onValueSet(relativeId, newValue);
+  };
+
   const [expanded, setExpanded] = React.useState<string | false>(relativeId);
   const [initiallyUnexpanded, setInitiallyUnexpanded] =
     useState(initiallyClosed);
+
   const handlePanelExpand =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setInitiallyUnexpanded(undefined);
       setExpanded(isExpanded ? panel : false);
     };
 
-  const handleCheckboxChange = (newValue: boolean) => {
-    setValue(newValue);
-    onValueSet && onValueSet(relativeId, newValue);
-  };
   const childrenWithProps = React.Children.map(children, (child) => {
     // Checking isValidElement is the safe way and avoids a typescript
     // error too.
@@ -114,41 +148,119 @@ export const CustomAccordion: FC<Props> = ({
   if (children) {
     return (
       <Accordion
+        disableGutters
         expanded={initiallyUnexpanded ? false : expanded === relativeId}
         onChange={handlePanelExpand(relativeId)}
       >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          sx={{ display: 'flex', alignItems: 'center' }}
-        >
-          <Typography sx={{ flexGrow: 1, alignSelf: 'center' }}>
-            {title}
-          </Typography>
-          <Checkbox
-            color="default"
-            size="small"
-            checked={isChecked(relativeId)}
-            indeterminate={isIndeterminate(relativeId)}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleCheckboxChange(!value);
-            }}
-          />
-        </AccordionSummary>
-        <AccordionDetails>{childrenWithProps}</AccordionDetails>
+        {topLevel ? (
+          <StickyHeader sx={{ pt: 0 }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                bgcolor: bgColor,
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{ flexGrow: 1, alignSelf: 'center', color: 'common.white' }}
+              >
+                {title}
+              </Typography>
+              <Checkbox
+                color="default"
+                size="small"
+                checked={isChecked(relativeId)}
+                indeterminate={isIndeterminate(relativeId)}
+                indeterminateIcon={<IndeterminateCheckBoxOutlinedIcon />}
+                checkedIcon={<CheckBoxOutlinedIcon />}
+                icon={<CheckBoxOutlineBlankOutlinedIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCheckboxChange(!value);
+                }}
+              />
+            </AccordionSummary>
+          </StickyHeader>
+        ) : (
+          <StickySubHeader>
+            <AccordionSummary
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                bgcolor: 'background.default',
+                margin: 0,
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  flexGrow: 1,
+                  alignSelf: 'center',
+                  color: 'common.white',
+                  fontWeight: 'bold',
+                }}
+              >
+                {expanded ? (
+                  <ArrowDropDownIcon sx={{ color: '#5680AF' }} />
+                ) : (
+                  <ArrowRightIcon sx={{ color: '#5680AF' }} />
+                )}{' '}
+                {title}
+              </Typography>
+              <Checkbox
+                color="default"
+                size="small"
+                checked={isChecked(relativeId)}
+                indeterminate={isIndeterminate(relativeId)}
+                indeterminateIcon={<IndeterminateCheckBoxOutlinedIcon />}
+                checkedIcon={<CheckBoxOutlinedIcon />}
+                icon={<CheckBoxOutlineBlankOutlinedIcon />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCheckboxChange(!value);
+                }}
+              />
+            </AccordionSummary>
+          </StickySubHeader>
+        )}
+        <AccordionDetails sx={{ p: 0 }}>{childrenWithProps}</AccordionDetails>
       </Accordion>
     );
   } else {
     return (
-      <Accordion>
-        <AccordionDetails sx={{ display: 'flex' }}>
-          <Typography sx={{ flexGrow: 1, alignSelf: 'center' }}>
+      <Accordion disableGutters>
+        <AccordionDetails
+          sx={{
+            display: 'flex',
+            paddingBlock: 0,
+            bgcolor: 'background.paper',
+          }}
+        >
+          <Typography
+            variant="subtitle2"
+            sx={{
+              flexGrow: 1,
+              alignSelf: 'center',
+              color: 'common.white',
+              letterSpacing: '0.4px',
+              fontWeight: 'light',
+            }}
+          >
+            <FiberManualRecordIcon
+              sx={{ width: 6, height: 6, color: '#5680AF' }}
+            />
+            {` `}
             {title}
           </Typography>
           <Checkbox
             color="default"
             size="small"
             checked={isChecked(relativeId)}
+            indeterminateIcon={<IndeterminateCheckBoxOutlinedIcon />}
+            checkedIcon={<CheckBoxOutlinedIcon />}
+            icon={<CheckBoxOutlineBlankOutlinedIcon />}
             id={elementId}
             onClick={(e) => {
               e.stopPropagation();
