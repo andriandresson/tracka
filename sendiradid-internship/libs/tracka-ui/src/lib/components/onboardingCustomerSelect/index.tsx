@@ -140,6 +140,7 @@ export const CustomerSelect: FC<Props> = ({
                       title={folder.name}
                       relativeId={`${space[0]?.space.id}#${folder.id}`}
                       selection={selection}
+                      initiallyClosed={true}
                     >
                       {folder.lists.map((list: any) => {
                         if (list) {
