@@ -2,10 +2,8 @@ import { useState, FC, ReactNode } from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import {
   Avatar,
-  Container,
   Box,
   List,
-  CssBaseline,
   Typography,
   Divider,
   IconButton,
@@ -70,7 +68,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Container sx={{ mt: 30 }}>{children}</Container>}
+      {value === index && <> {children}</>}
     </div>
   );
 }
@@ -117,7 +115,6 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
   };
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <DashboardNavbar
         open={open}
         handleDrawerOpen={() => handleDrawerOpen()}
@@ -168,17 +165,21 @@ export const DashboardLayout: FC<Props> = ({ children }) => {
           )}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" flexGrow={1}>
         <TabPanel value={activeTab} index={0}>
           {children}
         </TabPanel>
 
         <TabPanel value={activeTab} index={1}>
-          // Calendar //
+          <Typography sx={{ mt: 30, ml: 60, color: 'common.white' }}>
+            // Calendar //
+          </Typography>
         </TabPanel>
 
         <TabPanel value={activeTab} index={2}>
-          // Timesheet //
+          <Typography sx={{ mt: 30, ml: 60, color: 'common.white' }}>
+            // Timesheet //
+          </Typography>
         </TabPanel>
       </Box>
     </Box>

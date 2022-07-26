@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Box,
   Toolbar,
   Menu,
   IconButton,
@@ -76,79 +75,77 @@ export const DashboardNavbar = ({
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" open={open}>
-        <Toolbar
+    <AppBar position="fixed" open={open}>
+      <Toolbar
+        sx={{
+          height: 96,
+          backgroundColor: 'background.default',
+          borderBottom: 'solid 1px #278BFC',
+        }}
+      >
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
           sx={{
-            height: 96,
-            backgroundColor: 'background.default',
-            borderBottom: 'solid 1px #278BFC',
+            marginRight: 5,
+            ...(open && { display: 'none' }),
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            aria-label="nav tabs example"
-            sx={{ flexGrow: 1 }}
-          >
-            <Tab label="Dashboard" {...a11yProps(0)} />
-            <Tab label="Calendar" {...a11yProps(1)} />
-            <Tab label="Timesheets" {...a11yProps(2)} />
-          </Tabs>
+          <MenuIcon />
+        </IconButton>
+        <Tabs
+          value={activeTab}
+          onChange={handleTabChange}
+          aria-label="nav tabs example"
+          sx={{ flexGrow: 1 }}
+        >
+          <Tab label="Dashboard" {...a11yProps(0)} />
+          <Tab label="Calendar" {...a11yProps(1)} />
+          <Tab label="Timesheets" {...a11yProps(2)} />
+        </Tabs>
 
-          {user ? (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="default"
+        {user ? (
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="default"
+            >
+              <Avatar
+                src={user.profilePicture}
+                sx={{ bgcolor: user.color, color: '#FFF' }}
               >
-                <Avatar
-                  src={user.profilePicture}
-                  sx={{ bgcolor: user.color, color: '#FFF' }}
-                >
-                  {user.initials}
-                </Avatar>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem disabled onClick={handleClose}>
-                  Hello {user.username.split(' ')[0]}
-                </MenuItem>
-                <MenuItem onClick={() => signOut()}>Logout</MenuItem>
-              </Menu>
-            </div>
-          ) : null}
-        </Toolbar>
-      </AppBar>
-    </Box>
+                {user.initials}
+              </Avatar>
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem disabled onClick={handleClose}>
+                Hello {user.username.split(' ')[0]}
+              </MenuItem>
+              <MenuItem onClick={() => signOut()}>Logout</MenuItem>
+            </Menu>
+          </div>
+        ) : null}
+      </Toolbar>
+    </AppBar>
   );
 };
