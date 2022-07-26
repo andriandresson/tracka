@@ -1,6 +1,6 @@
 import {Container, Skeleton, Box} from '@mui/material';
 
-export const TimeTrackerSkeleton = () =>{
+export const TimeTrackerSkeleton = () => {
     return(
         <Container
         sx={{
@@ -72,4 +72,4 @@ export const TimeTrackerSkeleton = () =>{
       </Container>
     )
 
-}
+};
