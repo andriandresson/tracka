@@ -4,8 +4,12 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material';
-import { Step as StepType, Selection } from '@sendiradid-internship/tracka-ui';
+import { useTheme, Container } from '@mui/material';
+import {
+  Step as StepType,
+  Selection,
+  InformativePopup,
+} from '@sendiradid-internship/tracka-ui';
 
 interface Props {
   steps: StepType[];
@@ -31,9 +35,20 @@ export const OnboardingProgress: FC<Props> = ({ steps, activeStep }) => {
 
   return (
     <Box sx={{ maxWidth: 400 }}>
-      <Typography variant="h3" sx={{ color: 'common.white' }}>
-        Onboarding process
-      </Typography>
+      <Container
+        disableGutters
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography variant="h3" sx={{ color: 'common.white' }}>
+          Onboarding process
+        </Typography>
+        <InformativePopup />
+      </Container>
       <Stepper
         sx={{ mt: 8, maxWidth: 200 }}
         activeStep={activeStep}
