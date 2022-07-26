@@ -1,7 +1,11 @@
-import { GoalTracker, Goal, Selection } from '@sendiradid-internship/tracka-ui';
+import {
+  GoalTracker,
+  Goal,
+  GoalTrackerSkeleton,
+} from '@sendiradid-internship/tracka-ui';
 import { FC } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { Box, Container, Card, Typography, Skeleton } from '@mui/material';
+import { Box, Container, Card, Typography, Button } from '@mui/material';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
@@ -40,6 +44,7 @@ export const GoalTrackerWidget: FC<Props> = ({ teamID }) => {
     data: goalDetails,
     isLoading,
     isError,
+    refetch,
   } = useQuery(
     [`${goalsIds?.toString()}-goal-details`, goalsIds],
     () => {
@@ -51,59 +56,51 @@ export const GoalTrackerWidget: FC<Props> = ({ teamID }) => {
     },
     { enabled: !!goalsIds }
   );
-  //isLoading
+
   if (isLoading || !goalsIds) {
+    return <GoalTrackerSkeleton />;
+  }
+
+  const handleClick = () => {
+    refetch();
+  };
+
+  if (isError) {
     return (
       <Container
         sx={{
-          width: 792,
-          height: 409,
-          mr: 5,
+          width: '792px',
+          maxHeight: '409px',
           bgcolor: 'background.paper',
           display: 'flex',
-          flexDirection: 'column',
-          p: 1,
-          borderRadius: '5px',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <Box sx={{ p: 4 }}>
-          <Skeleton variant="text" sx={{ width: 100, height: 30 }} />
-          <Skeleton variant="text" />
-        </Box>
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            gap: 8,
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <Box>
-            <Skeleton variant="circular" width={130} height={130} />
-            <Skeleton variant="text" sx={{ mt: 3 }} />
-            <Skeleton variant="text" sx={{ width: 60 }} />
-          </Box>
-          <Box>
-            <Skeleton
-              variant="rectangular"
-              width={330}
-              height={200}
-              sx={{ borderRadius: 1 }}
-            />
-          </Box>
+          <Typography variant="h3">Oops! Something went wrong</Typography>
+          <Button
+            sx={{ mt: 2, width: 100 }}
+            variant="contained"
+            onClick={(e) => handleClick()}
+          >
+            Refresh
+          </Button>
         </Box>
       </Container>
     );
-  }
-  if (isError) {
-    return <Container>Error</Container>;
   }
   return (
     <Box
       sx={{
         width: 792,
         height: 409,
-        mr: 5,
         p: 2,
         bgcolor: 'background.paper',
         borderRadius: '5px',
