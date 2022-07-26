@@ -64,7 +64,6 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
       if (res?.ok) {
         router.push('/onboarding');
       } else {
-        console.log(res?.error);
         setError('Wrong or missing credentials.');
       }
     });
