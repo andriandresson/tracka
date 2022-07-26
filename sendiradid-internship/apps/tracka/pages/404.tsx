@@ -1,8 +1,7 @@
 import { Container, Typography, Button } from '@mui/material';
-import Logo from '../public/logo.svg';
+import Logo from '../public/Logo.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled';
 
 const Custom404 = () => {
   const router = useRouter();
