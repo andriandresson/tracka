@@ -55,26 +55,25 @@ export const ApplicationProvider = ({ children }) => {
     steps: [
       {
         label: 'Select team',
-        description: ' Pick your default workspace team, you only select one.',
+        description: 'Choose your default workspace team, you only select one.',
       },
       {
-        label: 'Select external space(s)',
-        description: 'Only select the space you need access to.',
+        label: 'Select spaces for customers',
+        description: 'Choose your space(s) to acess data about customers.',
         selected: [],
       },
       {
-        label: 'Select external customer(s)',
-        description:
-          'There are 2 different types of customers, external customers and internal customer.',
+        label: 'Select costumers',
+        description: 'You can pick any amount of customers.',
       },
       {
-        label: 'Select internal space(s)',
-        description: 'Only select the space you need access to.',
+        label: 'Select spaces for internal tasks',
+        description: 'Choose your space(s) to acess data about internal tasks.',
         selected: [],
       },
       {
-        label: 'Select internal task(s)',
-        description: `Select internal non-billable tasks you need access to.`,
+        label: 'Select internal tasks',
+        description: `You can pick any amount of internal tasks.`,
       },
       // {
       //   label: 'Review',

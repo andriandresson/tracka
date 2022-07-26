@@ -1,8 +1,9 @@
-import { Navbar } from '@sendiradid-internship/tracka-ui';
+import { Navbar, DashboardLayout } from '@sendiradid-internship/tracka-ui';
 import { DefaultUser, Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { useApplicationContext } from './appContext';
 
 interface ExtendedUserSession extends DefaultUser {
   apiToken: string;
@@ -22,8 +23,9 @@ interface WithAuthProps {
   session: ExtendedSession;
 }
 
-export const withAuth = (Component: React.ComponentType<WithAuthProps>) => {
+export const WithAuth = (Component: React.ComponentType<WithAuthProps>) => {
   const WithAuthComponent = ({ ...props }) => {
+    const { value } = useApplicationContext();
     const { data: session, status } = useSession();
     const extendedSession = session as ExtendedSession;
     const loading = status === 'loading';
@@ -35,15 +37,23 @@ export const withAuth = (Component: React.ComponentType<WithAuthProps>) => {
       }
     }, [loading, hasUser]);
     if (loading || !hasUser) {
-      return <div>Waiting for session...</div>;
+      return null;
     }
-
-    return (
-      <>
-        <Navbar></Navbar>
-        <Component {...props} session={extendedSession} />
-      </>
-    );
+    if (value.isOnboard) {
+      return (
+        <>
+          <DashboardLayout>
+            <Component {...props} session={extendedSession} />
+          </DashboardLayout>
+        </>
+      );
+    } else
+      return (
+        <>
+          <Navbar></Navbar>
+          <Component {...props} session={extendedSession} />
+        </>
+      );
   };
 
   WithAuthComponent.displayName = `WithAuth(${

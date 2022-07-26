@@ -28,6 +28,7 @@ interface Props {
   initiallyClosed?: boolean;
   bgColor?: string;
   topLevel?: boolean;
+
 }
 
 export const CustomAccordion: FC<Props> = ({
@@ -41,6 +42,7 @@ export const CustomAccordion: FC<Props> = ({
   initiallyClosed,
   bgColor,
   topLevel,
+
 }) => {
   const [value, setValue] = useState(parentValue);
   useEffect(() => {
@@ -124,7 +126,8 @@ export const CustomAccordion: FC<Props> = ({
 
   const [expanded, setExpanded] = React.useState<string | false>(relativeId);
   const [initiallyUnexpanded, setInitiallyUnexpanded] =
-    React.useState(initiallyClosed);
+    useState(initiallyClosed);
+
   const handlePanelExpand =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setInitiallyUnexpanded(undefined);

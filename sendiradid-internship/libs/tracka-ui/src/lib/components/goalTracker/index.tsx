@@ -118,7 +118,7 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
           >
             <Box
               sx={{
-                bgcolor: '#D55681',
+                bgcolor: '#7B6CEB',
                 width: 340,
                 ml: 2,
                 height: 30,
