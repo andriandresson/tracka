@@ -6,7 +6,7 @@ import {
   Container,
   List,
   ListSubheader,
-  Skeleton,
+  Button
 } from '@mui/material';
 import { useQuery } from 'react-query';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -153,7 +153,8 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
     () => fetchTeamMembers(teamID),
     useQueryOptions
   );
-  const { data, isLoading, isError } = useQuery(
+
+  const { data, isError, refetch } = useQuery(
     [`timetracked members`, teamID, teamMembers, dateRange],
     () => {
       if (Array.isArray(teamMembers)) {
@@ -172,9 +173,44 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
     },
     {
       enabled: !!teamMembers,
-      // ...useQueryOptions,
     }
   );
+
+  const handleClick = () => {
+    refetch();
+  };
+
+  if (isError) {
+    return (
+      <Container
+        sx={{
+          width: '512px',
+          maxHeight: '409px',
+          bgcolor: 'background.paper',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h3">Oops! Something went wrong</Typography>
+          <Button
+            sx={{ mt: 2, width: 100 }}
+            variant="contained"
+            onClick={(e) => handleClick()}
+          >
+            Refresh
+          </Button>
+        </Box>
+      </Container>
+    );
+  }
 
   //filter members with non empty tasks
   const activeMembers = data?.filter(
@@ -216,8 +252,6 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
                 },
               ]}
               onApply={handleOnApply}
-              // setRange={setState}
-              // onChange={(item) => setState([item['selection']])}
             />
           </Box>
           <ListSubheader disableGutters sx={{ pt: 3 }}>
@@ -260,17 +294,6 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
                 data={employee.data}
               />
             ))}
-            {/* ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              maxHeight: '500px',
-            }}
-          >
-          </Box> */}
           </List>
         </Container>
       ) : (
