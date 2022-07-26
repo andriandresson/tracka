@@ -8,12 +8,12 @@ import {
   Modal,
   IconButton,
 } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import HelpIcon from '@mui/icons-material/Help';
 
 const style = {
   position: 'absolute',
-  top: '18%',
-  left: '18%',
+  top: '20%',
+  left: '25% ',
 
   width: 875,
   height: 440,
@@ -37,9 +37,9 @@ export const InformativePopup: FC = ({}) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Container disableGutters sx={{ ml: 4.5, mt: 16, position: 'absolute' }}>
+    <>
       <IconButton>
-        <InfoIcon fontSize="large" onClick={handleOpen}></InfoIcon>
+        <HelpIcon fontSize="small" onClick={handleOpen}></HelpIcon>
       </IconButton>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
@@ -62,6 +62,6 @@ export const InformativePopup: FC = ({}) => {
           </Typography>
         </Box>
       </Modal>
-    </Container>
+    </>
   );
 };
