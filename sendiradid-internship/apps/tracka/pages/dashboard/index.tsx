@@ -1,4 +1,4 @@
-import { Container } from '@mui/system';
+import { Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react';
 import {
@@ -23,10 +23,21 @@ const Dashboard = () => {
 
     const teamID = selectedTeam();
     return (
-      <Container sx={{ mt: 20, display: 'flex', flexDirection: 'row' }}>
-        <GoalTrackerWidget teamID={teamID} />
-        <EmployeeTimeTrackerWidgetV2 teamID={teamID} />
-      </Container>
+      <Grid
+        container
+        spacing={8}
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="flex-start"
+        sx={{ mt: 20 }}
+      >
+        <Grid item>
+          <GoalTrackerWidget teamID={teamID} />
+        </Grid>
+        <Grid item>
+          <EmployeeTimeTrackerWidgetV2 teamID={teamID} />
+        </Grid>
+      </Grid>
     );
   }
 };
