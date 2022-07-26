@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { Popover, Button, Typography, Divider, Box } from '@mui/material';
 import { DateRange, Range } from 'react-date-range';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
 import * as timeUtils from './timeUtils';
 interface Props {
@@ -83,19 +84,18 @@ export const CustomDateRangePicker: FC<Props> = ({ state, onApply }) => {
 
   return (
     <Box>
+      
       <Button
         aria-describedby={id}
-        variant="outlined"
         onClick={handleClick}
         sx={{
-          backgroundColor: '#0C1B2C',
           color: '#fff',
-          borderColor: '#fff',
-          borderWidth: '1px',
-          borderStyle: 'solid',
+          fontSize:'0.688rem'
         }}
         startIcon={<CalendarTodayIcon sx={{ height: 16, m: 0 }} />}
+        endIcon={<ArrowDropDownIcon />}
       >
+        
         {state[0]?.startDate?.toLocaleDateString('en-US', {
           day: 'numeric',
           month: 'short',
