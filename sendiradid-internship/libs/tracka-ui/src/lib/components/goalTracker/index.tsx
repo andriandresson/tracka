@@ -1,9 +1,4 @@
-import {
-  Box,
-  Typography,
-  Divider,
-  List, useTheme
-} from '@mui/material';
+import { Box, Typography, Divider, List, useTheme } from '@mui/material';
 import { Container } from '@mui/system';
 import { Chart as ChartJS, ArcElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -58,6 +53,7 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
   return (
     <Container
       sx={{
+        ml: 5,
         display: 'flex',
         alignContent: 'flex-start',
         flexDirection: ' column',
@@ -93,6 +89,7 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
               due date: {dueDate.toDateString()}
             </Typography>
           </Box>
+
           <List
             sx={{
               width: '100%',
@@ -101,6 +98,7 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
               position: 'relative',
               overflow: 'auto',
               m: 4,
+              ml: 10,
               pl: 0,
               '&::-webkit-scrollbar': {
                 width: '4px',
