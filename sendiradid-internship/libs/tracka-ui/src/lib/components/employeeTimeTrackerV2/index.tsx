@@ -6,7 +6,7 @@ import {
   Container,
   List,
   ListSubheader,
-  Skeleton
+  Skeleton,
 } from '@mui/material';
 import { useQuery } from 'react-query';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -50,13 +50,13 @@ export const EmployeeTimeTrackerV2: FC<TrackerProps> = ({ data }) => {
 
   return (
     <>
-    <Box
-         display="flex"
+      <Box
+        display="flex"
         flexDirection="row"
-         alignItems="center"
-         sx={{ maxWidth: '464px', pt: 1, pb: 1, height: '100%' }}
-       >
-         <Avatar
+        alignItems="center"
+        sx={{ maxWidth: '464px', pt: 1, pb: 1, height: '100%' }}
+      >
+        <Avatar
           src={data[0].user.profilePicture}
           sx={{ bgcolor: data[0].user.color, width: 32, height: 32 }}
         >
@@ -84,8 +84,8 @@ export const EmployeeTimeTrackerV2: FC<TrackerProps> = ({ data }) => {
         </Container>
         <Typography variant="subtitle1">
           {msToString(timeTrackedInMs)}
-        </Typography> 
-    </Box>
+        </Typography>
+      </Box>
     </>
   );
 };
@@ -180,66 +180,74 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
         sx={{
           width: '512px',
           height: '409px',
-          bgcolor: 'background.paper'
+          bgcolor: 'background.paper',
         }}
       >
-        <Box sx={{display:'flex', pt:3, gap: 30}}>
-        <Skeleton sx={{flexGrow:1, width:100, height:40}}/>
-        <Skeleton sx={{flexGrow:1, width:100, height:20}}/> 
+        <Box sx={{ display: 'flex', pt: 3, gap: 30 }}>
+          <Skeleton sx={{ flexGrow: 1, width: 100, height: 40 }} />
+          <Skeleton sx={{ flexGrow: 1, width: 100, height: 20 }} />
         </Box>
-        <Box sx={{display:'flex', pt:3, gap:40}}> 
-        <Skeleton sx={{flexGrow:1, width:60, height:20}}/>
-        <Skeleton sx={{flexGrow:1, width:60, height:20}}/> 
+        <Box sx={{ display: 'flex', pt: 3, gap: 40 }}>
+          <Skeleton sx={{ flexGrow: 1, width: 60, height: 20 }} />
+          <Skeleton sx={{ flexGrow: 1, width: 60, height: 20 }} />
         </Box>
-        <Box sx={{display:'flex', flexDirection:'column', gap:2, alignContent:'flex-start', pt:1.5}}>
-          <Box sx={{display:'flex', flexDirection:'row', gap:2}}>
-            <Skeleton variant='circular' sx={{width:40, height:40}}/>
-            <Box sx={{display:'flex', flexDirection:'row', gap:23}}>
-            <Box sx={{display:'flex', flexDirection:'column'}}> 
-            <Skeleton variant='text' sx={{width:140, height:25}}/>
-            <Skeleton variant='text' sx={{width:70, height:15}}/>
-            </Box>
-            <Skeleton variant='text' sx={{width:55, height:25}}/>
-            </Box>
-          </Box>
-          <Box sx={{display:'flex', flexDirection:'row', gap:2}}>
-            <Skeleton variant='circular' sx={{width:40, height:40}}/>
-            <Box sx={{display:'flex', flexDirection:'row', gap:23}}>
-            <Box sx={{display:'flex', flexDirection:'column'}}> 
-            <Skeleton variant='text' sx={{width:140, height:25}}/>
-            <Skeleton variant='text' sx={{width:70, height:15}}/>
-            </Box>
-            <Skeleton variant='text' sx={{width:55, height:25}}/>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            alignContent: 'flex-start',
+            pt: 1.5,
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+            <Skeleton variant="circular" sx={{ width: 40, height: 40 }} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 23 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Skeleton variant="text" sx={{ width: 140, height: 25 }} />
+                <Skeleton variant="text" sx={{ width: 70, height: 15 }} />
+              </Box>
+              <Skeleton variant="text" sx={{ width: 55, height: 25 }} />
             </Box>
           </Box>
-          <Box sx={{display:'flex', flexDirection:'row', gap:2}}>
-            <Skeleton variant='circular' sx={{width:40, height:40}}/>
-            <Box sx={{display:'flex', flexDirection:'row', gap:23}}>
-            <Box sx={{display:'flex', flexDirection:'column'}}> 
-            <Skeleton variant='text' sx={{width:140, height:25}}/>
-            <Skeleton variant='text' sx={{width:70, height:15}}/>
-            </Box>
-            <Skeleton variant='text' sx={{width:55, height:25}}/>
-            </Box>
-          </Box>
-          <Box sx={{display:'flex', flexDirection:'row', gap:2}}>
-            <Skeleton variant='circular' sx={{width:40, height:40}}/>
-            <Box sx={{display:'flex', flexDirection:'row', gap:23}}>
-            <Box sx={{display:'flex', flexDirection:'column'}}> 
-            <Skeleton variant='text' sx={{width:140, height:25}}/>
-            <Skeleton variant='text' sx={{width:70, height:15}}/>
-            </Box>
-            <Skeleton variant='text' sx={{width:55, height:25}}/>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+            <Skeleton variant="circular" sx={{ width: 40, height: 40 }} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 23 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Skeleton variant="text" sx={{ width: 140, height: 25 }} />
+                <Skeleton variant="text" sx={{ width: 70, height: 15 }} />
+              </Box>
+              <Skeleton variant="text" sx={{ width: 55, height: 25 }} />
             </Box>
           </Box>
-          <Box sx={{display:'flex', flexDirection:'row', gap:2}}>
-            <Skeleton variant='circular' sx={{width:40, height:40}}/>
-            <Box sx={{display:'flex', flexDirection:'row', gap:23}}>
-            <Box sx={{display:'flex', flexDirection:'column'}}> 
-            <Skeleton variant='text' sx={{width:140, height:25}}/>
-            <Skeleton variant='text' sx={{width:70, height:15}}/>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+            <Skeleton variant="circular" sx={{ width: 40, height: 40 }} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 23 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Skeleton variant="text" sx={{ width: 140, height: 25 }} />
+                <Skeleton variant="text" sx={{ width: 70, height: 15 }} />
+              </Box>
+              <Skeleton variant="text" sx={{ width: 55, height: 25 }} />
             </Box>
-            <Skeleton variant='text' sx={{width:55, height:25}}/>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+            <Skeleton variant="circular" sx={{ width: 40, height: 40 }} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 23 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Skeleton variant="text" sx={{ width: 140, height: 25 }} />
+                <Skeleton variant="text" sx={{ width: 70, height: 15 }} />
+              </Box>
+              <Skeleton variant="text" sx={{ width: 55, height: 25 }} />
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+            <Skeleton variant="circular" sx={{ width: 40, height: 40 }} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 23 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Skeleton variant="text" sx={{ width: 140, height: 25 }} />
+                <Skeleton variant="text" sx={{ width: 70, height: 15 }} />
+              </Box>
+              <Skeleton variant="text" sx={{ width: 55, height: 25 }} />
             </Box>
           </Box>
         </Box>
@@ -255,73 +263,86 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
     (member: TrackerProps) => member.data.length > 0
   ) as TrackerProps[];
   return (
-    <Container sx={{ width: '512px', maxHeight: '409px', bgcolor:'background.paper' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          pt:3,
-
-        }}
-      >
-        <Typography variant="h3" sx={{flexGrow:1, alignSelf: 'center', alignContent:'flex-start' }}>
-          Time Tracked
-        </Typography>
-        <CustomDateRangePicker
-          state={[
-            {
-              key: 'selection',
-              startDate: dateRange.startDate,
-              endDate: dateRange.endDate,
-            },
-          ]}
-          onApply={handleOnApply}
-          // setRange={setState}
-          // onChange={(item) => setState([item['selection']])}
-        />
-      </Box>
-      <ListSubheader disableGutters sx={{pt:3}}>
+    <>
+      {activeMembers?.length > 0 ? (
+        <Container
+          sx={{
+            width: '512px',
+            maxHeight: '409px',
+            bgcolor: 'background.paper',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              pt: 3,
+            }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                flexGrow: 1,
+                alignSelf: 'center',
+                alignContent: 'flex-start',
+              }}
+            >
+              Time Tracked
+            </Typography>
+            <CustomDateRangePicker
+              state={[
+                {
+                  key: 'selection',
+                  startDate: dateRange.startDate,
+                  endDate: dateRange.endDate,
+                },
+              ]}
+              onApply={handleOnApply}
+              // setRange={setState}
+              // onChange={(item) => setState([item['selection']])}
+            />
+          </Box>
+          <ListSubheader disableGutters sx={{ pt: 3 }}>
             <Box
               sx={{
                 display: 'flex',
-                flexDirection:'row',
+                flexDirection: 'row',
               }}
             >
-              <Typography variant="subtitle2" sx={{flexGrow:0.9}}>
+              <Typography variant="subtitle2" sx={{ flexGrow: 0.9 }}>
                 Members
               </Typography>
               <Typography variant="subtitle2">Hours </Typography>
             </Box>
           </ListSubheader>
-      <List
-        sx={{
-          position: 'relative',
-          maxHeight: 270,
-          overflow: 'auto',
-          pr:3,
-          mt:1,
-          '&::-webkit-scrollbar': {
-            width: '4px',
-          },
-          '&::-webkit-scrollbar-track': {
-            boxShadow: 'inset 0 0 6px rgb(44	52	60)',
-            webkitBoxShadow: 'inset 0 0 6px rgb(44	52	60)',
-            borderRadius: '5px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'common.white',
-            borderRadius: '5px',
-          },
-        }}
-      >
-        {activeMembers?.length > 0 ? (
-          activeMembers.map((employee) => (
-            <EmployeeTimeTrackerV2
-              key={employee.data[0].user.id}
-              data={employee.data}
-            />
-          ))
-        ) : (
+          <List
+            sx={{
+              position: 'relative',
+              maxHeight: 270,
+              overflow: 'auto',
+              pr: 3,
+              mt: 1,
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                boxShadow: 'inset 0 0 6px rgb(44	52	60)',
+                webkitBoxShadow: 'inset 0 0 6px rgb(44	52	60)',
+                borderRadius: '5px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'common.white',
+                borderRadius: '5px',
+              },
+            }}
+          >
+            {activeMembers.map((employee) => (
+              <EmployeeTimeTrackerV2
+                key={employee.data[0].user.id}
+                data={employee.data}
+              />
+            ))}
+            {/* ) : (
           <Box
             sx={{
               display: 'flex',
@@ -331,9 +352,12 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
               maxHeight: '500px',
             }}
           >
-          </Box>
-        )}
-      </List>
-    </Container>
+          </Box> */}
+          </List>
+        </Container>
+      ) : (
+        <Typography>Here goes the skeleton</Typography>
+      )}
+    </>
   );
 };
