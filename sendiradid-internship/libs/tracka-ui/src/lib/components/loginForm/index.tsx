@@ -5,9 +5,12 @@ import {
   Container,
   Typography,
   InputAdornment,
+  IconButton,
 } from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { styled } from '@mui/material/styles';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
@@ -41,7 +44,12 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleLogin = (e: any) => {
     e.preventDefault();
@@ -57,7 +65,7 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
         router.push('/onboarding');
       } else {
         console.log(res?.error);
-        setError('Sorry, wrong credentials');
+        setError('Wrong or missing credentials.');
       }
     });
   };
@@ -100,8 +108,9 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
           Please Sign in with your ClickUp credentials.{' '}
         </Typography>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <Typography>Email</Typography>
+        <Typography>Email </Typography>
         <LoginTextField
+          error={!!error}
           name="username"
           value={email}
           onChange={(e) => {
@@ -127,8 +136,9 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
         />
         <Typography>Password</Typography>
         <LoginTextField
+          error={!!error}
           name="password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder="Enter your password"
           value={password}
           onChange={(e) => {
@@ -139,7 +149,7 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
           sx={{
             width: 395,
             height: 60,
-            mb: 4,
+            mb: 2,
           }}
           InputProps={{
             style: { fontSize: '1rem' },
@@ -148,20 +158,21 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
                 <LockOpenIcon sx={{ height: 20, width: 26 }} />
               </InputAdornment>
             ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleShowPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
         />
-        {error && (
-          <Typography
-            variant="body1"
-            sx={{
-              color: 'red',
-              pb: 8,
-            }}
-          >
-            {error}
-          </Typography>
-        )}
-
+        <Typography color="error" variant="body1" sx={{ mb: 4 }}>
+          {error}
+        </Typography>
         <Button
           variant="contained"
           type="submit"
