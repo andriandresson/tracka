@@ -4,9 +4,9 @@ import {
   Box,
   Avatar,
   Container,
-  Card,
   List,
   ListSubheader,
+  Button
 } from '@mui/material';
 import { useQuery } from 'react-query';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -17,7 +17,7 @@ import {
   TaskTag,
   TeamsArray,
   CustomDateRangePicker,
-  Loader,
+  TimeTrackerSkeleton
 } from '@sendiradid-internship/tracka-ui';
 
 interface TrackerProps {
@@ -153,7 +153,8 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
     () => fetchTeamMembers(teamID),
     useQueryOptions
   );
-  const { data, isLoading, isError } = useQuery(
+
+  const { data, isError, refetch } = useQuery(
     [`timetracked members`, teamID, teamMembers, dateRange],
     () => {
       if (Array.isArray(teamMembers)) {
@@ -172,143 +173,132 @@ export const EmployeeTimeTrackerWidgetV2: FC<Props> = ({ teamID }) => {
     },
     {
       enabled: !!teamMembers,
-      // ...useQueryOptions,
     }
   );
-  if (isLoading) {
+
+  const handleClick = () => {
+    refetch();
+  };
+
+  if (isError) {
     return (
-      <Card
+      <Container
         sx={{
           width: '512px',
-          backgroundColor: 'background.default',
+          maxHeight: '409px',
+          bgcolor: 'background.paper',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <Container
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            pb: 2,
-            backgroundColor: 'background.paper',
-            pt: 4,
-          }}
-        >
-          <Typography variant="body2" sx={{ flexGrow: 1, alignSelf: 'center' }}>
-            Time Tracked
-          </Typography>
-          <CustomDateRangePicker
-            state={[
-              {
-                key: 'selection',
-                startDate: dateRange.startDate,
-                endDate: dateRange.endDate,
-              },
-            ]}
-            onApply={handleOnApply}
-            // setRange={setState}
-            // onChange={(item) => setState([item['selection']])}
-          />
-        </Container>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
-            alignContent: 'center',
-            marginInline: 'auto',
-            backgroundColor: 'background.paper',
-            maxHeigh: '500px',
           }}
         >
-          <Loader />
+          <Typography variant="h3">Oops! Something went wrong</Typography>
+          <Button
+            sx={{ mt: 2, width: 100 }}
+            variant="contained"
+            onClick={(e) => handleClick()}
+          >
+            Refresh
+          </Button>
         </Box>
-      </Card>
+      </Container>
     );
-  }
-  if (isError) {
-    return <Container>Error</Container>;
   }
 
   //filter members with non empty tasks
   const activeMembers = data?.filter(
     (member: TrackerProps) => member.data.length > 0
   ) as TrackerProps[];
-  console.log('activeMembers', activeMembers);
   return (
-    <Card sx={{ width: '512px', maxHeight: '500px' }}>
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          pb: 2,
-          backgroundColor: 'background.paper',
-          pt: 4,
-        }}
-      >
-        <Typography variant="body2" sx={{ flexGrow: 1, alignSelf: 'center' }}>
-          Time Tracked
-        </Typography>
-        <CustomDateRangePicker
-          state={[
-            {
-              key: 'selection',
-              startDate: dateRange.startDate,
-              endDate: dateRange.endDate,
-            },
-          ]}
-          onApply={handleOnApply}
-          // setRange={setState}
-          // onChange={(item) => setState([item['selection']])}
-        />
-      </Container>
-
-      <List
-        sx={{
-          maxWidth: '100%',
-          position: 'relative',
-          maxHeight: 420,
-          overflow: 'auto',
-          backgroundColor: 'background.paper',
-        }}
-        subheader={
-          <ListSubheader>
+    <>
+      {activeMembers?.length > 0 ? (
+        <Container
+          sx={{
+            width: '512px',
+            maxHeight: '409px',
+            bgcolor: 'background.paper',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              pt: 3,
+            }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                flexGrow: 1,
+                alignSelf: 'center',
+                alignContent: 'flex-start',
+              }}
+            >
+              Time Tracked
+            </Typography>
+            <CustomDateRangePicker
+              state={[
+                {
+                  key: 'selection',
+                  startDate: dateRange.startDate,
+                  endDate: dateRange.endDate,
+                },
+              ]}
+              onApply={handleOnApply}
+            />
+          </Box>
+          <ListSubheader disableGutters sx={{ pt: 3 }}>
             <Box
               sx={{
                 display: 'flex',
-                p: 1,
-                pb: 2,
-                backgroundColor: 'background.paper',
+                flexDirection: 'row',
               }}
             >
-              <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
+              <Typography variant="subtitle2" sx={{ flexGrow: 0.9 }}>
                 Members
               </Typography>
               <Typography variant="subtitle2">Hours </Typography>
             </Box>
           </ListSubheader>
-        }
-      >
-        {activeMembers?.length > 0 ? (
-          activeMembers.map((employee) => (
-            <EmployeeTimeTrackerV2
-              key={employee.data[0].user.id}
-              data={employee.data}
-            />
-          ))
-        ) : (
-          <Box
+          <List
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              maxHeight: '500px',
+              position: 'relative',
+              maxHeight: 270,
+              overflow: 'auto',
+              pr: 3,
+              mt: 1,
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                boxShadow: 'inset 0 0 6px rgb(44	52	60)',
+                webkitBoxShadow: 'inset 0 0 6px rgb(44	52	60)',
+                borderRadius: '5px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'common.white',
+                borderRadius: '5px',
+              },
             }}
           >
-            <Loader />
-          </Box>
-        )}
-      </List>
-    </Card>
+            {activeMembers.map((employee) => (
+              <EmployeeTimeTrackerV2
+                key={employee.data[0].user.id}
+                data={employee.data}
+              />
+            ))}
+          </List>
+        </Container>
+      ) : (
+        <TimeTrackerSkeleton />
+      )}
+    </>
   );
 };

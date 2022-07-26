@@ -1,5 +1,4 @@
-import { FC } from 'react';
-
+import { FC, useState } from 'react';
 import Button from '@mui/material/Button';
 import {
   TextField,
@@ -10,9 +9,10 @@ import {
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { styled } from '@mui/material/styles';
-
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Logo from './Logo.svg';
+import { useRouter } from 'next/router';
 
 interface Props {
   csrfToken: string;
@@ -38,8 +38,32 @@ const LoginTextField = styled(TextField)({
 });
 
 export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleLogin = (e: any) => {
+    e.preventDefault();
+    signIn('credentials', {
+      redirect: false,
+      username: email,
+      password,
+      csrfToken,
+      callbackUrl: APIurl,
+      // callbackUrl: `${window.location.origin}/profil`
+    }).then((res: any) => {
+      if (res?.ok) {
+        router.push('/onboarding');
+      } else {
+        console.log(res?.error);
+        setError('Sorry, wrong credentials');
+      }
+    });
+  };
+
   return (
-    <form method="post" action={APIurl}>
+    <form onSubmit={(e) => handleLogin(e)}>
       <Container
         sx={{
           width: 395,
@@ -79,6 +103,11 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
         <Typography>Email</Typography>
         <LoginTextField
           name="username"
+          value={email}
+          onChange={(e) => {
+            setError('');
+            setEmail(e.target.value);
+          }}
           type="text"
           placeholder="Enter your email"
           margin="normal"
@@ -101,6 +130,11 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
           name="password"
           type="password"
           placeholder="Enter your password"
+          value={password}
+          onChange={(e) => {
+            setError('');
+            setPassword(e.target.value);
+          }}
           margin="normal"
           sx={{
             width: 395,
@@ -116,6 +150,18 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
             ),
           }}
         />
+        {error && (
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'red',
+              pb: 8,
+            }}
+          >
+            {error}
+          </Typography>
+        )}
+
         <Button
           variant="contained"
           type="submit"
