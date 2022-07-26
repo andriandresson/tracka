@@ -29,7 +29,7 @@ function CustomApp({ Component, pageProps, router }) {
         <GlobalStyles styles={globalStyles} />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Head>
-            <link rel="shortcut icon" href="/favicon.png" />
+            <link rel="shortcut icon" href="/tracka.ico" />
             <title>Welcome to tracka!</title>
           </Head>
           <SessionProvider session={pageProps.session}>
