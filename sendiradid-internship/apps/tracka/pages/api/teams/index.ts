@@ -9,7 +9,6 @@ const Handler = async (req, res) => {
   }
 
   const apiToken = session.user['apiToken'];
-  const teamID = session.user['defaultTeam'];
   const config = {
     headers: {
       Authorization: apiToken,

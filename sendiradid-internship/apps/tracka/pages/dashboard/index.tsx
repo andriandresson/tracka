@@ -12,7 +12,6 @@ const Dashboard = () => {
   const router = useRouter();
 
   const { value } = useApplicationContext();
-
   if (!value.isOnboard) {
     router.push('/onboarding/select-team');
   } else {
@@ -29,7 +28,7 @@ const Dashboard = () => {
         direction="row"
         justifyContent="space-evenly"
         alignItems="flex-start"
-        sx={{ mt: 20 }}
+        sx={{ mt: 10, mb: 20 }}
       >
         <Grid item>
           <GoalTrackerWidget teamID={teamID} />

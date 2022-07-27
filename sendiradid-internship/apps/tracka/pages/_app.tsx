@@ -11,7 +11,6 @@ import { WithAuth } from '../components/withAuth';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import 'react-date-range/dist/styles.css'; // main style file
-// import 'react-date-range/dist/theme/default.css'; // theme css file
 import '../styles/CalendarStyle.css'; // custom style file
 import { GlobalStyles } from '@mui/styled-engine';
 import { globalStyles } from '../styles/globalStyles';
@@ -20,7 +19,6 @@ const queryClient = new QueryClient();
 
 function CustomApp({ Component, pageProps, router }) {
   const isLoginPage = router?.pathname.includes('/login');
-  console.log('isLoginPage', isLoginPage);
   const Screen = isLoginPage ? Component : WithAuth(Component);
   const isDev = process.env.NODE_ENV === 'development';
   return (

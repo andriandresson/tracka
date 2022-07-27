@@ -7,7 +7,6 @@ const SignIn = ({ csrfToken }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  console.info('%cconsole.info', 'color: green;');
   return {
     props: {
       csrfToken: await getCsrfToken(context),
