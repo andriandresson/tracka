@@ -94,10 +94,9 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
             sx={{
               width: '100%',
               maxWidth: 360,
-              maxHeight: 150,
+              maxHeight: 180,
               position: 'relative',
               overflow: 'auto',
-              m: 4,
               ml: 10,
               pl: 0,
               '&::-webkit-scrollbar': {
@@ -121,8 +120,6 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
                 ml: 2,
                 height: 30,
                 p: 0.5,
-                position: 'fixed',
-                mt: -5,
                 borderRadius: '4px 4px 0 0',
               }}
             >
