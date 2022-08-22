@@ -75,9 +75,6 @@ export const ApplicationProvider = ({ children }) => {
         label: 'Select internal tasks',
         description: `You can pick any amount of internal tasks.`,
       },
-      // {
-      //   label: 'Review',
-      // },
     ],
   };
   const [applicationState, setApplicationState] = useState<OnboardingProcess>(

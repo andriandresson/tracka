@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const useActiveStepStatus = (setValue: any) => {
   const router = useRouter();
   useEffect(() => {
-    console.log('useActiveStepStatus');
     if (router.pathname === '/onboarding/select-team') {
       setValue('activeStep', 0);
     } else if (router.pathname === '/onboarding/select-spaces') {

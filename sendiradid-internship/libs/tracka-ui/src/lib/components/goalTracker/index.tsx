@@ -21,8 +21,11 @@ export const GoalTracker: FC<Props> = ({ goalData }) => {
     backgroundArray.push(theme.palette.error.main, theme.palette.error.dark);
     borderArray.push(theme.palette.error.main, theme.palette.error.dark);
   } else if (percent < 50) {
-    backgroundArray.push(theme.palette.warning.main, theme.palette.error.dark);
-    borderArray.push(theme.palette.warning.main, theme.palette.error.dark);
+    backgroundArray.push(
+      theme.palette.warning.main,
+      theme.palette.warning.dark
+    );
+    borderArray.push(theme.palette.warning.main, theme.palette.warning.dark);
   } else if (percent < 75) {
     backgroundArray.push(
       theme.palette.success.main,

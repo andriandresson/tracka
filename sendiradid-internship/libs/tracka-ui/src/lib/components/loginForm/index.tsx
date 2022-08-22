@@ -75,7 +75,7 @@ export const LoginForm: FC<Props> = ({ csrfToken, APIurl }) => {
         sx={{
           width: 395,
           display: 'flex',
-          pt: 21,
+          pt: 11,
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'start',

@@ -31,15 +31,15 @@ const style = {
   boxShadow: 24,
 };
 
-export const InformativePopup: FC = ({}) => {
+export const InformativePopup: FC = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <IconButton>
-        <HelpIcon fontSize="small" onClick={handleOpen}></HelpIcon>
+      <IconButton onClick={handleOpen}>
+        <HelpIcon fontSize="small"></HelpIcon>
       </IconButton>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
